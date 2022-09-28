@@ -5,10 +5,11 @@ w209: Data Visualization
 Fall 2022
 
 Authors:
-* Brian Truong (brian.h.t@berkeley.edu)
-* Francis Lee (francis.j.lee@berkeley.edu)
-* Shrey Singhal (shrey.singhal@berkeley.edu)
-* Tausif Islam (tausif.islam@berkeley.edu)
+
+- Brian Truong (brian.h.t@berkeley.edu)
+- Francis Lee (francis.j.lee@berkeley.edu)
+- Shrey Singhal (shrey.singhal@berkeley.edu)
+- Tausif Islam (tausif.islam@berkeley.edu)
 
 # About
 
@@ -18,10 +19,34 @@ The Ultimate Fighting Championship (UFC) is a mixed martial arts
 organization that arranges and presents fights between different martial artists across the world.
 
 This project provides visualizations for the [Kaggle UFC historical fight data](https://www.kaggle.com/datasets/rajeevw/ufcdata?select=preprocessed_data.csv) with these two business purposes in mind:
-* **Marketing**: enhance UFC’s reach to countries where it is less widely known
-* **Business Development**: expand the avenues in which a fan interacts with the UFC brand
 
+- **Marketing**: enhance UFC’s reach to countries where it is less widely known
+- **Business Development**: expand the avenues in which a fan interacts with the UFC brand
+
+# Prerequisites
+
+Before running the project, install these dependencies:
+
+- Node.js: https://nodejs.org/en/
+- Yarn: https://yarnpkg.com/getting-started/install
+
+# Commands
+
+### `yarn install`
+
+- Install the project packages
+
+### `yarn start`
+
+- Run the project in development mode
+- Access the project at https://localhost:3000/
+- The project will automatically reload whenever changes are made to the files
+
+### `yarn build`
+
+- Create a production ready build
+- Build output is located in the `build/` directory
 
 # Links
 
-* [Project documents on Google Drive](https://drive.google.com/drive/folders/1ujbsqWG2VutODLRt32spW-fatCEhLKwO?usp=sharing)
+- [Project documents](https://drive.google.com/drive/folders/1ujbsqWG2VutODLRt32spW-fatCEhLKwO?usp=sharing)
