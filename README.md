@@ -23,6 +23,8 @@ This project provides visualizations for the [Kaggle UFC historical fight data](
 - **Marketing**: enhance UFC’s reach to countries where it is less widely known
 - **Business Development**: expand the avenues in which a fan interacts with the UFC brand
 
+More project documentation can be found at [this Google Drive folder](https://drive.google.com/drive/folders/1ujbsqWG2VutODLRt32spW-fatCEhLKwO?usp=sharing).
+
 # Prerequisites
 
 Before running the project, install these dependencies:
@@ -83,7 +85,3 @@ This allows the Emotion `css` attribute to be used correctly, e.g. in:
   Fight Club
 </Typography>
 ```
-
-# Links
-
-- [Project documents](https://drive.google.com/drive/folders/1ujbsqWG2VutODLRt32spW-fatCEhLKwO?usp=sharing)
