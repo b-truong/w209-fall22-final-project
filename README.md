@@ -63,10 +63,10 @@ The repository is organized as follows:
 
 | Directory Entries | Purpose                            |
 | ----------------- | ---------------------------------- |
-| `.gitignore`      | Files to ignore on `git` commits   |
-| `package.json`    | Web app packages and commands      |
-| `assets`          | Non-code files, e.g. images, fonts |
 | `public`          | Root files to be served unmodified |
+| `src`             | Source code of the app             |
+| `src/assets`      | Images and other non-code files    |
+| `src/components`  | Components used by the app         |
 
 ## Notes
 
