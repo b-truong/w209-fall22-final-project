@@ -61,12 +61,12 @@ The project web app is built with:
 
 The repository is organized as follows:
 
-| Directory Entries | Purpose                            |
-| ----------------- | ---------------------------------- |
-| `public`          | Root files to be served unmodified |
-| `src`             | Source code of the app             |
-| `src/assets`      | Images and other non-code files    |
-| `src/components`  | Components used by the app         |
+| Directory Entries | Purpose                         |
+| ----------------- | ------------------------------- |
+| `public`          | Files to be served unmodified   |
+| `src`             | Source code of the app          |
+| `src/assets`      | Images and other non-code files |
+| `src/components`  | Components used by the app      |
 
 ## Notes
 
