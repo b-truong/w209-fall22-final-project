@@ -39,7 +39,7 @@ Before running the project, install these dependencies:
 ### `yarn start`
 
 - Run the project in development mode
-- Access the project at https://localhost:3000/
+- Access the project at http://localhost:3000/
 - The project will automatically reload whenever changes are made to the files
 
 ### `yarn build`
