@@ -1,8 +1,12 @@
+/** @jsxImportSource @emotion/react */
+
 import { Typography } from "@mui/material";
-import React from "react";
 
 import Page from "./Page";
 
+/**
+ * Page to display if users enter a bad URL
+ */
 const NotFound = () => {
   return (
     <Page>

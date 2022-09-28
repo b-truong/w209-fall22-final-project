@@ -5,6 +5,9 @@ import { useTheme } from "@mui/material";
 import getStyles from "./Home.styles";
 import Page from "./Page";
 
+/**
+ * Home page for the project
+ */
 const Home = () => {
   const theme = useTheme();
   const styles = getStyles(theme);

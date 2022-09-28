@@ -11,7 +11,7 @@ const getStyles = (theme: Theme) => {
       line-height: ${typeface.lineHeight};
       letter-spacing: ${typeface.fontFamily};
     `,
-  }
+  };
 };
 
 export default getStyles;

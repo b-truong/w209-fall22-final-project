@@ -6,6 +6,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import NotFound from "./NotFound";
 
+/**
+ * App component to instantiate global providers and page routes
+ */
 const App = () => {
   return (
     <ThemeProvider theme={createTheme()}>

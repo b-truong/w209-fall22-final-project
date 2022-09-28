@@ -47,6 +47,43 @@ Before running the project, install these dependencies:
 - Create a production ready build
 - Build output is located in the `build/` directory
 
+# Developing
+
+The project web app is built with:
+
+- Typescript: https://www.typescriptlang.org/
+- React: https://reactjs.org/
+  - Create React App: https://create-react-app.dev/
+  - Material UI: https://mui.com/
+  - Emotion: https://emotion.sh/
+
+## File structure
+
+The repository is organized as follows:
+
+| Directory Entries | Purpose                            |
+| ----------------- | ---------------------------------- |
+| `.gitignore`      | Files to ignore on `git` commits   |
+| `package.json`    | Web app packages and commands      |
+| `assets`          | Non-code files, e.g. images, fonts |
+| `public`          | Root files to be served unmodified |
+
+## Notes
+
+Due to [this issue with CRA](https://github.com/facebook/create-react-app/issues/9847) `.tsx` files should have this pragma at the top of the file:
+
+```tsx
+/** @jsxImportSource @emotion/react */
+```
+
+This allows the Emotion `css` attribute to be used correctly, e.g. in:
+
+```tsx
+<Typography variant="h3" css={styles.header}>
+  Fight Club
+</Typography>
+```
+
 # Links
 
 - [Project documents](https://drive.google.com/drive/folders/1ujbsqWG2VutODLRt32spW-fatCEhLKwO?usp=sharing)
