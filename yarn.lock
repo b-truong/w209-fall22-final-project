@@ -9108,6 +9108,11 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
+vega-lite-api@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/vega-lite-api/-/vega-lite-api-5.0.0.tgz#2b4b26cc0e1ed9bd6debb671d962d762408a8d5a"
+  integrity sha512-rjNLkfOuBG1KTpIgQpX81LlGiqEb92lHlGiIuofs/EgntFVxD1REW18YKLpYdb1Mm7166zIOqNMdpchwjhstbQ==
+
 w3c-hr-time@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.2.tgz#0a89cdf5cc15822df9c360543676963e0cc308cd"
