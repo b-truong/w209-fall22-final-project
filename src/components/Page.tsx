@@ -12,10 +12,10 @@ import Navbar from "./Navbar";
 const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
   const styles = getStyles();
   return (
-    <Box css={styles.page}>
+    <>
       <Navbar />
-      {children}
-    </Box>
+      <Box css={styles.page}>{children}</Box>
+    </>
   );
 };
 

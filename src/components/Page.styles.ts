@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 
 const getStyles = () => ({
   page: css`
-    height: 100%;
+    height: 100vh;
   `,
 });
 
