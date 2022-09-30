@@ -15,16 +15,16 @@ const Home = () => {
 
   return (
     <Page>
-      <video autoPlay muted loop css={styles.video}>
-        <source src={video} type="video/mp4" />
-      </video>
-      <Container css={styles.stretch}>
-        <Stack direction="column" justifyContent="center" css={styles.stretch}>
-          <Typography variant="h1" textAlign="center" color="white">
-            WELCOME TO FIGHT CLUB
-          </Typography>
-        </Stack>
-      </Container>
+      <Box css={styles.videoContainer}>
+        <video autoPlay muted loop css={styles.video}>
+          <source src={video} type="video/mp4" />
+        </video>
+      </Box>
+      <Stack direction="column" justifyContent="center" css={styles.stretch}>
+        <Typography variant="h1" textAlign="center" color="white">
+          WELCOME TO FIGHT CLUB
+        </Typography>
+      </Stack>
     </Page>
   );
 };
