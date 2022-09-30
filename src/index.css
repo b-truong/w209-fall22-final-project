@@ -1,3 +1,20 @@
 body {
   margin: 0;
 }
+
+#root {
+  height: 100vh;
+}
+
+@font-face {
+  font-family: "Roboto Flex";
+  src: url("./assets/RobotoFlex-VariableFont_GRAD\,XTRA\,YOPQ\,YTAS\,YTDE\,YTFI\,YTLC\,YTUC\,opsz\,slnt\,wdth\,wght.ttf")
+    format("woff2");
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("./assets/Oswald-VariableFont_wght.ttf") format("woff2");
+  font-display: block;
+}
