@@ -10,14 +10,12 @@ import Navbar from "./Navbar";
  * Page wrapper component to provide headers, footers, etc.
  */
 const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const theme = useTheme();
-  const styles = getStyles(theme);
+  const styles = getStyles();
   return (
-    <Paper elevation={0} square css={styles.paper}>
+    <Box css={styles.page}>
       <Navbar />
-      <Divider css={styles.divider} />
       {children}
-    </Paper>
+    </Box>
   );
 };
 

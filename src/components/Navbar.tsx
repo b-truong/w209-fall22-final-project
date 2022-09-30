@@ -19,7 +19,7 @@ const Navbar = () => {
   const styles = getStyles(theme);
 
   return (
-    <AppBar position="static" enableColorOnDark>
+    <AppBar position="sticky" enableColorOnDark>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <img src={logo} css={styles.logo} alt="Fight Club logo" />

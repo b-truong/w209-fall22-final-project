@@ -9,6 +9,10 @@ import NotFound from "./NotFound";
 const theme: ThemeOptions = createTheme({
   palette: {
     mode: "dark",
+    background: {
+      default: "#303030",
+      paper: "#424242",
+    },
     primary: {
       main: "#c62828",
     },

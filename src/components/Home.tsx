@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import { Container, useTheme } from "@mui/material";
+import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 
 import getStyles from "./Home.styles";
 import Page from "./Page";
+import video from "../assets/boxing.mp4";
 
 /**
  * Home page for the project
@@ -14,19 +15,15 @@ const Home = () => {
 
   return (
     <Page>
-      <Container>
-        <div css={styles.body}>
-          Welcome to Fight Club.
-          <ul>
-            <li>
-              The first rule of Fight Club is: you do not talk about Fight Club.
-            </li>
-            <li>
-              The second rule of Fight Club is: you DO NOT talk about Fight
-              Club!
-            </li>
-          </ul>
-        </div>
+      <video autoPlay muted loop css={styles.video}>
+        <source src={video} type="video/mp4" />
+      </video>
+      <Container css={styles.stretch}>
+        <Stack direction="column" justifyContent="center" css={styles.stretch}>
+          <Typography variant="h1" textAlign="center" color="white">
+            WELCOME TO FIGHT CLUB
+          </Typography>
+        </Stack>
       </Container>
     </Page>
   );

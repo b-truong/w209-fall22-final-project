@@ -85,3 +85,10 @@ This allows the Emotion `css` attribute to be used correctly, e.g. in:
   Fight Club
 </Typography>
 ```
+
+# Credits
+
+Media:
+
+- [Logo](https://icons8.com/icons/set/fight)
+- [Boxing video](https://www.pexels.com/video/two-men-spars-in-a-boxing-match-4761711/)
