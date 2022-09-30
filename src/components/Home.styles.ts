@@ -22,10 +22,7 @@ const getStyles = (theme: Theme) => {
       object-fit: cover;
       filter: blur(10px) grayscale(80%) contrast(120%) brightness(50%);
       animation: ${fadeIn} 4s ease;
-    `,
-    stretch: css`
-      height: 100%;
-    `,
+    `
   };
 };
 

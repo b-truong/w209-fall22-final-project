@@ -1,9 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
 import { ThemeProvider, createTheme, ThemeOptions } from "@mui/material/styles";
+import { Box } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import FighterProfiles from "./FighterProfiles";
 import Home from "./Home";
+import Navbar from "./Navbar";
 import NotFound from "./NotFound";
 
 const theme: ThemeOptions = createTheme({
@@ -59,10 +62,14 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Home />} />
-        </Routes>
+        <Navbar />
+        <Box height="100vh">
+          <Routes>
+            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/fighters" element={<FighterProfiles />} />
+          </Routes>
+        </Box>
       </BrowserRouter>
     </ThemeProvider>
   );

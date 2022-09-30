@@ -10,8 +10,11 @@ const getStyles = (theme: Theme) => {
     `,
     navBox: css`
       color: ${theme.typography.body1.color};
-      margin-left: 32px;
     `,
+    navButton: css`
+      color: white;
+      margin-left: 32px;
+    `
   };
 };
 

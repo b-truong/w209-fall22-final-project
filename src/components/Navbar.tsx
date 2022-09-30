@@ -27,8 +27,11 @@ const Navbar = () => {
             F I G H T &nbsp; C L U B
           </Typography>
           <Box css={styles.navBox}>
-            <Button to="/" color="inherit" component={Link}>
+            <Button to="/" component={Link} css={styles.navButton}>
               Home
+            </Button>
+            <Button to="/fighters" component={Link} css={styles.navButton}>
+              Fighters
             </Button>
           </Box>
         </Toolbar>
