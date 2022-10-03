@@ -1,13 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
 
 import getStyles from "./Home.styles";
 import video from "../assets/boxing.mp4";

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Box, Button, Card, Container, Stack, Typography } from "@mui/material";
+import { Card, Container, Stack, Typography } from "@mui/material";
 
 /**
  * Fighter data profiles page
