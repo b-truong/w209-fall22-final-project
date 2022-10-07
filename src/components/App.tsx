@@ -9,6 +9,7 @@ import Home from "./Home";
 import Navbar from "./Navbar";
 import NotFound from "./NotFound";
 import theme from "./theme";
+import { DataProvider } from "./DataProvider";
 
 /**
  * App component to instantiate global providers and page routes
@@ -16,16 +17,18 @@ import theme from "./theme";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Navbar />
-        <Box height="100vh" paddingTop="64px" boxSizing="border-box">
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/fighters" element={<FighterProfiles />} />
-          </Routes>
-        </Box>
-      </BrowserRouter>
+      <DataProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Box height="100vh" paddingTop="64px" boxSizing="border-box">
+            <Routes>
+              <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/fighters" element={<FighterProfiles />} />
+            </Routes>
+          </Box>
+        </BrowserRouter>
+      </DataProvider>
     </ThemeProvider>
   );
 };
