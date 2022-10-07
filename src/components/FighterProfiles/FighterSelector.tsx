@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useData } from "../DataProvider";
+import { useFighterList } from "../DataProvider";
 import getStyles from "./FighterSelector.styles";
 
 interface IFighterSelector {
@@ -25,7 +25,7 @@ interface IFighterSelector {
 const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
   const theme = useTheme();
   const styles = getStyles(theme);
-  const { fightersList } = useData();
+  const fightersList = useFighterList();
 
   // Prepare fighter select box
   const getOptionLabel = useCallback(
@@ -65,7 +65,9 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
   useEffect(() => {
     if (!selected.fighter && fightersList.length) {
       const randomIndex = Math.floor(Math.random() * fightersList.length);
-      setSelected(fightersList[randomIndex]);
+      const fighter = fightersList[randomIndex];
+      setSelected(fighter);
+      onChange?.(fighter);
     }
   }, [selected, fightersList]);
 

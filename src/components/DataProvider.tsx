@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { csv, DSVRowArray } from "d3";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import fightByFighters from "../data/fight_by_fighters.csv";
 import fightersList from "../data/fighters_list.csv";
 
@@ -52,7 +52,18 @@ export const DataProvider: React.FC<React.PropsWithChildren> = ({
 /**
  * Access data loaded by the DataProvider
  */
-export const useData = () => {
-  const context = useContext(DataContext);
-  return context;
+export const useFighterList = () => {
+  const { fightersList } = useContext(DataContext);
+  return fightersList;
+};
+
+/**
+ * Get fight data by fighter name
+ */
+export const useFighterFights = (fighter: string) => {
+  const { fightByFighters } = useContext(DataContext);
+  const filteredFights = useMemo(() => {
+    return fightByFighters.filter((row) => row.fighter === fighter);
+  }, [fightByFighters, fighter]);
+  return filteredFights;
 };
