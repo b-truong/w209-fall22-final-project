@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
 
-import { Card, Container, Stack, Typography } from "@mui/material";
+import { Container, Stack } from "@mui/material";
+import { useData } from "../DataProvider";
+import FighterSelector from "./FighterSelector";
 
 /**
  * Fighter data profiles page
  */
 const FighterProfiles = () => {
+  const data = useData();
   return (
     <Stack direction="column" justifyContent="center" height="100%">
       <Container>
-        <Card>
-          <Typography>Hello world</Typography>
-        </Card>
+        <FighterSelector />
       </Container>
     </Stack>
   );
