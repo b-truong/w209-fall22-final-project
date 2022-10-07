@@ -1,20 +1,29 @@
 /** @jsxImportSource @emotion/react */
 
 import { Container, Stack } from "@mui/material";
-import { useData } from "../DataProvider";
+import { DSVRowString } from "d3";
+import { useState } from "react";
 import FighterSelector from "./FighterSelector";
+import FighterSheet from "./FighterSheet";
 
 /**
  * Fighter data profiles page
  */
 const FighterProfiles = () => {
-  const data = useData();
+  const [selected, setSelected] = useState<DSVRowString>({});
   return (
-    <Stack direction="column" justifyContent="center" height="100%">
-      <Container>
-        <FighterSelector />
-      </Container>
-    </Stack>
+    <Container>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        height="100%"
+        spacing={2}
+        mt={8}
+      >
+        <FighterSelector onChange={setSelected} />
+        <FighterSheet selected={selected} />
+      </Stack>
+    </Container>
   );
 };
 

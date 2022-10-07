@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { csv, DSVRowArray } from "d3";
-import React, { useState, useEffect, useMemo, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import fightByFighters from "../data/fight_by_fighters.csv";
 import fightersList from "../data/fighters_list.csv";
 

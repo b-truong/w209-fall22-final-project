@@ -12,12 +12,19 @@ import {
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useData } from "../DataProvider";
+import getStyles from "./FighterSelector.styles";
+
+interface IFighterSelector {
+  /** Callback to handle selections */
+  onChange?: (selected: DSVRowString) => void;
+}
 
 /**
- * Fighter selector card
+ * Allow users to select a fighter
  */
-const FighterSelector = () => {
+const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
   const theme = useTheme();
+  const styles = getStyles(theme);
   const { fightersList } = useData();
 
   // Prepare fighter select box
@@ -44,13 +51,14 @@ const FighterSelector = () => {
 
   // Handle option selection
   const [selected, setSelected] = useState<DSVRowString>({});
-  const onChange = useCallback(
+  const onSelectFighter = useCallback(
     (event: any, newSelection: DSVRowString | null) => {
       if (newSelection) {
         setSelected(newSelection);
+        onChange?.(newSelection);
       }
     },
-    []
+    [onChange]
   );
 
   // Select a random fighter by default
@@ -59,7 +67,7 @@ const FighterSelector = () => {
       const randomIndex = Math.floor(Math.random() * fightersList.length);
       setSelected(fightersList[randomIndex]);
     }
-  }, [selected, fightersList.length]);
+  }, [selected, fightersList]);
 
   // Filter fighter list by search input
   const noop = useCallback((x: any) => x, []);
@@ -72,20 +80,21 @@ const FighterSelector = () => {
       });
     }
     return fightersList;
-  }, [inputValue]);
+  }, [inputValue, fightersList]);
 
   return (
     <Card>
-      <Box padding={theme.spacing(4)}>
+      <Box css={styles.box}>
         <Autocomplete
           value={selected}
           filterOptions={noop}
           options={filteredList}
-          onChange={onChange}
+          onChange={onSelectFighter}
           onInputChange={onInputChange}
           loading={!selected.fighter}
           getOptionLabel={getOptionLabel}
           renderInput={renderInput}
+          disableClearable
         />
       </Box>
     </Card>
