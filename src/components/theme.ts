@@ -60,12 +60,15 @@ export const getVegaConfig = (theme: Theme): TopLevelSpec["config"] => {
     titleFontSize: 14,
     titleFontWeight: "normal" as FontWeight,
   };
+  const transparentWhite = "rgba(255, 255, 255, 0.3)";
   return {
     axis: {
       ...fontSettings,
-      tickColor: "rgba(255, 255, 255, 0.2)",
-      gridColor: "rgba(255, 255, 255, 0.2)",
-      domainColor: "rgba(255, 255, 255, 0.2)",
+      tickColor: transparentWhite,
+      gridColor: transparentWhite,
+      domainColor: transparentWhite,
+      tickSize: 10,
+      titlePadding: 10,
     },
     legend: {
       ...fontSettings,
