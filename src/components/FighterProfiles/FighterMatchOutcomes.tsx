@@ -1,12 +1,19 @@
 /** @jsxImportSource @emotion/react */
 
-import { Box, Card, Typography, useTheme } from "@mui/material";
+import {
+  Card,
+  CircularProgress,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { DSVRowString } from "d3";
 import { TopLevelSpec } from "vega-lite";
 import embed from "vega-embed";
 import { useFighterFights } from "../DataProvider";
 import { useEffect, useMemo } from "react";
 import { getVegaConfig } from "../theme";
+import getStyles from "./FighterMatchOutcomes.styles";
 
 interface IFighterMatchOutcomes {
   /** The selected fighter */
@@ -20,6 +27,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
   selected,
 }) => {
   const theme = useTheme();
+  const styles = getStyles(theme);
   const fights = useFighterFights(selected?.fighter ?? "");
 
   // VL specification
@@ -93,10 +101,10 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
 
   return (
     <Card>
-      <Typography margin={theme.spacing(2)} mb={0}>
-        Match Outcome History
-      </Typography>
-      <Box id={id} width="100%"></Box>
+      <Typography css={styles.title}>Match Outcome History</Typography>
+      <Stack id={id} css={styles.stack}>
+        <CircularProgress />
+      </Stack>
     </Card>
   );
 };
