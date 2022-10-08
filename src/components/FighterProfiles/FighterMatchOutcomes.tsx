@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Box, Card, Typography, unstable_useId, useTheme } from "@mui/material";
+import { Box, Card, Typography, useTheme } from "@mui/material";
 import { DSVRowString } from "d3";
 import { TopLevelSpec } from "vega-lite";
 import embed from "vega-embed";
@@ -54,7 +54,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
         },
         y: {
           field: "outcome",
-          type: "nominal",
+          type: "quantitative",
           aggregate: "count",
           scale: {
             domainMin: 0,
@@ -75,7 +75,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
         },
       },
     }),
-    [fights]
+    [fights, theme]
   );
 
   // Generate unique ID
@@ -89,7 +89,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
     if (fights.length) {
       embed(`#${id}`, vlSpec, { actions: false, renderer: "svg" });
     }
-  }, [vlSpec]);
+  }, [vlSpec, fights.length, id]);
 
   return (
     <Card>

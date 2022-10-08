@@ -69,7 +69,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
       setSelected(fighter);
       onChange?.(fighter);
     }
-  }, [selected, fightersList]);
+  }, [selected, fightersList, onChange]);
 
   // Filter fighter list by search input
   const noop = useCallback((x: any) => x, []);
@@ -84,6 +84,14 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
     return fightersList;
   }, [inputValue, fightersList]);
 
+  // Check if options match
+  const isOptionEqualToValue = useCallback(
+    (option: DSVRowString, value: DSVRowString) => {
+      return option.fighter === value.fighter;
+    },
+    []
+  );
+
   return (
     <Card>
       <Box css={styles.box}>
@@ -96,6 +104,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
           loading={!selected.fighter}
           getOptionLabel={getOptionLabel}
           renderInput={renderInput}
+          isOptionEqualToValue={isOptionEqualToValue}
           disableClearable
         />
       </Box>
