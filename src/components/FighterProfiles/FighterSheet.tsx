@@ -15,6 +15,27 @@ interface IFighterSheet {
 }
 
 /**
+ * Split PascalCase text into separate words
+ * From: https://stackoverflow.com/a/26188910
+ */
+const camelPad = (str: string) => {
+  return (
+    str
+      // Look for long acronyms and filter out the last letter
+      .replace(/([A-Z]+)([A-Z][a-z])/g, " $1 $2")
+      // Look for lower-case letters followed by upper-case letters
+      .replace(/([a-z\d])([A-Z])/g, "$1 $2")
+      // Look for lower-case letters followed by numbers
+      .replace(/([a-zA-Z])(\d)/g, "$1 $2")
+      .replace(/^./, function (str) {
+        return str.toUpperCase();
+      })
+      // Remove any white space left around the word
+      .trim()
+  );
+};
+
+/**
  * Display general information about a fighter
  */
 const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
@@ -33,7 +54,10 @@ const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
     weight = `${selected.Weight_lbs} lbs.`;
   }
 
-  const weightClass = selected.weight_class || "N/A";
+  let weightClass = "N/A";
+  if (selected.weight_class) {
+    weightClass = camelPad(selected.weight_class);
+  }
 
   const stance = selected.Stance || "N/A";
 
