@@ -22,7 +22,23 @@ const getStyles = (theme: Theme) => {
       object-fit: cover;
       filter: blur(10px) grayscale(80%) contrast(120%) brightness(50%);
       animation: ${fadeIn} 4s ease;
-    `
+    `,
+    splashTextLarge: css`
+      text-align: center;
+      color: white;
+      margin: ${theme.spacing(4)};
+      @media (width < ${theme.breakpoints.values.sm}px) {
+        display: none;
+      }
+    `,
+    splashTextSmall: css`
+      text-align: center;
+      color: white;
+      margin: ${theme.spacing(4)};
+      @media (width >= ${theme.breakpoints.values.sm}px) {
+        display: none;
+      }
+    `,
   };
 };
 

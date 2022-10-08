@@ -21,12 +21,18 @@ const Home = () => {
         </video>
       </Box>
       <Stack direction="column" justifyContent="center" height="100%">
-        <Typography variant="h1" textAlign="center" color="white">
-          WELCOME TO FIGHT CLUB
-        </Typography>
-        <Typography variant="h4" textAlign="center" color="white" mt={4}>
-          Explore 28 years of MMA data
-        </Typography>
+        <Box css={styles.splashTextLarge}>
+          <Typography variant="h1">WELCOME TO FIGHT CLUB</Typography>
+          <Typography variant="h4" mt={4}>
+            Explore 28 years of MMA data
+          </Typography>
+        </Box>
+        <Box css={styles.splashTextSmall}>
+          <Typography variant="h2">WELCOME TO FIGHT CLUB</Typography>
+          <Typography variant="h5" mt={3}>
+            Explore 28 years of MMA data
+          </Typography>
+        </Box>
         <Stack justifyContent="center" alignItems="center" mt={6}>
           <Button variant="contained" component={Link} to="/fighters">
             VIEW FIGHTER PROFILES
