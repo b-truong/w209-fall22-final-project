@@ -104,7 +104,11 @@ const Navbar = () => {
             <Divider />
             {links.map((link) => (
               <ListItem disablePadding key={link.text}>
-                <ListItemButton component={Link} to={link.path}>
+                <ListItemButton
+                  component={Link}
+                  to={link.path}
+                  onClick={toggleDrawer(false)}
+                >
                   <ListItemIcon>{link.icon}</ListItemIcon>
                   <ListItemText primary={link.text} />
                 </ListItemButton>
