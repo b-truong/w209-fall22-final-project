@@ -65,7 +65,7 @@ The repository is organized as follows:
 
 | Directory Entries | Purpose                            |
 | ----------------- | ---------------------------------- |
-| `processing`      | Raw data and preprocessing scripts |
+| `pre-processing`  | Raw data and preprocessing scripts |
 | `public`          | Files to be served unmodified      |
 | `src`             | Source code of the app             |
 | `src/assets`      | Images and other media files       |
