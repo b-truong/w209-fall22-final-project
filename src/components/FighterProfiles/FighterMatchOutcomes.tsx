@@ -60,12 +60,12 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
             domainMin: 0,
           },
           axis: {
-            title: "Fights",
+            title: "Matches",
             tickMinStep: 1,
           },
         },
         color: {
-          title: "Matches",
+          title: "Outcome",
           field: "outcome",
           type: "nominal",
           scale: {
