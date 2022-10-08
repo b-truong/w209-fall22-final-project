@@ -39,7 +39,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
         point: {
           filled: false,
           fill: theme.palette.background.paper,
-          size: 64,
+          size: 128,
         },
       },
       encoding: {
@@ -70,7 +70,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
           type: "nominal",
           scale: {
             domain: ["Lost", "Won"],
-            range: [theme.palette.primary.light, theme.palette.primary.main],
+            range: [theme.palette.secondary.main, theme.palette.primary.main],
           },
         },
       },
