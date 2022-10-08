@@ -3,16 +3,19 @@
 import {
   Autocomplete,
   AutocompleteRenderInputParams,
-  Box,
   Card,
   debounce,
+  IconButton,
+  Stack,
   TextField,
+  Tooltip,
   useTheme,
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFighterList } from "../DataProvider";
+import CasinoIcon from "@mui/icons-material/Casino";
 import getStyles from "./FighterSelector.styles";
 
 interface IFighterSelector {
@@ -66,6 +69,12 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
     [onChange, navigate]
   );
 
+  // Randomly select fighter
+  const onSelectRandomFighter = useCallback(() => {
+    const randomIndex = Math.floor(Math.random() * fightersList.length);
+    onSelectFighter(null, fightersList[randomIndex]);
+  }, [onSelectFighter, fightersList]);
+
   // Select a fighter from URL
   const { fighterName } = useParams();
   useEffect(() => {
@@ -108,7 +117,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
 
   return (
     <Card>
-      <Box css={styles.box}>
+      <Stack css={styles.box}>
         <Autocomplete
           value={selected}
           filterOptions={noop}
@@ -120,8 +129,18 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
           getOptionLabel={getOptionLabel}
           renderInput={renderInput}
           isOptionEqualToValue={isOptionEqualToValue}
+          css={styles.input}
         />
-      </Box>
+        <Tooltip title="Select random fighter" placement="top">
+          <IconButton
+            css={styles.button}
+            onClick={onSelectRandomFighter}
+            disabled={!fightersList.length}
+          >
+            <CasinoIcon />
+          </IconButton>
+        </Tooltip>
+      </Stack>
     </Card>
   );
 };
