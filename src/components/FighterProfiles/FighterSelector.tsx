@@ -3,6 +3,7 @@
 import {
   Autocomplete,
   AutocompleteRenderInputParams,
+  Box,
   Card,
   debounce,
   IconButton,
@@ -132,13 +133,17 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
           css={styles.input}
         />
         <Tooltip title="Select random fighter" placement="top">
-          <IconButton
-            css={styles.button}
-            onClick={onSelectRandomFighter}
-            disabled={!fightersList.length}
-          >
-            <CasinoIcon />
-          </IconButton>
+          {/* Need to use Box here as tooltip 
+              does not work on disabled elements */}
+          <Box>
+            <IconButton
+              css={styles.button}
+              onClick={onSelectRandomFighter}
+              disabled={!fightersList.length}
+            >
+              <CasinoIcon />
+            </IconButton>
+          </Box>
         </Tooltip>
       </Stack>
     </Card>
