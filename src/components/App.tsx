@@ -8,7 +8,7 @@ import FighterProfiles from "./FighterProfiles";
 import Home from "./Home";
 import Navbar from "./Navbar";
 import NotFound from "./NotFound";
-import theme from "./theme";
+import { materialheme } from "./theme";
 import { DataProvider } from "./DataProvider";
 
 /**
@@ -16,7 +16,7 @@ import { DataProvider } from "./DataProvider";
  */
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={materialheme}>
       <DataProvider>
         <BrowserRouter>
           <Navbar />

@@ -1,7 +1,9 @@
-import { createTheme, ThemeOptions } from "@mui/material/styles";
+import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
+import { FontWeight } from "vega";
+import { TopLevelSpec } from "vega-lite";
 
 // Custom Material UI
-const theme: ThemeOptions = createTheme({
+export const materialheme: ThemeOptions = createTheme({
   palette: {
     mode: "dark",
     background: {
@@ -47,4 +49,37 @@ const theme: ThemeOptions = createTheme({
   },
 });
 
-export default theme;
+// Vega configuration
+export const getVegaConfig = (theme: Theme): TopLevelSpec["config"] => {
+  const fontSettings = {
+    labelFont: theme.typography.fontFamily,
+    titleFont: theme.typography.fontFamily,
+    labelColor: "white",
+    titleColor: "white",
+    labelFontSize: 10,
+    titleFontSize: 14,
+    titleFontWeight: "normal" as FontWeight,
+  };
+  return {
+    axis: {
+      ...fontSettings,
+      tickColor: "rgba(255, 255, 255, 0.2)",
+      gridColor: "rgba(255, 255, 255, 0.2)",
+      domainColor: "rgba(255, 255, 255, 0.2)",
+    },
+    legend: {
+      ...fontSettings,
+    },
+    header: {
+      ...fontSettings,
+    },
+    mark: {
+      font: theme.typography.fontFamily,
+      color: theme.palette.primary.main,
+    },
+    title: {
+      font: theme.typography.fontFamily,
+      subtitleFont: theme.typography.fontFamily,
+    },
+  };
+};
