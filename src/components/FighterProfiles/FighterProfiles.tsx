@@ -20,6 +20,7 @@ const FighterProfiles = () => {
         height="100%"
         spacing={2}
         mt={8}
+        pb={2}
       >
         <FighterSelector onChange={setSelected} />
         <FighterSheet selected={selected} />
