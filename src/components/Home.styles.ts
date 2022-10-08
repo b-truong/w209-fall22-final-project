@@ -23,6 +23,11 @@ const getStyles = (theme: Theme) => {
       filter: blur(10px) grayscale(80%) contrast(120%) brightness(50%);
       animation: ${fadeIn} 4s ease;
     `,
+    splashTextStack: css`
+      flex-flow: column nowrap;
+      justify-content: center;
+      height: 100%;
+    `,
     splashTextLarge: css`
       text-align: center;
       color: white;

@@ -64,7 +64,7 @@ const Navbar = () => {
   return (
     <>
       <AppBar position="fixed" enableColorOnDark>
-        <Container maxWidth="xl">
+        <Container>
           <Toolbar disableGutters>
             <IconButton onClick={toggleDrawer(true)} css={styles.drawerButton}>
               <MenuIcon />

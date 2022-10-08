@@ -20,10 +20,12 @@ const empty: DSVRowArray = (() => {
   array.columns = [];
   return array;
 })();
+
 const defaultDataContext: IDataContext = {
   fightByFighters: empty,
   fightersList: empty,
 };
+
 const DataContext = React.createContext(defaultDataContext);
 
 /**

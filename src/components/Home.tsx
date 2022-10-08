@@ -20,7 +20,7 @@ const Home = () => {
           <source src={video} type="video/mp4" />
         </video>
       </Box>
-      <Stack direction="column" justifyContent="center" height="100%">
+      <Stack css={styles.splashTextStack}>
         <Box css={styles.splashTextLarge}>
           <Typography variant="h1">WELCOME TO FIGHT CLUB</Typography>
           <Typography variant="h4" mt={4}>
