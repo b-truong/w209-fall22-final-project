@@ -19,7 +19,8 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build"
+    "build": "craco build",
+    "install:pydeps": "python -m pip install -r ./pre-processing/requirements.txt"
   },
   "eslintConfig": {
     "extends": [

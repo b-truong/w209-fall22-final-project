@@ -29,14 +29,19 @@ More project documentation can be found at [this Google Drive folder](https://dr
 
 Before running the project, install these dependencies:
 
-- Node.js: https://nodejs.org/en/
-- Yarn: https://yarnpkg.com/getting-started/install
+- Node.js (16.17.1+): https://nodejs.org/en/
+- Yarn (1.22.19+): https://yarnpkg.com/getting-started/install
+- Python (3.9+): https://www.python.org/downloads/
 
 # Commands
 
 ### `yarn install`
 
-- Install the project packages
+- Install the web app project packages
+
+### `yarn install:pydeps`
+
+- Install the Python pre-processing packages
 
 ### `yarn start`
 
@@ -59,6 +64,8 @@ The project web app is built with:
   - Material UI: https://mui.com/
   - Emotion: https://emotion.sh/
 
+The data pre-processing is done in [Python](https://www.python.org/) with a [Jupyter](https://jupyter.org/) notebook.
+
 ## File structure
 
 The repository is organized as follows:
@@ -69,7 +76,7 @@ The repository is organized as follows:
 | `public`          | Files to be served unmodified      |
 | `src`             | Source code of the app             |
 | `src/assets`      | Images and other media files       |
-| `src/data`        | Processed files                    |
+| `src/data`        | Processed data files               |
 | `src/components`  | Components used by the app         |
 
 ## Notes
