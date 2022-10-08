@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { DSVRowString } from "d3";
+import { useMemo } from "react";
 
 interface IFighterSheet {
   selected: DSVRowString;
@@ -39,54 +40,53 @@ const camelPad = (str: string) => {
  * Display general information about a fighter
  */
 const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
-  const placeholder = "--";
-  const age = Math.round(Number(selected.age)) || placeholder;
+  const rows = useMemo(() => {
+    // Set up values
+    const placeholder = "--";
+    const age = Math.round(Number(selected.age)) || placeholder;
 
-  let height = placeholder;
-  if (selected.Height_cms) {
-    const heightInches = Number(selected.Height_cms) / 2.54;
-    const heightFeet = Math.floor(heightInches / 12);
-    const heightInchesRemainder = heightInches % 12;
-    height = `${heightFeet}' ${heightInchesRemainder}"`;
-  }
+    let height = placeholder;
+    if (selected.Height_cms) {
+      const heightInches = Number(selected.Height_cms) / 2.54;
+      const heightFeet = Math.floor(heightInches / 12);
+      const heightInchesRemainder = heightInches % 12;
+      height = `${heightFeet}' ${heightInchesRemainder}"`;
+    }
 
-  let weight = placeholder;
-  if (selected.Weight_lbs) {
-    weight = `${selected.Weight_lbs} lbs.`;
-  }
+    let weight = placeholder;
+    if (selected.Weight_lbs) {
+      weight = `${selected.Weight_lbs} lbs.`;
+    }
 
-  let weightClass = placeholder;
-  if (selected.weight_class) {
-    weightClass = camelPad(selected.weight_class);
-  }
+    let weightClass = placeholder;
+    if (selected.weight_class) {
+      weightClass = camelPad(selected.weight_class);
+    }
 
-  const stance = selected.Stance || placeholder;
+    const stance = selected.Stance || placeholder;
+
+    // Set up key-value mapping
+    const mapping = [
+      ["Age", age],
+      ["Height", height],
+      ["Weight", weight],
+      ["Weight Class", weightClass],
+      ["Stance", stance],
+    ];
+
+    // Generate table row elements
+    return mapping.map(([key, value]) => (
+      <TableRow key={key}>
+        <TableCell width="50%">{key}</TableCell>
+        <TableCell width="50%">{value}</TableCell>
+      </TableRow>
+    ));
+  }, [selected]);
 
   return (
     <TableContainer component={Paper}>
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell>Age</TableCell>
-            <TableCell>{age}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Height</TableCell>
-            <TableCell>{height}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Weight</TableCell>
-            <TableCell>{weight}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Weight Class</TableCell>
-            <TableCell>{weightClass}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Stance</TableCell>
-            <TableCell>{stance}</TableCell>
-          </TableRow>
-        </TableBody>
+      <Table size="small">
+        <TableBody>{rows}</TableBody>
       </Table>
     </TableContainer>
   );
