@@ -46,6 +46,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
       },
       encoding: {
         x: {
+          title: "Date",
           field: "date",
           type: "temporal",
           timeUnit: "year",
@@ -55,6 +56,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
           },
         },
         y: {
+          title: "Matches",
           field: "outcome",
           type: "quantitative",
           aggregate: "count",
