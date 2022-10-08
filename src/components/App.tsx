@@ -24,6 +24,10 @@ const App = () => {
             <Routes>
               <Route path="*" element={<NotFound />} />
               <Route path="/" element={<Home />} />
+              <Route
+                path="/fighters/:fighterName"
+                element={<FighterProfiles />}
+              />
               <Route path="/fighters" element={<FighterProfiles />} />
             </Routes>
           </Box>

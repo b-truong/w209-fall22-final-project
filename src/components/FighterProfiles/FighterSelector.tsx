@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useFighterList } from "../DataProvider";
 import getStyles from "./FighterSelector.styles";
 
@@ -45,31 +46,39 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
     () =>
       debounce((event: any, newValue: string | null) => {
         setInputValue(newValue ?? "");
-      }, 100),
+      }, 250),
     []
   );
 
   // Handle option selection
+  const navigate = useNavigate();
   const [selected, setSelected] = useState<DSVRowString>({});
   const onSelectFighter = useCallback(
     (event: any, newSelection: DSVRowString | null) => {
-      if (newSelection) {
-        setSelected(newSelection);
-        onChange?.(newSelection);
+      setSelected(newSelection ?? {});
+      onChange?.(newSelection ?? {});
+      if (newSelection?.fighter) {
+        navigate(`/fighters/${newSelection.fighter.replaceAll(" ", "")}`);
+      } else {
+        navigate("/fighters");
       }
     },
-    [onChange]
+    [onChange, navigate]
   );
 
-  // Select a random fighter by default
+  // Select a fighter from URL
+  const { fighterName } = useParams();
   useEffect(() => {
-    if (!selected.fighter && fightersList.length) {
-      const randomIndex = Math.floor(Math.random() * fightersList.length);
-      const fighter = fightersList[randomIndex];
-      setSelected(fighter);
-      onChange?.(fighter);
+    if (fightersList.length && selected.fighter !== fighterName) {
+      const fighter = fightersList.find(
+        (row) => row?.fighter?.replaceAll(" ", "") === fighterName
+      );
+      if (fighter) {
+        setSelected(fighter);
+        onChange?.(fighter);
+      }
     }
-  }, [selected, fightersList, onChange]);
+  }, [selected, fightersList, onChange, fighterName]);
 
   // Filter fighter list by search input
   const noop = useCallback((x: any) => x, []);
@@ -83,6 +92,11 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
     }
     return fightersList;
   }, [inputValue, fightersList]);
+
+  // Reset filter on opening the autocomplete
+  const onOpen = useCallback(() => {
+    setInputValue("");
+  }, []);
 
   // Check if options match
   const isOptionEqualToValue = useCallback(
@@ -101,11 +115,11 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
           options={filteredList}
           onChange={onSelectFighter}
           onInputChange={onInputChange}
-          loading={!selected.fighter}
+          onOpen={onOpen}
+          loading={!fightersList.length}
           getOptionLabel={getOptionLabel}
           renderInput={renderInput}
           isOptionEqualToValue={isOptionEqualToValue}
-          disableClearable
         />
       </Box>
     </Card>

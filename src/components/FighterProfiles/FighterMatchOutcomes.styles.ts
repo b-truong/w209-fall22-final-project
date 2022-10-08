@@ -12,6 +12,9 @@ const getStyles = (theme: Theme) => {
       align-items: center;
       justify-content: center;
     `,
+    empty: css`
+      font-style: italic;
+    `,
   };
 };
 

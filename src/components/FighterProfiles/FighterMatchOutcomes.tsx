@@ -1,12 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import {
-  Card,
-  CircularProgress,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Card, Stack, Typography, useTheme } from "@mui/material";
 import { DSVRowString } from "d3";
 import { TopLevelSpec } from "vega-lite";
 import embed from "vega-embed";
@@ -102,8 +96,8 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
   return (
     <Card>
       <Typography css={styles.title}>Match Outcome History</Typography>
-      <Stack id={id} css={styles.stack}>
-        <CircularProgress />
+      <Stack id={id} css={styles.stack} key={selected.fighter}>
+        <Typography css={styles.empty}>No fighter selected</Typography>
       </Stack>
     </Card>
   );

@@ -65,7 +65,10 @@ export const useFighterList = () => {
 export const useFighterFights = (fighter: string) => {
   const { fightByFighters } = useContext(DataContext);
   const filteredFights = useMemo(() => {
-    return fightByFighters.filter((row) => row.fighter === fighter);
+    if (fighter) {
+      return fightByFighters.filter((row) => row.fighter === fighter);
+    }
+    return [];
   }, [fightByFighters, fighter]);
   return filteredFights;
 };

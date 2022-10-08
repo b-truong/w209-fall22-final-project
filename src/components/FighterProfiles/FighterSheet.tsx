@@ -39,9 +39,10 @@ const camelPad = (str: string) => {
  * Display general information about a fighter
  */
 const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
-  const age = Math.round(Number(selected.age)) || "N/A";
+  const placeholder = "--";
+  const age = Math.round(Number(selected.age)) || placeholder;
 
-  let height = "N/A";
+  let height = placeholder;
   if (selected.Height_cms) {
     const heightInches = Number(selected.Height_cms) / 2.54;
     const heightFeet = Math.floor(heightInches / 12);
@@ -49,17 +50,17 @@ const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
     height = `${heightFeet}' ${heightInchesRemainder}"`;
   }
 
-  let weight = "N/A";
+  let weight = placeholder;
   if (selected.Weight_lbs) {
     weight = `${selected.Weight_lbs} lbs.`;
   }
 
-  let weightClass = "N/A";
+  let weightClass = placeholder;
   if (selected.weight_class) {
     weightClass = camelPad(selected.weight_class);
   }
 
-  const stance = selected.Stance || "N/A";
+  const stance = selected.Stance || placeholder;
 
   return (
     <TableContainer component={Paper}>
