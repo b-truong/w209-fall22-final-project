@@ -110,7 +110,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
         ],
       },
     }),
-    [fights, theme, normalize]
+    [fights, theme, normalize, onlyOne]
   );
 
   return (

@@ -72,7 +72,7 @@ const FighterStrikes: React.FC<IFighterStrikes> = ({ selected, taken }) => {
     }, []);
 
     return [strikes, onlyOne];
-  }, [fighterStrikes]);
+  }, [fighterStrikes, taken]);
 
   // Whether to normalize area chart
   const [normalize, setNormalize] = useState(false);
@@ -162,7 +162,7 @@ const FighterStrikes: React.FC<IFighterStrikes> = ({ selected, taken }) => {
         ],
       },
     }),
-    [strikes, theme, normalize]
+    [strikes, theme, normalize, onlyOne]
   );
 
   return (
