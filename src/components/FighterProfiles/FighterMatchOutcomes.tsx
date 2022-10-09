@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import { useTheme } from "@mui/material";
+import { Stack, Switch, Typography, useTheme } from "@mui/material";
 import { DSVRowString } from "d3";
 import { TopLevelSpec } from "vega-lite";
 import { useFighterFights } from "../DataProvider";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { getVegaConfig } from "../theme";
 import VegaGraphCard from "./VegaGraphCard";
 
@@ -38,6 +38,15 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
     }
     return onlyOne;
   }, [fights]);
+
+  // Whether to normalize area chart
+  const [normalize, setNormalize] = useState(false);
+  const onNormalize = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      setNormalize(checked);
+    },
+    []
+  );
 
   // VL specification
   const vlSpec: TopLevelSpec = useMemo(
@@ -80,8 +89,9 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
           },
           axis: {
             title: "Matches",
-            tickMinStep: 1,
+            tickMinStep: normalize ? 0.1 : 1,
           },
+          stack: normalize ? "normalize" : undefined,
         },
         color: {
           title: "Outcome",
@@ -100,7 +110,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
         ],
       },
     }),
-    [fights, theme]
+    [fights, theme, normalize]
   );
 
   return (
@@ -108,7 +118,12 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
       title="Match Outcome History"
       vlSpec={vlSpec}
       isEmpty={!fights.length}
-    />
+    >
+      <Stack direction="row">
+        <Typography>Normalize:</Typography>
+        <Switch size="small" onChange={onNormalize} />
+      </Stack>
+    </VegaGraphCard>
   );
 };
 
