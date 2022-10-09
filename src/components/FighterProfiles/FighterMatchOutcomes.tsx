@@ -53,7 +53,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
     () => ({
       config: getVegaConfig(theme),
       width: "container",
-      height: 286,
+      height: 250,
       padding: 16,
       autosize: {
         type: "fit",

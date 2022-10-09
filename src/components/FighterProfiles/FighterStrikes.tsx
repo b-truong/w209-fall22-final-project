@@ -12,6 +12,8 @@ import { Stack } from "@mui/system";
 interface IFighterStrikes {
   /** The selected fighter */
   selected: DSVRowString;
+  /** Whether to display strikes taken instead of given */
+  taken?: boolean;
 }
 
 const fighterStrikeColumns = [
@@ -23,10 +25,19 @@ const fighterStrikeColumns = [
   ["head_misses", "Head Misses"],
 ];
 
+const fighterStrikeTakenColumns = [
+  ["opponent_leg", "Leg Hits"],
+  ["opponent_leg_misses", "Leg Misses"],
+  ["opponent_body", "Body Hits"],
+  ["opponent_body_misses", "Body Misses"],
+  ["opponent_head", "Head Hits"],
+  ["opponent_head_misses", "Head Misses"],
+];
+
 /**
  * Display chart with fighter win rate
  */
-const FighterStrikes: React.FC<IFighterStrikes> = ({ selected }) => {
+const FighterStrikes: React.FC<IFighterStrikes> = ({ selected, taken }) => {
   const theme = useTheme();
   let fighterStrikes = useFighterStrikes(selected?.fighter ?? "");
 
@@ -48,7 +59,8 @@ const FighterStrikes: React.FC<IFighterStrikes> = ({ selected }) => {
 
     // Transform strike data
     const strikes = fighterStrikes.reduce((strikes: any[], fight) => {
-      fighterStrikeColumns.forEach(([strikeType, strikeTitle], index) => {
+      const columns = taken ? fighterStrikeTakenColumns : fighterStrikeColumns;
+      columns.forEach(([strikeType, strikeTitle], index) => {
         strikes.push({
           date: fight.date,
           strikeType: strikeTitle,
@@ -76,7 +88,7 @@ const FighterStrikes: React.FC<IFighterStrikes> = ({ selected }) => {
     () => ({
       config: getVegaConfig(theme),
       width: "container",
-      height: 286,
+      height: 250,
       padding: 16,
       autosize: {
         type: "fit",
@@ -155,7 +167,7 @@ const FighterStrikes: React.FC<IFighterStrikes> = ({ selected }) => {
 
   return (
     <VegaGraphCard
-      title="Significant Strikes"
+      title={`Significant Strikes${taken ? " Taken" : ""}`}
       vlSpec={vlSpec}
       isEmpty={!strikes.length}
     >

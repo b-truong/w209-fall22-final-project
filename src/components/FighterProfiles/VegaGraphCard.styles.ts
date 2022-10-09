@@ -11,7 +11,6 @@ const getStyles = (theme: Theme) => {
     `,
     stack: css`
       width: 100%;
-      height: 290px;
       align-items: center;
       justify-content: center;
     `,
