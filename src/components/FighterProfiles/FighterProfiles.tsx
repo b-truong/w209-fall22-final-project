@@ -6,6 +6,7 @@ import { useState } from "react";
 import FighterSelector from "./FighterSelector";
 import FighterSheet from "./FighterSheet";
 import FighterMatchOutcomes from "./FighterMatchOutcomes";
+import FighterStrikes from "./FighterStrikes";
 
 /**
  * Fighter data profiles page
@@ -25,6 +26,7 @@ const FighterProfiles = () => {
         <FighterSelector onChange={setSelected} />
         <FighterSheet selected={selected} />
         <FighterMatchOutcomes selected={selected} />
+        <FighterStrikes selected={selected} />
       </Stack>
     </Container>
   );

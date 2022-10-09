@@ -5,6 +5,9 @@ const getStyles = (theme: Theme) => {
     title: css`
       margin: ${theme.spacing(2)};
       margin-bottom: 0;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      align-items: center;
     `,
     stack: css`
       width: 100%;

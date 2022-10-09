@@ -4,15 +4,18 @@ import { csv, DSVRowArray } from "d3";
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import fightByFighters from "../data/fight_by_fighters.csv";
 import fightersList from "../data/fighters_list.csv";
+import fightStrikes from "../data/fight_str.csv";
 
 const csvLocations = {
   fightByFighters,
   fightersList,
+  fightStrikes,
 };
 
 interface IDataContext {
   fightByFighters: DSVRowArray;
   fightersList: DSVRowArray;
+  fightStrikes: DSVRowArray;
 }
 
 const empty: DSVRowArray = (() => {
@@ -24,6 +27,7 @@ const empty: DSVRowArray = (() => {
 const defaultDataContext: IDataContext = {
   fightByFighters: empty,
   fightersList: empty,
+  fightStrikes: empty,
 };
 
 const DataContext = React.createContext(defaultDataContext);
@@ -52,7 +56,7 @@ export const DataProvider: React.FC<React.PropsWithChildren> = ({
 };
 
 /**
- * Access data loaded by the DataProvider
+ * Get fighter list data
  */
 export const useFighterList = () => {
   const { fightersList } = useContext(DataContext);
@@ -70,5 +74,19 @@ export const useFighterFights = (fighter: string) => {
     }
     return [];
   }, [fightByFighters, fighter]);
+  return filteredFights;
+};
+
+/**
+ * Get fight strike data by fighter name
+ */
+export const useFighterStrikes = (fighter: string) => {
+  const { fightStrikes } = useContext(DataContext);
+  const filteredFights = useMemo(() => {
+    if (fighter) {
+      return fightStrikes.filter((row) => row.fighter === fighter);
+    }
+    return [];
+  }, [fightStrikes, fighter]);
   return filteredFights;
 };

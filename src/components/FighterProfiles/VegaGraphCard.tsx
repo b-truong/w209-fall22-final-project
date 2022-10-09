@@ -6,7 +6,7 @@ import embed from "vega-embed";
 import { useEffect, useMemo } from "react";
 import getStyles from "./VegaGraphCard.styles";
 
-interface IVegaGraphCard {
+interface IVegaGraphCard extends React.PropsWithChildren {
   /** Titla of the visualization */
   title: string;
   /** The Vega-Lite specification */
@@ -22,6 +22,7 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
   title,
   vlSpec,
   isEmpty,
+  children,
 }) => {
   const theme = useTheme();
   const styles = getStyles(theme);
@@ -41,7 +42,10 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
 
   return (
     <Card>
-      <Typography css={styles.title}>{title}</Typography>
+      <Stack css={styles.title}>
+        <Typography>{title}</Typography>
+        {children}
+      </Stack>
       {/* Key based on empty state to regenerate component and display empty state */}
       <Stack id={id} css={styles.stack} key={String(isEmpty)}>
         <Typography css={styles.empty}>No fighter selected</Typography>

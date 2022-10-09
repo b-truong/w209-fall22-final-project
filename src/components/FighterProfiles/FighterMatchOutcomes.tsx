@@ -22,25 +22,42 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
   const theme = useTheme();
   const fights = useFighterFights(selected?.fighter ?? "");
 
+  // Check if there is only one year of data
+  const onlyOne = useMemo(() => {
+    if (!fights.length) {
+      return false;
+    }
+
+    const date = new Date(fights[0].date ?? "");
+    let onlyOne = true;
+    for (const row of fights) {
+      if (new Date(row.date ?? "").getFullYear() !== date.getFullYear()) {
+        onlyOne = false;
+        break;
+      }
+    }
+    return onlyOne;
+  }, [fights]);
+
   // VL specification
   const vlSpec: TopLevelSpec = useMemo(
     () => ({
       config: getVegaConfig(theme),
       width: "container",
-      background: "transparent",
+      height: 286,
       padding: 16,
+      autosize: {
+        type: "fit",
+        contains: "padding",
+      },
+      background: "transparent",
       data: {
         values: fights,
       },
       mark: {
-        type: "area",
+        type: onlyOne ? "bar" : "area",
         color: theme.palette.primary.main,
         line: true,
-        point: {
-          filled: false,
-          fill: theme.palette.background.paper,
-          size: 128,
-        },
       },
       encoding: {
         x: {
@@ -75,6 +92,12 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
             range: [theme.palette.secondary.main, theme.palette.primary.main],
           },
         },
+        opacity: { value: 0.7 },
+        tooltip: [
+          { field: "outcome", title: "Outcome" },
+          { field: "outcome", title: "Matches", aggregate: "count" },
+          { field: "date", title: "Year", timeUnit: "year" },
+        ],
       },
     }),
     [fights, theme]
