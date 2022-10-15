@@ -10,16 +10,24 @@ import Navbar from "./Navbar";
 import NotFound from "./NotFound";
 import { materialheme } from "./theme";
 import { DataProvider } from "./DataProvider";
+import Observer from "./Observer";
+import { ServiceWorkerEvents } from "../service-register";
+import UpdateToasts from "./UpdateToasts";
+
+interface IApp {
+  swEventObserver: Observer<ServiceWorkerEvents>;
+}
 
 /**
  * App component to instantiate global providers and page routes
  */
-const App = () => {
+const App: React.FC<IApp> = ({ swEventObserver }) => {
   return (
     <ThemeProvider theme={materialheme}>
       <CssBaseline enableColorScheme />
       <DataProvider>
         <BrowserRouter>
+          <UpdateToasts swEventObserver={swEventObserver} />
           <Navbar />
           <Box height="100vh" paddingTop="64px" boxSizing="border-box">
             <Routes>

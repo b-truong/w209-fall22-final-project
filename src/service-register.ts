@@ -1,6 +1,8 @@
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
+import Observer from "./components/Observer";
+
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
 // will only see deployed updates on subsequent visits to a page, after all the
@@ -20,12 +22,12 @@ const isLocalhost = Boolean(
     )
 );
 
-type Config = {
-  onSuccess?: (registration: ServiceWorkerRegistration) => void;
-  onUpdate?: (registration: ServiceWorkerRegistration) => void;
-};
+export enum ServiceWorkerEvents {
+  Updated,
+  Installed,
+}
 
-export function register(config?: Config) {
+export function register(observer?: Observer<ServiceWorkerEvents>) {
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(
@@ -44,25 +46,28 @@ export function register(config?: Config) {
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
-        checkValidServiceWorker(swUrl, config);
+        checkValidServiceWorker(swUrl, observer);
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
           console.log(
-            "This web app is being served cache-first by a service " +
-              "worker. To learn more, visit https://cra.link/PWA"
+            "This web app is being served by a service worker." +
+              "To learn more, visit https://web.dev/what-are-pwas/"
           );
         });
       } else {
         // Is not localhost. Just register service worker
-        registerValidSW(swUrl, config);
+        registerValidSW(swUrl, observer);
       }
     });
   }
 }
 
-function registerValidSW(swUrl: string, config?: Config) {
+function registerValidSW(
+  swUrl: string,
+  observer?: Observer<ServiceWorkerEvents>
+) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
@@ -78,13 +83,14 @@ function registerValidSW(swUrl: string, config?: Config) {
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
               console.log(
-                "New content is available and will be used when all " +
-                  "tabs for this page are closed. See https://cra.link/PWA."
+                "New content is available and will be used when the page is refreshed."
               );
 
+              registration.waiting?.postMessage({ type: "SKIP_WAITING" });
+
               // Execute callback
-              if (config && config.onUpdate) {
-                config.onUpdate(registration);
+              if (observer) {
+                observer.publish(ServiceWorkerEvents.Updated);
               }
             } else {
               // At this point, everything has been precached.
@@ -93,8 +99,8 @@ function registerValidSW(swUrl: string, config?: Config) {
               console.log("Content is cached for offline use.");
 
               // Execute callback
-              if (config && config.onSuccess) {
-                config.onSuccess(registration);
+              if (observer) {
+                observer.publish(ServiceWorkerEvents.Installed);
               }
             }
           }
@@ -106,7 +112,10 @@ function registerValidSW(swUrl: string, config?: Config) {
     });
 }
 
-function checkValidServiceWorker(swUrl: string, config?: Config) {
+function checkValidServiceWorker(
+  swUrl: string,
+  observer?: Observer<ServiceWorkerEvents>
+) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
     headers: { "Service-Worker": "script" },
@@ -126,7 +135,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
         });
       } else {
         // Service worker found. Proceed as normal.
-        registerValidSW(swUrl, config);
+        registerValidSW(swUrl, observer);
       }
     })
     .catch(() => {

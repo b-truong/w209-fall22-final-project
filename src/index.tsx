@@ -4,7 +4,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./components/App";
-import { register } from "./service-register";
+import { register, ServiceWorkerEvents } from "./service-register";
+import Observer from "./components/Observer";
+
+// Register the service worker
+const swEventObserver = new Observer<ServiceWorkerEvents>();
+register(swEventObserver);
 
 // Bootstrap the React app
 const root = ReactDOM.createRoot(
@@ -13,9 +18,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+    <App swEventObserver={swEventObserver} />
   </React.StrictMode>
 );
-
-// Register the service worker
-register();
