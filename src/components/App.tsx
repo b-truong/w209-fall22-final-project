@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { ThemeProvider } from "@mui/material/styles";
-import { Box } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import FighterProfiles from "./FighterProfiles";
@@ -17,6 +17,7 @@ import { DataProvider } from "./DataProvider";
 const App = () => {
   return (
     <ThemeProvider theme={materialheme}>
+      <CssBaseline enableColorScheme />
       <DataProvider>
         <BrowserRouter>
           <Navbar />
