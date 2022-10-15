@@ -5,12 +5,13 @@ import { TopLevelSpec } from "vega-lite";
 import embed from "vega-embed";
 import { useEffect, useMemo } from "react";
 import getStyles from "./VegaGraphCard.styles";
+import { LayoutSizeMixins } from "vega-lite/build/src/spec";
 
 interface IVegaGraphCard extends React.PropsWithChildren {
   /** Titla of the visualization */
   title: string;
   /** The Vega-Lite specification */
-  vlSpec: TopLevelSpec;
+  vlSpec: TopLevelSpec & LayoutSizeMixins;
   /** If the data is empty */
   isEmpty?: boolean;
 }
@@ -25,7 +26,7 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
   children,
 }) => {
   const theme = useTheme();
-  const styles = getStyles(theme);
+  const styles = getStyles(theme, Number(vlSpec.height));
 
   // Generate unique ID
   const id = useMemo(

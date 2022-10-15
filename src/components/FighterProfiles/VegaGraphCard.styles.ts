@@ -1,6 +1,6 @@
 import { css, Theme } from "@mui/material";
 
-const getStyles = (theme: Theme) => {
+const getStyles = (theme: Theme, minHeight: number = 250) => {
   return {
     title: css`
       margin: ${theme.spacing(2)};
@@ -11,7 +11,7 @@ const getStyles = (theme: Theme) => {
     `,
     stack: css`
       width: 100%;
-      height: 254px;
+      min-height: ${minHeight + 4}px;
       align-items: center;
       justify-content: center;
     `,
