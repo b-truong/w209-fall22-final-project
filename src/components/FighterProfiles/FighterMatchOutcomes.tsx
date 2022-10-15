@@ -1,6 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
-import { Stack, Switch, Typography, useTheme } from "@mui/material";
+import {
+  Stack,
+  Switch,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { DSVRowString } from "d3";
 import { TopLevelSpec } from "vega-lite";
 import { useFighterFights } from "../DataProvider";
@@ -21,6 +27,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
 }) => {
   const theme = useTheme();
   const fights = useFighterFights(selected?.fighter ?? "");
+  const smallViewport = useMediaQuery("(max-width: 500px)");
 
   // Check if there is only one year of data
   const onlyOne = useMemo(() => {
@@ -53,12 +60,12 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
     () => ({
       config: getVegaConfig(theme),
       width: "container",
-      height: 250,
+      height: smallViewport ? 300 : 250,
       padding: {
         top: 16,
         bottom: 16,
         left: 16,
-        right: 35,
+        right: smallViewport ? 16 : 35,
       },
       autosize: {
         type: "fit",
@@ -106,6 +113,10 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
             domain: ["Lost", "Won"],
             range: [theme.palette.secondary.main, theme.palette.primary.main],
           },
+          legend: {
+            orient: smallViewport ? "bottom" : "right",
+            direction: "vertical",
+          },
         },
         opacity: { value: 0.7 },
         tooltip: [
@@ -115,7 +126,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
         ],
       },
     }),
-    [fights, theme, normalize, onlyOne]
+    [fights, theme, normalize, onlyOne, smallViewport]
   );
 
   return (

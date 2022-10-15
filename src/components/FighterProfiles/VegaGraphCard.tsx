@@ -48,7 +48,7 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
         {children}
       </Stack>
       {/* Key based on empty state to regenerate component and display empty state */}
-      <Stack id={id} css={styles.stack} key={String(isEmpty)}>
+      <Stack id={id} css={styles.stack} key={JSON.stringify(vlSpec)}>
         <Typography css={styles.empty}>No fighter selected</Typography>
       </Stack>
     </Card>

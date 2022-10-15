@@ -1,13 +1,18 @@
 /** @jsxImportSource @emotion/react */
 
-import { Switch, Typography, useTheme } from "@mui/material";
+import {
+  Stack,
+  Switch,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { DSVRowString } from "d3";
 import { TopLevelSpec } from "vega-lite";
 import { useFighterStrikes } from "../DataProvider";
 import { useCallback, useMemo, useState } from "react";
 import { getVegaConfig } from "../theme";
 import VegaGraphCard from "./VegaGraphCard";
-import { Stack } from "@mui/system";
 
 interface IFighterStrikes {
   /** The selected fighter */
@@ -40,6 +45,7 @@ const fighterStrikeTakenColumns = [
 const FighterStrikes: React.FC<IFighterStrikes> = ({ selected, taken }) => {
   const theme = useTheme();
   let fighterStrikes = useFighterStrikes(selected?.fighter ?? "");
+  const smallViewport = useMediaQuery("(max-width: 500px)");
 
   // Transform strike data for stacked area chart
   const [strikes, onlyOne] = useMemo(() => {
@@ -88,7 +94,7 @@ const FighterStrikes: React.FC<IFighterStrikes> = ({ selected, taken }) => {
     () => ({
       config: getVegaConfig(theme),
       width: "container",
-      height: 250,
+      height: smallViewport ? 364 : 250,
       padding: 16,
       autosize: {
         type: "fit",
@@ -152,6 +158,10 @@ const FighterStrikes: React.FC<IFighterStrikes> = ({ selected, taken }) => {
               theme.palette.success.dark,
             ],
           },
+          legend: {
+            orient: smallViewport ? "bottom" : "right",
+            direction: "vertical",
+          },
         },
         order: { field: "order" },
         opacity: { value: 0.7 },
@@ -162,7 +172,7 @@ const FighterStrikes: React.FC<IFighterStrikes> = ({ selected, taken }) => {
         ],
       },
     }),
-    [strikes, theme, normalize, onlyOne]
+    [strikes, theme, normalize, onlyOne, smallViewport]
   );
 
   return (

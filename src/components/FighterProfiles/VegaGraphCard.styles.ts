@@ -11,7 +11,7 @@ const getStyles = (theme: Theme, minHeight: number = 250) => {
     `,
     stack: css`
       width: 100%;
-      min-height: ${minHeight + 4}px;
+      min-height: ${minHeight + 7}px;
       align-items: center;
       justify-content: center;
     `,
