@@ -120,7 +120,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
 
   return (
     <VegaGraphCard
-      title="Match Outcome History"
+      title="Match Outcomes"
       vlSpec={vlSpec}
       isEmpty={!fights.length}
     >
