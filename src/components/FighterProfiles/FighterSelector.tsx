@@ -62,9 +62,11 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
       setSelected(newSelection ?? {});
       onChange?.(newSelection ?? {});
       if (newSelection?.fighter) {
-        navigate(`/fighters/${newSelection.fighter.replaceAll(" ", "")}`);
+        navigate(
+          `/fightclub/fighters/${newSelection.fighter.replaceAll(" ", "")}`
+        );
       } else {
-        navigate("/fighters");
+        navigate("/fightclub/fighters");
       }
     },
     [onChange, navigate]
