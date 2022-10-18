@@ -51,12 +51,12 @@ const Navbar = () => {
       {
         icon: <HomeIcon />,
         text: "Home",
-        path: "/",
+        path: "/fightclub/",
       },
       {
         icon: <SportsMmaIcon />,
         text: "Fighters",
-        path: "/fighters",
+        path: "/fightclub/fighters",
       },
     ];
   }, []);
@@ -69,7 +69,12 @@ const Navbar = () => {
             <IconButton onClick={toggleDrawer(true)} css={styles.drawerButton}>
               <MenuIcon />
             </IconButton>
-            <Button to="/" component={Link} css={styles.title} disableRipple>
+            <Button
+              to="/fightclub"
+              component={Link}
+              css={styles.title}
+              disableRipple
+            >
               <Typography variant="h6" noWrap>
                 <img src={logo} css={styles.logo} alt="Fight Club logo" />F I G
                 H T &nbsp; C L U B

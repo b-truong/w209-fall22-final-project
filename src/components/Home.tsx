@@ -34,7 +34,7 @@ const Home = () => {
           </Typography>
         </Box>
         <Stack justifyContent="center" alignItems="center" mt={6}>
-          <Button variant="contained" component={Link} to="/fighters">
+          <Button variant="contained" component={Link} to="/fightclub/fighters">
             VIEW FIGHTER PROFILES
           </Button>
         </Stack>

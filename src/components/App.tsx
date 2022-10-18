@@ -32,12 +32,12 @@ const App: React.FC<IApp> = ({ swEventObserver }) => {
           <Box height="100vh" paddingTop="64px" boxSizing="border-box">
             <Routes>
               <Route path="*" element={<NotFound />} />
-              <Route path="/" element={<Home />} />
+              <Route path="/fightclub" element={<Home />} />
               <Route
-                path="/fighters/:fighterName"
+                path="/fightclub/fighters/:fighterName"
                 element={<FighterProfiles />}
               />
-              <Route path="/fighters" element={<FighterProfiles />} />
+              <Route path="/fightclub/fighters" element={<FighterProfiles />} />
             </Routes>
           </Box>
         </BrowserRouter>
