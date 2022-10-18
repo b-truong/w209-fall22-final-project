@@ -13,6 +13,8 @@ Authors:
 
 # About
 
+[Live build available here](https://groups.ischool.berkeley.edu/fightclub/fighters).
+
 Final project for the Data Visualization course.
 
 The Ultimate Fighting Championship (UFC) is a mixed martial arts
