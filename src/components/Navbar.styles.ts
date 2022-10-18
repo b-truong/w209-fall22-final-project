@@ -10,7 +10,7 @@ const getStyles = (theme: Theme) => {
     `,
     title: css`
       color: white;
-      @media (width < ${theme.breakpoints.values.sm}px) {
+      @media (max-width: ${theme.breakpoints.values.sm}px) {
         margin-right: 40px;
         flex-grow: 1;
         text-align: center;
@@ -18,7 +18,7 @@ const getStyles = (theme: Theme) => {
     `,
     navBox: css`
       color: ${theme.typography.body1.color};
-      @media (width < ${theme.breakpoints.values.sm}px) {
+      @media (max-width: ${theme.breakpoints.values.sm}px) {
         display: none;
       }
     `,
@@ -27,8 +27,9 @@ const getStyles = (theme: Theme) => {
       margin-left: 32px;
     `,
     drawerButton: css`
-      @media (width >= ${theme.breakpoints.values.sm}px) {
-        display: none;
+      display: none;
+      @media (max-width: ${theme.breakpoints.values.sm}px) {
+        display: initial;
       }
     `,
     drawerBox: css`

@@ -35,16 +35,17 @@ const getStyles = (theme: Theme) => {
       text-align: center;
       color: white;
       margin: ${theme.spacing(4)};
-      @media (width < ${theme.breakpoints.values.sm}px) {
+      @media (max-width: ${theme.breakpoints.values.sm}px) {
         display: none;
       }
     `,
     splashTextSmall: css`
+      display: none;
       text-align: center;
       color: white;
       margin: ${theme.spacing(4)};
-      @media (width >= ${theme.breakpoints.values.sm}px) {
-        display: none;
+      @media (max-width: ${theme.breakpoints.values.sm}px) {
+        display: initial;
       }
     `,
   };
