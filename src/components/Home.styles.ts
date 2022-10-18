@@ -16,6 +16,9 @@ const getStyles = (theme: Theme) => {
       width: 100vw;
       background-color: black;
     `,
+    videoLoading: css`
+      display: none;
+    `,
     video: css`
       height: 100%;
       width: 100%;

@@ -5,6 +5,7 @@ import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
 import getStyles from "./Home.styles";
 import video from "../assets/boxing.mp4";
 import { Link } from "react-router-dom";
+import { useCallback, useState } from "react";
 
 /**
  * Home page for the project
@@ -13,10 +14,21 @@ const Home = () => {
   const theme = useTheme();
   const styles = getStyles(theme);
 
+  const [isVideoLoading, setIsVideoLoading] = useState(true);
+  const onVideoLoad = useCallback(() => {
+    setIsVideoLoading(false);
+  }, []);
+
   return (
     <>
       <Box css={styles.videoContainer}>
-        <video autoPlay muted loop css={styles.video}>
+        <video
+          autoPlay
+          muted
+          loop
+          onLoadedData={onVideoLoad}
+          css={isVideoLoading ? styles.videoLoading : styles.video}
+        >
           <source src={video} type="video/mp4" />
         </video>
       </Box>
