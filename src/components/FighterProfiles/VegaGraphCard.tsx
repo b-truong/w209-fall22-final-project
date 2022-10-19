@@ -3,7 +3,7 @@
 import { Card, Stack, Typography, useTheme } from "@mui/material";
 import { TopLevelSpec } from "vega-lite";
 import embed from "vega-embed";
-import { useEffect, useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import getStyles from "./VegaGraphCard.styles";
 import { LayoutSizeMixins } from "vega-lite/build/src/spec";
 
@@ -35,7 +35,7 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
   );
 
   // Embed VL visualization
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isEmpty) {
       embed(`#${id}`, vlSpec, { actions: false, renderer: "svg" });
     }
