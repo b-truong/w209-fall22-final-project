@@ -1,18 +1,33 @@
 /** @jsxImportSource @emotion/react */
 
-import { Container, Stack } from "@mui/material";
+import { CircularProgress, Container, Stack } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useState } from "react";
 import FighterSelector from "./FighterSelector";
 import FighterSheet from "./FighterSheet";
 import FighterMatchOutcomes from "./FighterMatchOutcomes";
 import FighterStrikes from "./FighterStrikes";
+import { useIsDataLoading } from "../DataProvider";
 
 /**
  * Fighter data profiles page
  */
 const FighterProfiles = () => {
+  const isDataLoading = useIsDataLoading();
   const [selected, setSelected] = useState<DSVRowString>({});
+  if (isDataLoading) {
+    return (
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+      >
+        <CircularProgress />
+      </Stack>
+    );
+  }
+
   return (
     <Container>
       <Stack

@@ -58,6 +58,17 @@ export const DataProvider: React.FC<React.PropsWithChildren> = ({
 /**
  * Get fighter list data
  */
+export const useIsDataLoading = () => {
+  const { fightersList, fightByFighters, fightStrikes } =
+    useContext(DataContext);
+  return (
+    !fightersList.length && !fightByFighters.length && !fightStrikes.length
+  );
+};
+
+/**
+ * Get fighter list data
+ */
 export const useFighterList = () => {
   const { fightersList } = useContext(DataContext);
   return fightersList;
