@@ -92,8 +92,6 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
         if (fighter) {
           setSelected(fighter);
           onChange?.(fighter);
-        } else {
-          navigate("/fightclub/notfound");
         }
       }
     }
