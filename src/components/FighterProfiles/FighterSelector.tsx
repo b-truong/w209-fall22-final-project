@@ -81,16 +81,23 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
   // Select a fighter from URL
   const { fighterName } = useParams();
   useEffect(() => {
-    if (fightersList.length && selected.fighter !== fighterName) {
-      const fighter = fightersList.find(
-        (row) => row?.fighter?.replaceAll(" ", "") === fighterName
-      );
-      if (fighter) {
-        setSelected(fighter);
-        onChange?.(fighter);
+    if (fightersList.length) {
+      if (!fighterName) {
+        onSelectRandomFighter();
+      }
+      if (selected.fighter !== fighterName) {
+        const fighter = fightersList.find(
+          (row) => row?.fighter?.replaceAll(" ", "") === fighterName
+        );
+        if (fighter) {
+          setSelected(fighter);
+          onChange?.(fighter);
+        } else {
+          navigate("/fightclub/notfound");
+        }
       }
     }
-  }, [selected, fightersList, onChange, fighterName]);
+  }, [selected, fightersList, onChange, fighterName, onSelectRandomFighter]);
 
   // Filter fighter list by search input
   const noop = useCallback((x: any) => x, []);
@@ -132,6 +139,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
           getOptionLabel={getOptionLabel}
           renderInput={renderInput}
           isOptionEqualToValue={isOptionEqualToValue}
+          disableClearable
           css={styles.input}
         />
         <Tooltip title="Select random fighter" placement="top">
