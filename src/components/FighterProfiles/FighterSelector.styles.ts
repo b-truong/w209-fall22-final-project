@@ -13,9 +13,6 @@ const getStyles = (theme: Theme) => {
     button: css`
       margin-left: ${theme.spacing(2)};
       transition: transform 0.4s ease-out;
-      &:hover {
-        transform: rotate(-20deg);
-      }
       &:active {
         transition: 0s;
         transform: rotate(360deg);
