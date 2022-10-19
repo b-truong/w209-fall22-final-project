@@ -23,6 +23,7 @@ const Home = () => {
     <>
       <Box css={styles.videoContainer}>
         <video
+          playsInline
           autoPlay
           muted
           loop
