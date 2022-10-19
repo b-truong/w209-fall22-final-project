@@ -3,7 +3,7 @@
 import { Card, Stack, Typography, useTheme } from "@mui/material";
 import { TopLevelSpec } from "vega-lite";
 import embed from "vega-embed";
-import { useLayoutEffect, useMemo } from "react";
+import { useEffect, useLayoutEffect, useMemo } from "react";
 import getStyles from "./VegaGraphCard.styles";
 import { LayoutSizeMixins } from "vega-lite/build/src/spec";
 
@@ -35,10 +35,8 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
   );
 
   // Embed VL visualization
-  useLayoutEffect(() => {
-    if (!isEmpty) {
-      embed(`#${id}`, vlSpec, { actions: false, renderer: "svg" });
-    }
+  useEffect(() => {
+    embed(`#${id}`, vlSpec, { actions: false, renderer: "svg" });
   }, [vlSpec, isEmpty, id]);
 
   return (
@@ -48,9 +46,7 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
         {children}
       </Stack>
       {/* Key based on empty state to regenerate component and display empty state */}
-      <Stack id={id} css={styles.stack} key={JSON.stringify(vlSpec)}>
-        <Typography css={styles.empty}>No fighter selected</Typography>
-      </Stack>
+      <Stack id={id} css={styles.stack} key={JSON.stringify(vlSpec)} />
     </Card>
   );
 };

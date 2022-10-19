@@ -69,6 +69,7 @@ export const getVegaConfig = (theme: Theme): TopLevelSpec["config"] => {
       domainColor: transparentWhite,
       tickSize: 10,
       titlePadding: 10,
+      minExtent: 32,
     },
     legend: {
       ...fontSettings,
