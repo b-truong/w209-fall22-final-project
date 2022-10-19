@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import { Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 /**
  * Page to display if users enter a bad URL
@@ -14,6 +15,11 @@ const NotFound = () => {
       <Typography variant="h4" textAlign="center" color="white" mt={4}>
         PAGE NOT FOUND
       </Typography>
+      <Stack justifyContent="center" alignItems="center" mt={6}>
+        <Button variant="contained" component={Link} to="/fightclub">
+          GO TO HOME
+        </Button>
+      </Stack>
     </Stack>
   );
 };
