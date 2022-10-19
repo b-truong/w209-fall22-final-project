@@ -57,7 +57,7 @@ const UpdateToasts: React.FC<IUpdateToasts> = ({ swEventObserver }) => {
         anchorOrigin={anchor}
         open={isInstalled}
         onClose={resetInstalled}
-        autoHideDuration={6000}
+        autoHideDuration={4000}
       >
         <Paper>
           <Stack direction="row" spacing={2} css={styles.toast}>
