@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Box, Card, useTheme } from "@mui/material";
+import { Card } from "@mui/material";
 import { TableauViz } from "../assets/tableau.embedding.3.latest.min";
 import { useLayoutEffect, useMemo } from "react";
 

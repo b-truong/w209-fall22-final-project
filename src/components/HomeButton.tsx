@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 
 interface IHomeButton {
@@ -16,10 +16,11 @@ interface IHomeButton {
  * Display analysis of match results
  */
 const HomeButton: React.FC<IHomeButton> = ({ icon, text, to }) => {
+  const theme = useTheme();
   return (
     <Button
       variant="contained"
-      css={{ width: "128px", height: "128px" }}
+      css={{ width: "128px", height: "128px", margin: theme.spacing(1) }}
       component={Link}
       to={to}
     >

@@ -57,9 +57,6 @@ const getStyles = (theme: Theme) => {
       @media (max-width: ${theme.breakpoints.values.sm}px) {
         margin-top: 0;
       }
-      & > * {
-        margin: ${theme.spacing(1)};
-      }
     `,
   };
 };
