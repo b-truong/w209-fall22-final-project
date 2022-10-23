@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Box } from "@mui/material";
+import { Box, Card, useTheme } from "@mui/material";
 import { TableauViz } from "../assets/tableau.embedding.3.latest.min";
 import { useLayoutEffect, useMemo } from "react";
 
@@ -37,7 +37,7 @@ const TableauVizBox: React.FC<ITableauVizBox> = ({ url }) => {
     }
   }, [url, id]);
 
-  return <Box id={id} />;
+  return <Card id={id} />;
 };
 
 export default TableauVizBox;
