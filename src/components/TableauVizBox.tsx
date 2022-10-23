@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { Box } from "@mui/material";
-import { TableauViz } from "https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js";
+import { TableauViz } from "../assets/tableau.embedding.3.latest.min";
 import { useLayoutEffect, useMemo } from "react";
 
 interface ITableauVizBox extends React.PropsWithChildren {
