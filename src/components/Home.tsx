@@ -1,11 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 
 import getStyles from "./Home.styles";
 import video from "../assets/boxing.mp4";
-import { Link } from "react-router-dom";
 import { useCallback, useState } from "react";
+import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
+import SportsMmaIcon from "@mui/icons-material/SportsMma";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import HomeButton from "./HomeButton";
 
 /**
  * Home page for the project
@@ -46,10 +50,33 @@ const Home = () => {
             Explore 28 years of MMA data
           </Typography>
         </Box>
-        <Stack justifyContent="center" alignItems="center" mt={6}>
-          <Button variant="contained" component={Link} to="/fightclub/fighters">
-            VIEW FIGHTER PROFILES
-          </Button>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          mt={6}
+          spacing={2}
+        >
+          <HomeButton
+            icon={<SportsMmaIcon fontSize="large" />}
+            text="Fighter profiles"
+            to="/fightclub/fighters"
+          />
+          <HomeButton
+            icon={<SportsKabaddiIcon fontSize="large" />}
+            text="Red vs. Blue fighters"
+            to="/fightclub/corners"
+          />
+          <HomeButton
+            icon={<AccountTreeIcon fontSize="large" />}
+            text="Match Results"
+            to="/fightclub/matches"
+          />
+          <HomeButton
+            icon={<LocationOnIcon fontSize="large" />}
+            text="Match Locations"
+            to="/fightclub/locations"
+          />
         </Stack>
       </Stack>
     </>
