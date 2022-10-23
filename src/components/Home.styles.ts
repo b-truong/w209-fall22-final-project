@@ -48,6 +48,19 @@ const getStyles = (theme: Theme) => {
         display: initial;
       }
     `,
+    buttons: css`
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-top: ${theme.spacing(6)};
+      @media (max-width: ${theme.breakpoints.values.sm}px) {
+        margin-top: 0;
+      }
+      & > * {
+        margin: ${theme.spacing(1)};
+      }
+    `,
   };
 };
 

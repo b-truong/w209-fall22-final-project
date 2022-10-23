@@ -50,13 +50,7 @@ const Home = () => {
             Explore 28 years of MMA data
           </Typography>
         </Box>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          mt={6}
-          spacing={2}
-        >
+        <Stack direction="row" css={styles.buttons}>
           <HomeButton
             icon={<SportsMmaIcon fontSize="large" />}
             text="Fighter profiles"
