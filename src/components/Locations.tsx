@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Stack, Tab, Tabs } from "@mui/material";
+import { Container, Stack, Tab, Tabs } from "@mui/material";
 import { useCallback, useState } from "react";
 import TableauVizBox from "./TableauVizBox";
 
@@ -15,29 +15,34 @@ const Locations = () => {
   );
 
   return (
-    <Stack
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      height="100%"
-      width="100%"
-      spacing={2}
-    >
-      <Tabs value={tab} onChange={onTabChange} aria-label="basic tabs example">
-        <Tab label="Country-wise" />
-        <Tab label="Bubble" />
-        <Tab label="History" />
-      </Tabs>
-      {tab === 0 && (
-        <TableauVizBox url="https://public.tableau.com/views/Hypothesis1_v1/Dashboard1" />
-      )}
-      {tab === 1 && (
-        <TableauVizBox url="https://public.tableau.com/views/Hypothesis1_v2/Dashboard2" />
-      )}
-      {tab === 2 && (
-        <TableauVizBox url="https://public.tableau.com/views/Hypothesis1_v3/Dashboard3" />
-      )}
-    </Stack>
+    <Container maxWidth="md">
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        mt={2}
+        spacing={2}
+      >
+        <Tabs
+          value={tab}
+          onChange={onTabChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="Country-wise" />
+          <Tab label="Bubble" />
+          <Tab label="History" />
+        </Tabs>
+        {tab === 0 && (
+          <TableauVizBox url="https://public.tableau.com/views/Hypothesis1_v1/Dashboard1" />
+        )}
+        {tab === 1 && (
+          <TableauVizBox url="https://public.tableau.com/views/Hypothesis1_v2/Dashboard2" />
+        )}
+        {tab === 2 && (
+          <TableauVizBox url="https://public.tableau.com/views/Hypothesis1_v3/Dashboard3" />
+        )}
+      </Stack>
+    </Container>
   );
 };
 

@@ -27,7 +27,7 @@ const TableauVizBox: React.FC<ITableauVizBox> = ({ url }) => {
 
     viz.src = url;
     viz.toolbar = "hidden";
-    viz.width = "1000px"; // TODO: Make responsive
+    viz.width = "100%"; // TODO: Make responsive
     viz.height = "827px";
 
     const vizElement = document.getElementById(id);
@@ -37,7 +37,7 @@ const TableauVizBox: React.FC<ITableauVizBox> = ({ url }) => {
     }
   }, [url, id]);
 
-  return <Card id={id} />;
+  return <Card id={id} css={{ width: "100%" }} />;
 };
 
 export default TableauVizBox;

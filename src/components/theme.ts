@@ -47,6 +47,15 @@ export const materialheme: ThemeOptions = createTheme({
       fontFamily: "Oswald",
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 1048,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
 });
 
 // Vega configuration
