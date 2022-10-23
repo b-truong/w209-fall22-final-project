@@ -13,6 +13,9 @@ import { DataProvider } from "./DataProvider";
 import Observer from "./Observer";
 import { ServiceWorkerEvents } from "../service-register";
 import UpdateToasts from "./UpdateToasts";
+import RedBlue from "./RedBlue";
+import Matches from "./Matches";
+import Locations from "./Locations";
 
 interface IApp {
   swEventObserver: Observer<ServiceWorkerEvents>;
@@ -37,6 +40,9 @@ const App: React.FC<IApp> = ({ swEventObserver }) => {
                 path="/fightclub/fighters/:fighterName"
                 element={<FighterProfiles />}
               />
+              <Route path="/fightclub/matches" element={<Matches />} />
+              <Route path="/fightclub/locations" element={<Locations />} />
+              <Route path="/fightclub/corners" element={<RedBlue />} />
               <Route path="/fightclub/fighters" element={<FighterProfiles />} />
             </Routes>
           </Box>

@@ -20,7 +20,10 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
+import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
 import SportsMmaIcon from "@mui/icons-material/SportsMma";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/logo.png";
@@ -57,6 +60,21 @@ const Navbar = () => {
         icon: <SportsMmaIcon />,
         text: "Fighters",
         path: "/fightclub/fighters",
+      },
+      {
+        icon: <SportsKabaddiIcon />,
+        text: "Red vs. Blue",
+        path: "/fightclub/corners",
+      },
+      {
+        icon: <AccountTreeIcon />,
+        text: "Match Results",
+        path: "/fightclub/matches",
+      },
+      {
+        icon: <LocationOnIcon />,
+        text: "Match Locations",
+        path: "/fightclub/locations",
       },
     ];
   }, []);

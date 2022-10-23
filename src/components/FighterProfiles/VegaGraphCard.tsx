@@ -3,12 +3,12 @@
 import { Card, Stack, Typography, useTheme } from "@mui/material";
 import { TopLevelSpec } from "vega-lite";
 import embed from "vega-embed";
-import { useEffect, useLayoutEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import getStyles from "./VegaGraphCard.styles";
 import { LayoutSizeMixins } from "vega-lite/build/src/spec";
 
 interface IVegaGraphCard extends React.PropsWithChildren {
-  /** Titla of the visualization */
+  /** Title of the visualization */
   title: string;
   /** The Vega-Lite specification */
   vlSpec: TopLevelSpec & LayoutSizeMixins;
