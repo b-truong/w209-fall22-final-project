@@ -13,7 +13,7 @@ Authors:
 
 # About
 
-[Live build available here](https://groups.ischool.berkeley.edu/fightclub/fighters).
+[Live build available here](https://groups.ischool.berkeley.edu/fightclub/).
 
 Final project for the Data Visualization course.
 
