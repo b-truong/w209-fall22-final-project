@@ -88,7 +88,7 @@ const Navbar = () => {
               <MenuIcon />
             </IconButton>
             <Button
-              to="/fightclub"
+              to="/fightclub/"
               component={Link}
               css={styles.title}
               disableRipple
