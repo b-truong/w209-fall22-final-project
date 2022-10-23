@@ -77,7 +77,7 @@ The repository is organized as follows:
 | `pre-processing`  | Raw data and preprocessing scripts |
 | `public`          | Files to be served unmodified      |
 | `src`             | Source code of the app             |
-| `src/assets`      | Images and other media files       |
+| `src/assets`      | Images and other static files      |
 | `src/data`        | Processed data files               |
 | `src/components`  | Components used by the app         |
 
