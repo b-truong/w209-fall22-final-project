@@ -36,7 +36,7 @@ const UpdateToasts: React.FC<IUpdateToasts> = ({ swEventObserver }) => {
   const handleEvents = useCallback((event: ServiceWorkerEvents) => {
     switch (event) {
       case ServiceWorkerEvents.Installed:
-        setInstalled(true);
+        // setInstalled(true); // TODO: figure out how to cache Tableau visualizations
         break;
       case ServiceWorkerEvents.Updated:
       default:
