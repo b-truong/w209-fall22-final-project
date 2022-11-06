@@ -40,9 +40,9 @@ const camelPad = (str: string) => {
  * Convert centimeteres to feet/inches
  */
 const cmsToImperial = (cms: number) => {
-  const inches = Number(cms) / 2.54;
+  const inches = cms / 2.54;
   const feet = Math.floor(inches / 12);
-  const inchesRemainder = feet % 12;
+  const inchesRemainder = inches % 12;
   return [feet, inchesRemainder];
 };
 
@@ -73,7 +73,6 @@ const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
 
     const stance = selected.Stance || placeholder;
 
-    console.log(selected);
     let reach = placeholder;
     if (selected.Reach_cms) {
       const [feet, inches] = cmsToImperial(Number(selected.Reach_cms));
