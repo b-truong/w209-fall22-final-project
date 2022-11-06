@@ -1,16 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import {
-  Stack,
-  Switch,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { DSVRowString } from "d3";
 import { TopLevelSpec } from "vega-lite";
 import { useFighterStrikes } from "../DataProvider";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { getVegaConfig } from "../theme";
 import VegaGraphCard from "./VegaGraphCard";
 
@@ -81,7 +75,7 @@ const FighterStrikesSummary: React.FC<IFighterStrikes> = ({
     return Object.entries(strikesTally).map(([key, value]) => ({
       strikeType: key,
       count: value,
-      order: columns.findIndex((column) => column[1] == key),
+      order: columns.findIndex((column) => column[1] === key),
       group: key.split(" ")[0],
     }));
   }, [fighterStrikes, taken]);

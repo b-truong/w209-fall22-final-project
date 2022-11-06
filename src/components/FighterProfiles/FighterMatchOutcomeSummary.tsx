@@ -1,16 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import {
-  Stack,
-  Switch,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { DSVRowString } from "d3";
 import { TopLevelSpec } from "vega-lite";
 import { useFighterFights } from "../DataProvider";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { getVegaConfig } from "../theme";
 import VegaGraphCard from "./VegaGraphCard";
 
@@ -106,7 +100,7 @@ const FighterMatchOutcomeSummary: React.FC<IFighterMatchOutcomes> = ({
         ],
       },
     }),
-    [fights, theme, smallViewport]
+    [theme, smallViewport, values]
   );
 
   return (
