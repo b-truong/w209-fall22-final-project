@@ -43,7 +43,7 @@ const cmsToImperial = (cms: number) => {
   const inches = Number(cms) / 2.54;
   const feet = Math.floor(inches / 12);
   const inchesRemainder = feet % 12;
-  return [feet, inches];
+  return [feet, inchesRemainder];
 };
 
 /**
