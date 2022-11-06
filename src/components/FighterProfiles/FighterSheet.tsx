@@ -37,6 +37,16 @@ const camelPad = (str: string) => {
 };
 
 /**
+ * Convert centimeteres to feet/inches
+ */
+const cmsToImperial = (cms: number) => {
+  const inches = Number(cms) / 2.54;
+  const feet = Math.floor(inches / 12);
+  const inchesRemainder = feet % 12;
+  return [feet, inches];
+};
+
+/**
  * Display general information about a fighter
  */
 const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
@@ -47,10 +57,8 @@ const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
 
     let height = placeholder;
     if (selected.Height_cms) {
-      const heightInches = Number(selected.Height_cms) / 2.54;
-      const heightFeet = Math.floor(heightInches / 12);
-      const heightInchesRemainder = heightInches % 12;
-      height = `${heightFeet}' ${heightInchesRemainder}"`;
+      const [feet, inches] = cmsToImperial(Number(selected.Height_cms));
+      height = `${feet}' ${inches}"`;
     }
 
     let weight = placeholder;
@@ -65,12 +73,20 @@ const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
 
     const stance = selected.Stance || placeholder;
 
+    console.log(selected);
+    let reach = placeholder;
+    if (selected.Reach_cms) {
+      const [feet, inches] = cmsToImperial(Number(selected.Reach_cms));
+      reach = `${feet}' ${inches}"`;
+    }
+
     // Set up key-value mapping
     const mapping = [
       ["Age", age],
       ["Height", height],
       ["Weight", weight],
       ["Weight Class", weightClass],
+      ["Reach", reach],
       ["Stance", stance],
     ];
 
