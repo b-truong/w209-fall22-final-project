@@ -54,7 +54,7 @@ Before running the project, install these dependencies:
 ### `yarn build`
 
 - Create a production ready build
-- Build output is located in the `build/` directory
+- Build output is located in the generated `build/` directory
 
 # Developing
 
