@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import { Card } from "@mui/material";
 import { TableauViz } from "../assets/tableau.embedding.3.latest.min";
 import { useLayoutEffect, useMemo } from "react";
 
@@ -27,8 +26,8 @@ const TableauVizBox: React.FC<ITableauVizBox> = ({ url }) => {
 
     viz.src = url;
     viz.toolbar = "hidden";
-    viz.width = "100%"; // TODO: Make responsive
-    viz.height = "827px";
+    viz.width = "100vw";
+    viz.height = "calc(100vh - 64px)";
 
     const vizElement = document.getElementById(id);
     if (vizElement) {
@@ -37,7 +36,7 @@ const TableauVizBox: React.FC<ITableauVizBox> = ({ url }) => {
     }
   }, [url, id]);
 
-  return <Card id={id} css={{ width: "100%" }} />;
+  return <div id={id} css={{ width: "100vw" }} />;
 };
 
 export default TableauVizBox;

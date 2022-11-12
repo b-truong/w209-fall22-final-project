@@ -9,12 +9,7 @@ import TableauVizBox from "./TableauVizBox";
 const Matches = () => {
   return (
     <Container maxWidth="md">
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        mt={2}
-      >
+      <Stack direction="column" justifyContent="center" alignItems="center">
         <TableauVizBox url="https://public.tableau.com/views/Hypothesis2Project/Dashboard3" />
       </Stack>
     </Container>

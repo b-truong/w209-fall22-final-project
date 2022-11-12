@@ -9,12 +9,7 @@ import TableauVizBox from "./TableauVizBox";
 const RedBlue = () => {
   return (
     <Container maxWidth="md">
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        mt={2}
-      >
+      <Stack direction="column" justifyContent="center" alignItems="center">
         <TableauVizBox url="https://public.tableau.com/views/w209_Project_EDA/Dashboard1" />
       </Stack>
     </Container>
