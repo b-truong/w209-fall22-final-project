@@ -16,6 +16,7 @@ import UpdateToasts from "./UpdateToasts";
 import RedBlue from "./RedBlue";
 import Matches from "./Matches";
 import Locations from "./Locations";
+import Prediction from "./Prediction";
 
 interface IApp {
   swEventObserver: Observer<ServiceWorkerEvents>;
@@ -44,6 +45,7 @@ const App: React.FC<IApp> = ({ swEventObserver }) => {
               <Route path="/fightclub/locations" element={<Locations />} />
               <Route path="/fightclub/corners" element={<RedBlue />} />
               <Route path="/fightclub/fighters" element={<FighterProfiles />} />
+              <Route path="/fightclub/predict" element={<Prediction />} />
             </Routes>
           </Box>
         </BrowserRouter>

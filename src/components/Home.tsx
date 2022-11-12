@@ -9,6 +9,7 @@ import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
 import SportsMmaIcon from "@mui/icons-material/SportsMma";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import HomeButton from "./HomeButton";
 
 /**
@@ -70,6 +71,11 @@ const Home = () => {
             icon={<LocationOnIcon fontSize="large" />}
             text="Match Locations"
             to="/fightclub/locations"
+          />
+          <HomeButton
+            icon={<QueryStatsIcon fontSize="large" />}
+            text="Predict Winner"
+            to="/fightclub/predict"
           />
         </Stack>
       </Stack>

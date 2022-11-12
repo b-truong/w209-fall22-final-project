@@ -24,6 +24,7 @@ import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
 import SportsMmaIcon from "@mui/icons-material/SportsMma";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/logo.png";
@@ -75,6 +76,11 @@ const Navbar = () => {
         icon: <LocationOnIcon />,
         text: "Match Locations",
         path: "/fightclub/locations",
+      },
+      {
+        icon: <QueryStatsIcon />,
+        text: "Predict Winner",
+        path: "/fightclub/predict",
       },
     ];
   }, []);
