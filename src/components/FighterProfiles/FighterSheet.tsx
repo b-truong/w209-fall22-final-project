@@ -37,13 +37,13 @@ const camelPad = (str: string) => {
 };
 
 /**
- * Convert centimeteres to feet/inches
+ * Convert centimeteres to feet/inches and total inches
  */
 const cmsToImperial = (cms: number) => {
-  const inches = cms / 2.54;
-  const feet = Math.floor(inches / 12);
-  const inchesRemainder = inches % 12;
-  return [feet, inchesRemainder];
+  const totalInches = cms / 2.54;
+  const feet = Math.floor(totalInches / 12);
+  const inches = totalInches % 12;
+  return { feet, inches, totalInches };
 };
 
 /**
@@ -57,7 +57,7 @@ const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
 
     let height = placeholder;
     if (selected.Height_cms) {
-      const [feet, inches] = cmsToImperial(Number(selected.Height_cms));
+      const { feet, inches } = cmsToImperial(Number(selected.Height_cms));
       height = `${feet}' ${inches}"`;
     }
 
@@ -75,8 +75,8 @@ const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
 
     let reach = placeholder;
     if (selected.Reach_cms) {
-      const [feet, inches] = cmsToImperial(Number(selected.Reach_cms));
-      reach = `${feet}' ${inches}"`;
+      const { totalInches } = cmsToImperial(Number(selected.Reach_cms));
+      reach = `${totalInches}"`;
     }
 
     // Set up key-value mapping
