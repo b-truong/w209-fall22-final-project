@@ -17,7 +17,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useFighterList } from "../DataProvider";
 import CasinoIcon from "@mui/icons-material/Casino";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import CloseIcon from "@mui/icons-material/Close";
 import getStyles from "./FighterSelector.styles";
 
 interface IFighterSelector {
@@ -202,7 +202,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({
                 onClick={onRemove}
                 disabled={!fightersList.length}
               >
-                <RemoveCircleOutlineIcon />
+                <CloseIcon />
               </IconButton>
             </Box>
           </Tooltip>
