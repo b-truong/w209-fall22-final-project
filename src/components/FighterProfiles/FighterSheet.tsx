@@ -7,7 +7,6 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Typography,
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useMemo } from "react";
@@ -43,7 +42,7 @@ const FighterSheet: React.FC<IFighterSheet> = ({ selected }) => {
         <TableCell width="50%">{value}</TableCell>
       </TableRow>
     ));
-  }, [selected]);
+  }, [age, height, weight, weightClass, stance, reach]);
 
   return (
     <TableContainer component={Paper}>

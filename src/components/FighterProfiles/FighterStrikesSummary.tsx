@@ -132,7 +132,7 @@ const FighterStrikesSummary: React.FC<IFighterStrikes> = ({
         ],
       },
     }),
-    [values, theme, smallViewport]
+    [values, theme, smallViewport, maxStrikes]
   );
 
   return (

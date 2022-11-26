@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import {
-  Box,
   Button,
   CircularProgress,
   Container,
@@ -11,7 +10,7 @@ import {
   Tabs,
 } from "@mui/material";
 import { DSVRowString } from "d3";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import FighterSelector from "./FighterSelector";
 import FighterSheet from "./FighterSheet";
 import FighterMatchOutcomes from "./FighterMatchOutcomes";
@@ -43,7 +42,7 @@ const FighterProfiles = () => {
     setComparing(false);
     setSelectedComparison({});
     navigate(location.pathname);
-  }, []);
+  }, [navigate, location]);
 
   const [tab, setTab] = useState("Summary");
   const onChangeTab = useCallback((event: any, newTab: string) => {

@@ -4,7 +4,6 @@ import {
   Autocomplete,
   AutocompleteRenderInputParams,
   Box,
-  Button,
   Card,
   debounce,
   IconButton,
@@ -130,6 +129,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({
       }
     }
   }, [
+    onRemove,
     selected,
     fightersList,
     onChange,
