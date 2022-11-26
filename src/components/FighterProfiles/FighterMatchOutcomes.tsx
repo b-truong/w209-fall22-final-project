@@ -17,6 +17,8 @@ import VegaGraphCard from "./VegaGraphCard";
 interface IFighterMatchOutcomes {
   /** The selected fighter */
   selected: DSVRowString;
+  /** Whether to display the fighter name in the title */
+  displayName?: boolean;
 }
 
 /**
@@ -24,6 +26,7 @@ interface IFighterMatchOutcomes {
  */
 const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
   selected,
+  displayName,
 }) => {
   const theme = useTheme();
   const fights = useFighterFights(selected?.fighter ?? "");
@@ -131,7 +134,7 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
 
   return (
     <VegaGraphCard
-      title="Match Outcomes"
+      title={`${displayName ? selected.fighter + " - " : ""}Match Outcomes`}
       vlSpec={vlSpec}
       isEmpty={!fights.length}
     >

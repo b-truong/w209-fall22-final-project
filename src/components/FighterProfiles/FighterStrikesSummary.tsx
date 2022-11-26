@@ -13,8 +13,11 @@ interface IFighterStrikes {
   selected: DSVRowString;
   /** Whether to display strikes taken instead of given */
   taken?: boolean;
+  /** Whether to display the fighter name in the title */
+  displayName?: boolean;
 }
 
+/** Get totals for different strike groups */
 const getStrikeCounts = (
   strikes: Array<{
     strikeType: string;
@@ -40,6 +43,7 @@ const getStrikeCounts = (
 const FighterStrikesSummary: React.FC<IFighterStrikes> = ({
   selected,
   taken,
+  displayName,
 }) => {
   const theme = useTheme();
   const smallViewport = useMediaQuery("(max-width: 500px)");
@@ -133,7 +137,9 @@ const FighterStrikesSummary: React.FC<IFighterStrikes> = ({
 
   return (
     <VegaGraphCard
-      title={`Significant Strikes${taken ? " Taken" : ""}`}
+      title={`${
+        displayName ? selected.fighter + " - " : ""
+      }Significant Strikes${taken ? " Taken" : ""}`}
       vlSpec={vlSpec}
       isEmpty={!values.length}
     />

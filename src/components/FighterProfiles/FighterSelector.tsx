@@ -103,7 +103,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({
         }
       }
     },
-    [onChange, navigate]
+    [onChange, navigate, secondFighterName, onRemove, location.pathname]
   );
 
   // Randomly select fighter

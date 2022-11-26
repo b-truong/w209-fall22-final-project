@@ -20,6 +20,7 @@ import { useIsDataLoading } from "../DataProvider";
 import FighterStrikesSummary from "./FighterStrikesSummary";
 import FighterMatchOutcomeSummary from "./FighterMatchOutcomeSummary";
 import { useLocation, useNavigate } from "react-router-dom";
+import FighterSheetCompare from "./FighterSheetCompare";
 
 /**
  * Fighter data profiles page
@@ -84,23 +85,68 @@ const FighterProfiles = () => {
             onRemove={onRemoveComparison}
           />
         )}
-        <FighterSheet selected={selected} />
+        {comparing && selectedComparison ? (
+          <FighterSheetCompare
+            selected={selected}
+            secondSelected={selectedComparison}
+          />
+        ) : (
+          <FighterSheet selected={selected} />
+        )}
         <Tabs centered onChange={onChangeTab} value={tab}>
           <Tab value="Summary" label="Summary" />
           <Tab value="History" label="History" />
         </Tabs>
         {tab === "Summary" && (
           <Stack spacing={2}>
-            <FighterMatchOutcomeSummary selected={selected} />
-            <FighterStrikesSummary selected={selected} />
-            <FighterStrikesSummary selected={selected} taken />
+            <FighterMatchOutcomeSummary
+              selected={selected}
+              displayName={comparing}
+            />
+            {comparing && (
+              <FighterMatchOutcomeSummary
+                selected={selectedComparison}
+                displayName
+              />
+            )}
+            <FighterStrikesSummary
+              selected={selected}
+              displayName={comparing}
+            />
+            {comparing && (
+              <FighterStrikesSummary
+                selected={selectedComparison}
+                displayName
+              />
+            )}
+            <FighterStrikesSummary
+              selected={selected}
+              displayName={comparing}
+              taken
+            />
+            {comparing && (
+              <FighterStrikesSummary
+                selected={selectedComparison}
+                displayName
+                taken
+              />
+            )}
           </Stack>
         )}
         {tab === "History" && (
           <Stack spacing={2}>
-            <FighterMatchOutcomes selected={selected} />
-            <FighterStrikes selected={selected} />
-            <FighterStrikes selected={selected} taken />
+            <FighterMatchOutcomes selected={selected} displayName={comparing} />
+            {comparing && (
+              <FighterMatchOutcomes selected={selectedComparison} displayName />
+            )}
+            <FighterStrikes selected={selected} displayName={comparing} />
+            {comparing && (
+              <FighterStrikes selected={selectedComparison} displayName />
+            )}
+            <FighterStrikes selected={selected} displayName={comparing} taken />
+            {comparing && (
+              <FighterStrikes selected={selectedComparison} displayName taken />
+            )}
           </Stack>
         )}
       </Stack>
