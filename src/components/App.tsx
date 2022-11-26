@@ -2,7 +2,7 @@
 
 import { ThemeProvider } from "@mui/material/styles";
 import { Box, CssBaseline } from "@mui/material";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import FighterProfiles from "./FighterProfiles";
 import Home from "./Home";
@@ -36,7 +36,11 @@ const App: React.FC<IApp> = ({ swEventObserver }) => {
           <Box height="100vh" paddingTop="64px" boxSizing="border-box">
             <Routes>
               <Route path="*" element={<NotFound />} />
-              <Route path="/fightclub" element={<Home />} />
+              <Route
+                path="/fightclub/"
+                element={<Navigate to="/fightclub/home" replace />}
+              />
+              <Route path="/fightclub/home" element={<Home />} />
               <Route
                 path="/fightclub/fighters/:fighterName"
                 element={<FighterProfiles />}

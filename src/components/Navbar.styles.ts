@@ -35,6 +35,11 @@ const getStyles = (theme: Theme) => {
     drawerBox: css`
       width: 250px;
     `,
+    disabled: css`
+      opacity: 1 !important;
+      color: white !important;
+      background-color: rgba(255, 255, 255, 0.1);
+    `,
   };
 };
 

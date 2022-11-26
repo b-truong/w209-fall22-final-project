@@ -25,7 +25,7 @@ import SportsMmaIcon from "@mui/icons-material/SportsMma";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import getStyles from "./Navbar.styles";
@@ -50,12 +50,14 @@ const Navbar = () => {
       setIsDrawerOpen(open);
     };
 
+  const location = useLocation();
+
   const links = useMemo(() => {
     return [
       {
         icon: <HomeIcon />,
         text: "Home",
-        path: "/fightclub/",
+        path: "/fightclub/home",
       },
       {
         icon: <SportsMmaIcon />,
@@ -105,16 +107,23 @@ const Navbar = () => {
               </Typography>
             </Button>
             <Box css={styles.navBox}>
-              {links.map((link) => (
-                <Button
-                  key={link.text}
-                  to={link.path}
-                  component={Link}
-                  css={styles.navButton}
-                >
-                  {link.text}
-                </Button>
-              ))}
+              {links.map((link) => {
+                const isDisabled = location.pathname.includes(link.path);
+                return (
+                  <Button
+                    key={link.text}
+                    to={link.path}
+                    component={Link}
+                    css={[
+                      styles.navButton,
+                      isDisabled ? styles.disabled : null,
+                    ]}
+                    disabled={isDisabled}
+                  >
+                    {link.text}
+                  </Button>
+                );
+              })}
             </Box>
           </Toolbar>
         </Container>
@@ -131,18 +140,23 @@ const Navbar = () => {
               </ListItemButton>
             </ListItem>
             <Divider />
-            {links.map((link) => (
-              <ListItem disablePadding key={link.text}>
-                <ListItemButton
-                  component={Link}
-                  to={link.path}
-                  onClick={toggleDrawer(false)}
-                >
-                  <ListItemIcon>{link.icon}</ListItemIcon>
-                  <ListItemText primary={link.text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
+            {links.map((link) => {
+              const isDisabled = location.pathname.includes(link.path);
+              return (
+                <ListItem disablePadding key={link.text}>
+                  <ListItemButton
+                    component={Link}
+                    to={link.path}
+                    onClick={toggleDrawer(false)}
+                    css={isDisabled ? styles.disabled : null}
+                    disabled={isDisabled}
+                  >
+                    <ListItemIcon>{link.icon}</ListItemIcon>
+                    <ListItemText primary={link.text} />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
           </List>
         </Box>
       </Drawer>
