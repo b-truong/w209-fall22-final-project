@@ -10,6 +10,9 @@ const getStyles = (theme: Theme) => {
     input: css`
       flex-grow: 1;
     `,
+    remove: css`
+      margin-left: ${theme.spacing(2)};
+    `,
     button: css`
       margin-left: ${theme.spacing(2)};
       transition: transform 0.4s ease-out;

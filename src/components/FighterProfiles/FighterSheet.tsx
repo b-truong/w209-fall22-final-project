@@ -7,6 +7,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useMemo } from "react";

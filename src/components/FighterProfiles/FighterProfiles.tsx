@@ -1,8 +1,17 @@
 /** @jsxImportSource @emotion/react */
 
-import { CircularProgress, Container, Stack, Tab, Tabs } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  css,
+  Stack,
+  Tab,
+  Tabs,
+} from "@mui/material";
 import { DSVRowString } from "d3";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import FighterSelector from "./FighterSelector";
 import FighterSheet from "./FighterSheet";
 import FighterMatchOutcomes from "./FighterMatchOutcomes";
@@ -10,6 +19,7 @@ import FighterStrikes from "./FighterStrikes";
 import { useIsDataLoading } from "../DataProvider";
 import FighterStrikesSummary from "./FighterStrikesSummary";
 import FighterMatchOutcomeSummary from "./FighterMatchOutcomeSummary";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /**
  * Fighter data profiles page
@@ -17,6 +27,22 @@ import FighterMatchOutcomeSummary from "./FighterMatchOutcomeSummary";
 const FighterProfiles = () => {
   const isDataLoading = useIsDataLoading();
   const [selected, setSelected] = useState<DSVRowString>({});
+  const [selectedComparison, setSelectedComparison] = useState<DSVRowString>(
+    {}
+  );
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [comparing, setComparing] = useState(false);
+  const onAddComparison = useCallback(() => {
+    setComparing(true);
+  }, []);
+  const onRemoveComparison = useCallback(() => {
+    setComparing(false);
+    setSelectedComparison({});
+    navigate(location.pathname);
+  }, []);
 
   const [tab, setTab] = useState("Summary");
   const onChangeTab = useCallback((event: any, newTab: string) => {
@@ -40,6 +66,24 @@ const FighterProfiles = () => {
     <Container>
       <Stack justifyContent="center" height="100%" spacing={2} mt={2} pb={2}>
         <FighterSelector onChange={setSelected} />
+        {!comparing && (
+          <Stack justifyContent="center" alignItems="center">
+            <Button
+              css={css`
+                color: white;
+              `}
+              onClick={onAddComparison}
+            >
+              Add Comparison
+            </Button>
+          </Stack>
+        )}
+        {comparing && (
+          <FighterSelector
+            onChange={setSelectedComparison}
+            onRemove={onRemoveComparison}
+          />
+        )}
         <FighterSheet selected={selected} />
         <Tabs centered onChange={onChangeTab} value={tab}>
           <Tab value="Summary" label="Summary" />

@@ -4,6 +4,7 @@ import {
   Autocomplete,
   AutocompleteRenderInputParams,
   Box,
+  Button,
   Card,
   debounce,
   IconButton,
@@ -14,23 +15,36 @@ import {
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useFighterList } from "../DataProvider";
 import CasinoIcon from "@mui/icons-material/Casino";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import getStyles from "./FighterSelector.styles";
 
 interface IFighterSelector {
   /** Callback to handle selections */
   onChange?: (selected: DSVRowString) => void;
+  /** Callback for removal button; button is hidden if not provided */
+  onRemove?: () => void;
 }
 
 /**
  * Allow users to select a fighter
  */
-const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
+const FighterSelector: React.FC<IFighterSelector> = ({
+  onChange,
+  onRemove,
+}) => {
   const theme = useTheme();
   const styles = getStyles(theme);
   const fightersList = useFighterList();
+
+  const location = useLocation();
+  const { fighterName } = useParams();
+  const secondFighterName = useMemo(
+    () => new URLSearchParams(location.search).get("other"),
+    [location]
+  );
 
   // Prepare fighter select box
   const getOptionLabel = useCallback(
@@ -61,12 +75,32 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
     (event: any, newSelection: DSVRowString | null) => {
       setSelected(newSelection ?? {});
       onChange?.(newSelection ?? {});
-      if (newSelection?.fighter) {
-        navigate(
-          `/fightclub/fighters/${newSelection.fighter.replaceAll(" ", "")}`
-        );
+
+      if (!onRemove) {
+        const secondFighterQuery = secondFighterName
+          ? "?other=" + secondFighterName.replaceAll(" ", "")
+          : "";
+        if (newSelection?.fighter) {
+          navigate(
+            `/fightclub/fighters/${newSelection.fighter.replaceAll(
+              " ",
+              ""
+            )}${secondFighterQuery}`
+          );
+        } else {
+          navigate(`/fightclub/fighters${secondFighterQuery}`);
+        }
       } else {
-        navigate("/fightclub/fighters");
+        if (newSelection?.fighter) {
+          navigate(
+            `${location.pathname}?other=${newSelection.fighter.replaceAll(
+              " ",
+              ""
+            )}`
+          );
+        } else {
+          navigate(location.pathname);
+        }
       }
     },
     [onChange, navigate]
@@ -79,15 +113,15 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
   }, [onSelectFighter, fightersList]);
 
   // Select a fighter from URL
-  const { fighterName } = useParams();
   useEffect(() => {
     if (fightersList.length) {
-      if (!fighterName) {
+      if (!fighterName || (onRemove && !secondFighterName)) {
         onSelectRandomFighter();
       }
-      if (selected.fighter !== fighterName) {
+      const name = onRemove ? secondFighterName : fighterName;
+      if (selected.fighter !== name) {
         const fighter = fightersList.find(
-          (row) => row?.fighter?.replaceAll(" ", "") === fighterName
+          (row) => row?.fighter?.replaceAll(" ", "") === name
         );
         if (fighter) {
           setSelected(fighter);
@@ -95,7 +129,14 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
         }
       }
     }
-  }, [selected, fightersList, onChange, fighterName, onSelectRandomFighter]);
+  }, [
+    selected,
+    fightersList,
+    onChange,
+    fighterName,
+    secondFighterName,
+    onSelectRandomFighter,
+  ]);
 
   // Filter fighter list by search input
   const noop = useCallback((x: any) => x, []);
@@ -153,6 +194,19 @@ const FighterSelector: React.FC<IFighterSelector> = ({ onChange }) => {
             </IconButton>
           </Box>
         </Tooltip>
+        {onRemove && (
+          <Tooltip title="Remove comparison" placement="top">
+            <Box>
+              <IconButton
+                css={styles.button}
+                onClick={onRemove}
+                disabled={!fightersList.length}
+              >
+                <RemoveCircleOutlineIcon />
+              </IconButton>
+            </Box>
+          </Tooltip>
+        )}
       </Stack>
     </Card>
   );
