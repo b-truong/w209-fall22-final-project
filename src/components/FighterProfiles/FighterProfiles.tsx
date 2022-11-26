@@ -10,7 +10,7 @@ import {
   Tabs,
 } from "@mui/material";
 import { DSVRowString } from "d3";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import FighterSelector from "./FighterSelector";
 import FighterSheet from "./FighterSheet";
 import FighterMatchOutcomes from "./FighterMatchOutcomes";
@@ -33,8 +33,12 @@ const FighterProfiles = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const secondFighterName = useMemo(
+    () => new URLSearchParams(location.search).get("other"),
+    [location]
+  );
 
-  const [comparing, setComparing] = useState(false);
+  const [comparing, setComparing] = useState(!!secondFighterName);
   const onAddComparison = useCallback(() => {
     setComparing(true);
   }, []);
