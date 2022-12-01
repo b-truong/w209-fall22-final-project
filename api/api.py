@@ -8,7 +8,7 @@ from flask import Flask, jsonify, request
 
 # Read saved fighter data
 fighter_df = pd.read_csv(
-    "data/latest_fighter_stats.csv.old", index_col="index")
+    "data/fighters_list.csv", index_col="index")
 
 # Open saved model files
 with open("data/model.sav", "rb") as mdl:
@@ -28,14 +28,14 @@ df_weight_classes = {
     "Lightweight": "weight_class_Lightweight",
     "Welterweight": "weight_class_Welterweight",
     "Middleweight": "weight_class_Middleweight",
-    "Light Heavyweight": "weight_class_LightHeavyweight",
+    "Light Heavyweight": "weight_class_Light Heavyweight",
     "Heavyweight": "weight_class_Heavyweight",
-    "Women's Strawweight": "weight_class_Women_Strawweight",
-    "Women's Flyweight": "weight_class_Women_Flyweight",
-    "Women's Bantamweight": "weight_class_Women_Bantamweight",
-    "Women's Featherweight": "weight_class_Women_Featherweight",
-    "Catch Weight": "weight_class_CatchWeight",
-    "Open Weight": "weight_class_OpenWeight",
+    "Women's Strawweight": "weight_class_Women's Strawweight",
+    "Women's Flyweight": "weight_class_Women's Flyweight",
+    "Women's Bantamweight": "weight_class_Women's Bantamweight",
+    "Women's Featherweight": "weight_class_Women's Featherweight",
+    "Catch Weight": "weight_class_Catch Weight",
+    "Open Weight": "weight_class_Open Weight",
 }
 
 
@@ -77,10 +77,6 @@ def run_model(red, blue, weightclass, no_of_rounds, fight_type):
         [list(cols_dict.values())], columns=cols_dict.keys())
     r = df.loc[[red]].add_prefix("R_").reset_index(drop=True)
     b = df.loc[[blue]].add_prefix("B_").reset_index(drop=True)
-    # dropped_col_names = ['B_avg_PASS', 'B_avg_opp_PASS', 'R_avg_PASS', 'R_avg_opp_PASS', 'B_Stance_OpenStance', 'B_Stance_Orthodox', 'B_Stance_Sideways',
-    #                      'B_Stance_Southpaw', 'B_Stance_Switch', 'R_Stance_OpenStance', 'R_Stance_Orthodox', 'R_Stance_Sideways', 'R_Stance_Southpaw', 'R_Stance_Switch']
-    # dropped_cols = pd.DataFrame(
-    #     [[0 for _ in dropped_col_names]], columns=dropped_col_names)
     final = pd.concat([r, b, extra_cols], axis=1)[cols]
     [blue_proba, red_proba] = model.predict_proba(
         np.array(normalize(final, scaler))
@@ -124,15 +120,15 @@ def predict():
     red_proba, blue_proba = run_model(
         red, blue, weightclass, no_of_rounds, fight_type)
 
-    return jsonify(red=red_proba, blue=blue_proba)
+    return jsonify(red=str(red_proba), blue=str(blue_proba))
 
 
-# @app.errorhandler(Exception)
-# def handle_error(e):
-#     '''
-#     Handle any exceptions raised by the API
-#     '''
-#     return jsonify(error=str(e)), 400
+@app.errorhandler(Exception)
+def handle_error(e):
+    '''
+    Handle any exceptions raised by the API
+    '''
+    return jsonify(error=str(e)), 400
 
 
 if __name__ == "__main__":
