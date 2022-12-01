@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import math
 import pickle
 
 import numpy as np
@@ -8,7 +7,7 @@ from flask import Flask, jsonify, request
 
 # Read saved fighter data
 fighter_df = pd.read_csv(
-    "api/data/fighters_list.csv", index_col="index")
+    "api/data/fighters_stats.csv", index_col="index")
 
 # Open saved model files
 with open("api/data/model.sav", "rb") as mdl:
@@ -38,6 +37,9 @@ df_weight_classes = {
     "Open Weight": "weight_class_Open Weight",
 }
 
+# Title bout field mapping
+title_bout = {"Non Title": False, "Title": True}
+
 
 # Normalization function
 def normalize(df: pd.DataFrame, scaler) -> pd.DataFrame:
@@ -63,20 +65,27 @@ def run_model(red, blue, weightclass, no_of_rounds, fight_type):
     # Run model
     df = fighter_df.copy()
 
-    title_bout = {"Non Title": False, "Title": True}
-
+    # Hot-encode weight classes
     cols_dict = {
         df_weight_classes[k]: (1 if weightclass == k else 0)
         for k in df_weight_classes.keys()
     }
+
+    # Set other fields
     cols_dict.update(
-        {"title_bout": title_bout[fight_type],
-            "no_of_rounds": no_of_rounds}
+        {
+            "title_bout": title_bout[fight_type],
+            "no_of_rounds": no_of_rounds
+        }
     )
     extra_cols = pd.DataFrame(
         [list(cols_dict.values())], columns=cols_dict.keys())
+
+    # Read fighter stats
     r = df.loc[[red]].add_prefix("R_").reset_index(drop=True)
     b = df.loc[[blue]].add_prefix("B_").reset_index(drop=True)
+
+    # Combine input values and run model
     final = pd.concat([r, b, extra_cols], axis=1)[cols]
     [blue_proba, red_proba] = model.predict_proba(
         np.array(normalize(final, scaler))

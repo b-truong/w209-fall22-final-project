@@ -81,12 +81,15 @@ The project web app is built with:
 
 The data pre-processing is done in [Python](https://www.python.org/) with a [Jupyter](https://jupyter.org/) notebook.
 
+The prediction API is done in Python with [Flask](https://flask.palletsprojects.com/), based on work from [this project](https://github.com/WarrierRajeev/UFC-Predictions).
+
 ## File structure
 
 The repository is organized as follows:
 
 | Directory Entries | Purpose                            |
 | ----------------- | ---------------------------------- |
+| `api`             | Prediction API Flask server        |
 | `pre-processing`  | Raw data and preprocessing scripts |
 | `public`          | Files to be served unmodified      |
 | `src`             | Source code of the app             |
@@ -116,3 +119,7 @@ Media:
 
 - [Logo](https://icons8.com/icons/set/fight)
 - [Boxing video](https://www.pexels.com/video/two-men-spars-in-a-boxing-match-4761711/)
+
+Prediction Model:
+
+- [UFC Predictions by Rajeev Warrier](https://github.com/WarrierRajeev/UFC-Predictions)
