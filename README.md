@@ -79,13 +79,13 @@ The API supports the following commands:
 
 - Payload:
 
-  ```json
+  ```yaml
   {
-    "red": "Matt Hughes",          // Name of red fighter
-    "blue": "Kenny Robertson",     // Name of blue fighter
-    "weightclass": "Welterweight", // Common weight class of the two fighters
-    "no_of_rounds": 3,             // Number of rounds, either 3 or 5
-    "fight_type": "Non Title"      // Type of fight, either "Title" or "Non Title"
+    "red": "Matt Hughes",          # Name of red fighter
+    "blue": "Kenny Robertson",     # Name of blue fighter
+    "weightclass": "Welterweight", # Common weight class of the two fighters
+    "no_of_rounds": 3,             # Number of rounds, either 3 or 5
+    "fight_type": "Non Title"      # Type of fight, either "Title" or "Non Title"
   }
   ```
 
@@ -93,15 +93,15 @@ The API supports the following commands:
 
   - `200`:
 
-    ```json
+    ```yaml
     {
-      "blue": "0.5842115", // Chance of blue fighter winning
-      "red": "0.41578847"  // Chance of red fighter winning
+      "blue": "0.5842115", # Chance of blue fighter winning
+      "red": "0.41578847"  # Chance of red fighter winning
     }
     ```
 
   - `400`:
-    ```json
+    ```yaml
     {
       "error": "Error description"
     }
