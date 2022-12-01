@@ -69,6 +69,44 @@ Before running the project, install these dependencies:
 - Create a production ready build
 - Build output is located in the generated `build/` directory
 
+# Prediction API
+
+A live build of the prediction API is hosted at http://api.mma.arcane-arts.net/predict
+
+The API supports the following commands:
+
+### `GET /predict`
+
+- Payload:
+
+  ```json
+  {
+    "red": "Matt Hughes",          // Name of red fighter
+    "blue": "Kenny Robertson",     // Name of blue fighter
+    "weightclass": "Welterweight", // Common weight class of the two fighters
+    "no_of_rounds": 3,             // Number of rounds, either 3 or 5
+    "fight_type": "Non Title"      // Type of fight, either "Title" or "Non Title"
+  }
+  ```
+
+- Responses:
+
+  - `200`:
+
+    ```json
+    {
+      "blue": "0.5842115", // Chance of blue fighter winning
+      "red": "0.41578847"  // Chance of red fighter winning
+    }
+    ```
+
+  - `400`:
+    ```json
+    {
+      "error": "Error description"
+    }
+    ```
+
 # Developing
 
 The project web app is built with:
