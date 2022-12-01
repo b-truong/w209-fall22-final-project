@@ -11,7 +11,6 @@ const getStyles = (theme: Theme) => {
     title: css`
       color: white;
       @media (max-width: 949px) {
-        margin-right: 40px;
         flex-grow: 1;
         text-align: center;
       }
@@ -30,6 +29,8 @@ const getStyles = (theme: Theme) => {
       display: none;
       @media (max-width: 949px) {
         display: initial;
+        width: 40px;
+        height: 40px;
       }
     `,
     drawerBox: css`

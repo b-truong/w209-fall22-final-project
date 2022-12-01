@@ -13,7 +13,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
   Toolbar,
+  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -24,6 +26,7 @@ import SportsMmaIcon from "@mui/icons-material/SportsMma";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import { Link, useLocation } from "react-router-dom";
 
 import logo from "../assets/logo.png";
@@ -86,39 +89,54 @@ const Navbar = () => {
       <AppBar position="fixed" enableColorOnDark>
         <Container>
           <Toolbar disableGutters>
-            <IconButton onClick={toggleDrawer(true)} css={styles.drawerButton}>
-              <MenuIcon />
-            </IconButton>
-            <Button
-              to="/fightclub/"
-              component={Link}
-              css={styles.title}
-              disableRipple
-            >
-              <Typography variant="h6" noWrap>
-                <img src={logo} css={styles.logo} alt="Fight Club logo" />F I G
-                H T &nbsp; C L U B
-              </Typography>
-            </Button>
-            <Box css={styles.navBox}>
-              {links.map((link) => {
-                const isDisabled = location.pathname.includes(link.path);
-                return (
-                  <Button
-                    key={link.text}
-                    to={link.path}
-                    component={Link}
-                    css={[
-                      styles.navButton,
-                      isDisabled ? styles.disabled : null,
-                    ]}
-                    disabled={isDisabled}
-                  >
-                    {link.text}
-                  </Button>
-                );
-              })}
-            </Box>
+            <Tooltip title="View navigation options" placement="right">
+              <IconButton
+                onClick={toggleDrawer(true)}
+                css={styles.drawerButton}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Tooltip>
+            <Stack direction="row" alignItems="center" flexGrow={1}>
+              <Button
+                to="/fightclub/"
+                component={Link}
+                css={styles.title}
+                disableRipple
+              >
+                <Typography variant="h6" noWrap>
+                  <img src={logo} css={styles.logo} alt="Fight Club logo" />F I
+                  G H T &nbsp; C L U B
+                </Typography>
+              </Button>
+              <Box css={styles.navBox}>
+                {links.map((link) => {
+                  const isDisabled = location.pathname.includes(link.path);
+                  return (
+                    <Button
+                      key={link.text}
+                      to={link.path}
+                      component={Link}
+                      css={[
+                        styles.navButton,
+                        isDisabled ? styles.disabled : null,
+                      ]}
+                      disabled={isDisabled}
+                    >
+                      {link.text}
+                    </Button>
+                  );
+                })}
+              </Box>
+            </Stack>
+            <Tooltip title="View source code" placement="left">
+              <IconButton
+                href="https://github.com/b-truong/w209-fall22-final-project"
+                target="_blank"
+              >
+                <GitHubIcon />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </Container>
       </AppBar>
