@@ -5,7 +5,6 @@ import { Box, Stack, Typography, useTheme } from "@mui/material";
 import getStyles from "./Home.styles";
 import video from "../assets/boxing.mp4";
 import { useCallback, useState } from "react";
-import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
 import SportsMmaIcon from "@mui/icons-material/SportsMma";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
