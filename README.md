@@ -45,11 +45,20 @@ Before running the project, install these dependencies:
 
 - Install the Python pre-processing packages
 
+### `yarn install:api`
+
+- Install the Python api packages
+
 ### `yarn start`
 
 - Run the project in development mode
 - Access the project at http://localhost:3000/
 - The project will automatically reload whenever changes are made to the files
+
+### `yarn start:api`
+
+- Run the API on a local server
+- Note that the app currently points to the production server
 
 ### `yarn build`
 
