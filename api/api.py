@@ -46,21 +46,6 @@ def normalize(df: pd.DataFrame, scaler) -> pd.DataFrame:
     return df
 
 
-# Get age from given birth date
-def get_age(X):
-
-    median_age = 29
-
-    DOB = pd.to_datetime(X)
-    today = pd.to_datetime("today")
-
-    if pd.isnull(DOB):
-        return median_age
-    else:
-        age = math.floor((today - DOB).days / 365.25)
-        return age
-
-
 # Set up Flask REST API
 app = Flask(__name__)
 
