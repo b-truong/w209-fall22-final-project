@@ -65,6 +65,45 @@ def get_age(X):
 app = Flask(__name__)
 
 
+def run_model(red, blue, weightclass, no_of_rounds, fight_type):
+    '''
+    Run the saved model with the given parameters.
+
+    @param red          : The name of the red fighter
+    @param blue         : The name of the red fighter
+    @param weightclass  : A key from the df_weight_classes map
+    @param no_of_rounds : Either 3 or 5
+    @param fight_type   : Either "Non Title" or "Title"
+    '''
+    # Run model
+    df = fighter_df.copy()
+
+    title_bout = {"Non Title": False, "Title": True}
+
+    cols_dict = {
+        df_weight_classes[k]: (1 if weightclass == k else 0)
+        for k in df_weight_classes.keys()
+    }
+    cols_dict.update(
+        {"title_bout": title_bout[fight_type],
+            "no_of_rounds": no_of_rounds}
+    )
+    extra_cols = pd.DataFrame(
+        [list(cols_dict.values())], columns=cols_dict.keys())
+    r = df.loc[[red]].add_prefix("R_").reset_index(drop=True)
+    b = df.loc[[blue]].add_prefix("B_").reset_index(drop=True)
+    # dropped_col_names = ['B_avg_PASS', 'B_avg_opp_PASS', 'R_avg_PASS', 'R_avg_opp_PASS', 'B_Stance_OpenStance', 'B_Stance_Orthodox', 'B_Stance_Sideways',
+    #                      'B_Stance_Southpaw', 'B_Stance_Switch', 'R_Stance_OpenStance', 'R_Stance_Orthodox', 'R_Stance_Sideways', 'R_Stance_Southpaw', 'R_Stance_Switch']
+    # dropped_cols = pd.DataFrame(
+    #     [[0 for _ in dropped_col_names]], columns=dropped_col_names)
+    final = pd.concat([r, b, extra_cols], axis=1)[cols]
+    [blue_proba, red_proba] = model.predict_proba(
+        np.array(normalize(final, scaler))
+    )[0]
+
+    return blue_proba, red_proba
+
+
 @app.route('/predict', methods=['GET'])
 def predict():
     '''
@@ -97,30 +136,8 @@ def predict():
             f"Invalid fight_type: {no_of_rounds}; must be 'Title' or 'Non Title'")
 
     # Run model
-    df = fighter_df.copy()
-
-    title_bout = {"Non Title": False, "Title": True}
-
-    cols_dict = {
-        df_weight_classes[k]: (1 if weightclass == k else 0)
-        for k in df_weight_classes.keys()
-    }
-    cols_dict.update(
-        {"title_bout": title_bout[fight_type],
-            "no_of_rounds": no_of_rounds}
-    )
-    extra_cols = pd.DataFrame(
-        [list(cols_dict.values())], columns=cols_dict.keys())
-    r = df.loc[[red]].add_prefix("R_").reset_index(drop=True)
-    b = df.loc[[blue]].add_prefix("B_").reset_index(drop=True)
-    # dropped_col_names = ['B_avg_PASS', 'B_avg_opp_PASS', 'R_avg_PASS', 'R_avg_opp_PASS', 'B_Stance_OpenStance', 'B_Stance_Orthodox', 'B_Stance_Sideways',
-    #                      'B_Stance_Southpaw', 'B_Stance_Switch', 'R_Stance_OpenStance', 'R_Stance_Orthodox', 'R_Stance_Sideways', 'R_Stance_Southpaw', 'R_Stance_Switch']
-    # dropped_cols = pd.DataFrame(
-    #     [[0 for _ in dropped_col_names]], columns=dropped_col_names)
-    final = pd.concat([r, b, extra_cols], axis=1)[cols]
-    [blue_proba, red_proba] = model.predict_proba(
-        np.array(normalize(final, scaler))
-    )[0]
+    red_proba, blue_proba = run_model(
+        red, blue, weightclass, no_of_rounds, fight_type)
 
     return jsonify(red=red_proba, blue=blue_proba)
 
