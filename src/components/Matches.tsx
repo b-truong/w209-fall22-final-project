@@ -10,7 +10,7 @@ const Matches = () => {
   return (
     <Container maxWidth="md">
       <Stack direction="column" justifyContent="center" alignItems="center">
-        <TableauVizBox url="https://public.tableau.com/views/Hypothesis2Project/Dashboard3" />
+        <TableauVizBox url="https://public.tableau.com/views/Hypothesis2Project/Dashboard4" />
       </Stack>
     </Container>
   );
