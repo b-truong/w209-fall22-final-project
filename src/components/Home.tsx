@@ -58,11 +58,6 @@ const Home = () => {
             to="/fightclub/fighters"
           />
           <HomeButton
-            icon={<SportsKabaddiIcon fontSize="large" />}
-            text="Red vs. Blue fighters"
-            to="/fightclub/corners"
-          />
-          <HomeButton
             icon={<AccountTreeIcon fontSize="large" />}
             text="Match Results"
             to="/fightclub/matches"
