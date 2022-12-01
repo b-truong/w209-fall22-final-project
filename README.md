@@ -60,6 +60,10 @@ Before running the project, install these dependencies:
 - Run the API on a local server
 - Note that the app currently points to the production server
 
+### `yarn start:api:prod`
+
+- Run the API for production
+
 ### `yarn build`
 
 - Create a production ready build
