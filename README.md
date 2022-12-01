@@ -73,6 +73,8 @@ Before running the project, install these dependencies:
 
 A live build of the prediction API is hosted at http://api.mma.arcane-arts.net/predict
 
+Prediction model based on work from [this project](https://github.com/WarrierRajeev/UFC-Predictions).
+
 The API supports the following commands:
 
 ### `GET /predict`
@@ -119,7 +121,7 @@ The project web app is built with:
 
 The data pre-processing is done in [Python](https://www.python.org/) with a [Jupyter](https://jupyter.org/) notebook.
 
-The prediction API is done in Python with [Flask](https://flask.palletsprojects.com/), based on work from [this project](https://github.com/WarrierRajeev/UFC-Predictions).
+The prediction API is done in Python with [Flask](https://flask.palletsprojects.com/).
 
 ## File structure
 
