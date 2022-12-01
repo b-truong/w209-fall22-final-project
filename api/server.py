@@ -8,16 +8,16 @@ from flask import Flask, jsonify, request
 
 # Read saved fighter data
 fighter_df = pd.read_csv(
-    "data/fighters_list.csv", index_col="index")
+    "api/data/fighters_list.csv", index_col="index")
 
 # Open saved model files
-with open("data/model.sav", "rb") as mdl:
+with open("api/data/model.sav", "rb") as mdl:
     model = pickle.load(mdl)
 
-with open("data/cols.list", "rb") as c:
+with open("api/data/cols.list", "rb") as c:
     cols = pickle.load(c)
 
-with open("data/standard.scaler", "rb") as ss:
+with open("api/data/standard.scaler", "rb") as ss:
     scaler = pickle.load(ss)
 
 # Weight class string mapping

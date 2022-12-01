@@ -19,8 +19,8 @@
   },
   "scripts": {
     "start": "craco start",
-    "start:api": "cd api & python -m flask --app api run",
-    "start:api:prod": "cd api & python -m flask --app api run --host=0.0.0.0",
+    "start:api": "cd api & python -m flask --app api.server run",
+    "start:api:prod": "cd api & python -m flask --app api.server run --host=0.0.0.0",
     "build": "craco build",
     "install:pydeps": "python -m pip install -r ./pre-processing/requirements.txt",
     "install:api": "python -m pip install -r ./api/requirements.txt"
