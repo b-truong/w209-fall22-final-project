@@ -60,7 +60,7 @@ const Prediction = () => {
 
   // Set current fighters and class to URL
   useEffect(() => {
-    if (red?.fighter) {
+    if (red?.fighter && blue?.fighter && selectedWeightClass) {
       const urlSelection = red.fighter.replaceAll(" ", "");
       const secondFighterQuery = blue.fighter
         ? "?other=" + blue.fighter.replaceAll(" ", "")
@@ -68,9 +68,10 @@ const Prediction = () => {
       const classQuery = selectedWeightClass
         ? "&class=" + selectedWeightClass
         : "";
-      navigate(
-        `/fightclub/predict/${urlSelection}${secondFighterQuery}${classQuery}`
-      );
+      const newPath = `/fightclub/predict/${urlSelection}${secondFighterQuery}${classQuery}`;
+      if (location.pathname + location.search !== newPath) {
+        navigate(newPath);
+      }
     }
   }, [red, blue, selectedWeightClass, navigate]);
 

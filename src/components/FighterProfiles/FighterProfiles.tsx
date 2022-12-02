@@ -47,7 +47,10 @@ const FighterProfiles = () => {
       const secondFighterQuery = selectedComparison.fighter
         ? "?other=" + selectedComparison.fighter.replaceAll(" ", "")
         : "";
-      navigate(`/fightclub/fighters/${urlSelection}${secondFighterQuery}`);
+      const newPath = `/fightclub/fighters/${urlSelection}${secondFighterQuery}`;
+      if (location.pathname + location.search !== newPath) {
+        navigate(newPath);
+      }
     }
   }, [selected, selectedComparison, navigate]);
 
