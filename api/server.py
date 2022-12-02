@@ -94,7 +94,7 @@ def run_model(red, blue, weight_class, rounds, bout_type):
     return blue_proba, red_proba
 
 
-@app.route('/predict', methods=['GET'])
+@app.route('/predict', methods=['POST'])
 def predict():
     '''
     Predict probability of a fighter winning
