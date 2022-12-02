@@ -16,7 +16,6 @@ import {
   OutlinedInput,
   Select,
   SelectChangeEvent,
-  Slider,
   Stack,
   TextField,
   Tooltip,
@@ -88,8 +87,8 @@ const FighterSelector: React.FC<IFighterSelector> = ({
     0,
     Infinity,
   ]);
-  const onChangeWeightRange = (event: any, newValue: number | number[]) => {
-    setWeightRange(newValue as [number, number]);
+  const onChangeWeightRange = (newValue: [number, number]) => {
+    setWeightRange(newValue);
     applyFilter();
   };
   const formatWeightLabel = (value: number) => {
@@ -101,8 +100,8 @@ const FighterSelector: React.FC<IFighterSelector> = ({
     0,
     Infinity,
   ]);
-  const onChangeHeightRange = (event: any, newValue: number | number[]) => {
-    setHeightRange(newValue as [number, number]);
+  const onChangeHeightRange = (newValue: [number, number]) => {
+    setHeightRange(newValue);
     applyFilter();
   };
   const formatHeightLabel = (value: number) => {
@@ -115,8 +114,8 @@ const FighterSelector: React.FC<IFighterSelector> = ({
     0,
     Infinity,
   ]);
-  const onChangeAgeRange = (event: any, newValue: number | number[]) => {
-    setAgeRange(newValue as [number, number]);
+  const onChangeAgeRange = (newValue: [number, number]) => {
+    setAgeRange(newValue);
     applyFilter();
   };
 
@@ -238,7 +237,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({
         setChooseRandomeFighter(true);
       }
     }
-  }, [selected, weightClass]);
+  }, [selected, weightClass, fighterName]);
   useEffect(() => {
     if (shouldChooseRandomFighter && !shouldApplyFilter) {
       setChooseRandomeFighter(false);
@@ -351,20 +350,20 @@ const FighterSelector: React.FC<IFighterSelector> = ({
           <RangeSlider
             label="Weight Range"
             valueLabelFormat={formatWeightLabel}
-            onChange={setWeightRange}
+            onChange={onChangeWeightRange}
             value={selectedWeightRange}
             range={ranges.weightRange}
           />
           <RangeSlider
             label="Height Range"
             valueLabelFormat={formatHeightLabel}
-            onChange={setHeightRange}
+            onChange={onChangeHeightRange}
             value={selectedHeightRange}
             range={ranges.heightRange}
           />
           <RangeSlider
             label="Age Range"
-            onChange={setAgeRange}
+            onChange={onChangeAgeRange}
             value={selectedAgeRange}
             range={ranges.ageRange}
           />

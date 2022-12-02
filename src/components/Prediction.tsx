@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import {
-  Box,
   Card,
   CircularProgress,
   Container,
@@ -13,7 +12,6 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { DSVRowString } from "d3";
@@ -36,7 +34,6 @@ const Prediction = () => {
   const styles = getStyles(theme);
 
   const isDataLoading = useIsDataLoading();
-  const smallViewport = useMediaQuery("(max-width: 500px)");
   const {
     ranges: { weightClasses },
   } = useFighterList();

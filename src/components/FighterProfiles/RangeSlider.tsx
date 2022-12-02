@@ -1,28 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import {
-  Autocomplete,
-  AutocompleteRenderInputParams,
-  Box,
-  Button,
-  Card,
-  debounce,
-  FormControl,
-  IconButton,
-  InputLabel,
-  ListItemText,
-  Menu,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  SelectChangeEvent,
-  Slider,
-  Stack,
-  TextField,
-  Tooltip,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Slider, Stack, Typography, useTheme } from "@mui/material";
 import { useCallback } from "react";
 import getStyles from "./RangeSlider.styles";
 
