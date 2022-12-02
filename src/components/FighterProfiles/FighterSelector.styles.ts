@@ -7,19 +7,40 @@ const getStyles = (theme: Theme) => {
       flex-flow: row nowrap;
       align-items: flex-end;
     `,
+    filterBox: css`
+      padding: ${theme.spacing(2)};
+      flex-flow: column wrap;
+      width: 300px;
+      max-width: calc(100vw - ${theme.spacing(4)});
+    `,
+    form: css`
+      width: 100%;
+    `,
     input: css`
       flex-grow: 1;
     `,
-    remove: css`
+    button: css`
       margin-left: ${theme.spacing(2)};
     `,
-    button: css`
+    random: css`
       margin-left: ${theme.spacing(2)};
       transition: transform 0.4s ease-out;
       &:active {
         transition: 0s;
         transform: rotate(360deg);
       }
+    `,
+    sliderBox: css`
+      width: 100%;
+      padding: ${theme.spacing(2)};
+      padding-bottom: 0;
+    `,
+    resetBox: css`
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: ${theme.spacing(2)};
+      padding-right: ${theme.spacing(1)};
     `,
   };
 };

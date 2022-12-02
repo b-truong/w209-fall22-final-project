@@ -67,11 +67,144 @@ export const useIsDataLoading = () => {
 };
 
 /**
+ * Get the minimum and maximum for a numberic item property
+ */
+const getMinMax = (list: Array<any>, key: string) =>
+  list.reduce(
+    ([min, max], item) => {
+      const height = Number(item[key]);
+      if (min > height) {
+        min = height;
+      }
+      if (max < height) {
+        max = height;
+      }
+      return [min, max];
+    },
+    [Infinity, 0]
+  );
+
+/**
+ * Check if value is in a given range
+ * Return true if value is zero to include missing values
+ */
+const getIsInRange = (value: number, [lower, upper]: [number, number]) =>
+  value >= lower && value <= upper;
+
+export interface IFighterListOptions {
+  weightClass?: string;
+  ageRange?: [number, number];
+  heightRange?: [number, number];
+  weightRange?: [number, number];
+}
+
+export interface IUseFighterList {
+  fightersList: DSVRowArray<string>;
+  ranges: {
+    weightClasses: string[];
+    ageRange: [number, number];
+    heightRange: [number, number];
+    weightRange: [number, number];
+  };
+}
+
+/**
+ * Filter data for a given range option
+ */
+const getFilterdRangeList = (
+  list: DSVRowArray<string>,
+  range: [number, number] | undefined,
+  key: string
+) => {
+  if (!range) {
+    return list;
+  }
+  const filteredList = list.filter((fighter) =>
+    getIsInRange(Number(fighter[key]), range)
+  );
+  return Object.assign(filteredList, { columns: list.columns });
+};
+
+/**
  * Get fighter list data
  */
-export const useFighterList = () => {
+export const useFighterList = (
+  options?: IFighterListOptions
+): IUseFighterList => {
   const { fightersList } = useContext(DataContext);
-  return fightersList;
+
+  // Get all weight classes
+  const weightClasses = useMemo(
+    () =>
+      fightersList
+        .reduce((classes: string[], fighter) => {
+          if (fighter.weight_class && !classes.includes(fighter.weight_class)) {
+            classes.push(fighter.weight_class);
+          }
+          return classes;
+        }, [])
+        .sort(),
+    [fightersList]
+  );
+
+  // Constrain to weight class if given
+  const weightFiltered: DSVRowArray<string> = useMemo(() => {
+    if (options?.weightClass) {
+      const list = fightersList.filter(
+        (fighter) => fighter.weight_class === options.weightClass
+      );
+      return Object.assign(list, { columns: fightersList.columns });
+    }
+    return fightersList;
+  }, [options?.weightClass, fightersList]);
+
+  // Get min and max ranges of weight class constrained set
+  const [minAge, maxAge] = useMemo(
+    () => getMinMax(fightersList, "age"),
+    [fightersList]
+  );
+  const [minHeight, maxHeight] = useMemo(
+    () => getMinMax(fightersList, "Height_cms"),
+    [fightersList]
+  );
+  const [minWeight, maxWeight] = useMemo(
+    () => getMinMax(fightersList, "Weight_lbs"),
+    [fightersList]
+  );
+
+  // Filter by weight range if given
+  const weightRangeFiltered: DSVRowArray<string> = useMemo(
+    () =>
+      getFilterdRangeList(weightFiltered, options?.weightRange, "Weight_lbs"),
+    [weightFiltered, options?.weightRange]
+  );
+
+  // Filter by height range if given
+  const heightRangeFiltered: DSVRowArray<string> = useMemo(
+    () =>
+      getFilterdRangeList(
+        weightRangeFiltered,
+        options?.heightRange,
+        "Height_cms"
+      ),
+    [weightRangeFiltered, options?.heightRange]
+  );
+
+  // Filter by weight range if given
+  const ageRangeFiltered: DSVRowArray<string> = useMemo(
+    () => getFilterdRangeList(heightRangeFiltered, options?.ageRange, "age"),
+    [heightRangeFiltered, options?.ageRange]
+  );
+
+  return {
+    fightersList: ageRangeFiltered,
+    ranges: {
+      weightClasses,
+      ageRange: [minAge, maxAge],
+      heightRange: [minHeight, maxHeight],
+      weightRange: [minWeight, maxWeight],
+    },
+  };
 };
 
 /**
