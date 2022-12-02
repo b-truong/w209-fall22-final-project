@@ -283,7 +283,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({
           onInputChange={onInputChange}
           onOpen={onOpen}
           loading={!fightersList.length}
-          loadingText="No fighters"
+          loadingText="No options"
           getOptionLabel={getOptionLabel}
           renderInput={renderInput}
           isOptionEqualToValue={isOptionEqualToValue}
@@ -324,6 +324,8 @@ const FighterSelector: React.FC<IFighterSelector> = ({
         anchorEl={filterElement}
         open={isFilterMenuOpen}
         onClose={closeFilterMenu}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Stack css={styles.filterBox}>
           <FormControl css={styles.form}>
