@@ -13,6 +13,8 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -21,12 +23,20 @@ import { useFighterList, useIsDataLoading } from "./DataProvider";
 import FighterSelector from "./FighterProfiles/FighterSelector";
 import { camelPad } from "./FighterProfiles/FighterSheet.utils";
 import FighterSheetCompare from "./FighterProfiles/FighterSheetCompare";
+import getStyles from "./Prediction.styles";
+
+const boutTypes = ["Non Title", "Title"];
+const roundsOptions = [3, 5];
 
 /**
  * Predict which fighter will win
  */
 const Prediction = () => {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
   const isDataLoading = useIsDataLoading();
+  const smallViewport = useMediaQuery("(max-width: 500px)");
   const {
     ranges: { weightClasses },
   } = useFighterList();
@@ -76,14 +86,23 @@ const Prediction = () => {
     []
   );
 
+  // Manage rounds state
+  const [rounds, setRounds] = useState(roundsOptions[0]);
+  const onChangeRounds = useCallback((event: SelectChangeEvent<number>) => {
+    const newRounds = event.target.value;
+    setRounds(Number(newRounds));
+  }, []);
+
+  // Manage bout type state
+  const [boutType, setBoutType] = useState(boutTypes[0]);
+  const onChangeBoutType = useCallback((event: SelectChangeEvent<string>) => {
+    const newBoutType = event.target.value;
+    setBoutType(newBoutType);
+  }, []);
+
   if (isDataLoading) {
     return (
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-      >
+      <Stack css={styles.pageLoader}>
         <CircularProgress />
       </Stack>
     );
@@ -93,8 +112,8 @@ const Prediction = () => {
     <Container>
       <Stack justifyContent="center" height="100%" spacing={2} mt={2} pb={2}>
         <Card>
-          <Box p={2}>
-            <FormControl fullWidth>
+          <Stack css={styles.paramBox}>
+            <FormControl css={styles.class}>
               <InputLabel id="wc-label" variant="standard">
                 Weight Class
               </InputLabel>
@@ -114,7 +133,47 @@ const Prediction = () => {
                 })}
               </Select>
             </FormControl>
-          </Box>
+            <FormControl css={styles.rounds}>
+              <InputLabel id="nr-label" variant="standard">
+                Rounds
+              </InputLabel>
+              <Select
+                labelId="nr-label"
+                value={rounds}
+                onChange={onChangeRounds}
+                input={<Input name="Rounds" />}
+                fullWidth
+              >
+                {roundsOptions.map((r) => {
+                  return (
+                    <MenuItem key={r} value={r}>
+                      <ListItemText primary={`${r} Rounds`} />
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+            <FormControl css={styles.bouts}>
+              <InputLabel id="bt-label" variant="standard">
+                Bout Type
+              </InputLabel>
+              <Select
+                labelId="bt-label"
+                value={boutType}
+                onChange={onChangeBoutType}
+                input={<Input name="Bout Type" />}
+                fullWidth
+              >
+                {boutTypes.map((bout) => {
+                  return (
+                    <MenuItem key={bout} value={bout}>
+                      <ListItemText primary={bout} />
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Stack>
         </Card>
         <FighterSelector
           onChange={setRed}
