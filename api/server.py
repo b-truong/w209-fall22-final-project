@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 import pandas as pd
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 # Read saved fighter data
 fighter_df = pd.read_csv(
@@ -50,6 +51,7 @@ def normalize(df: pd.DataFrame, scaler) -> pd.DataFrame:
 
 # Set up Flask REST API
 app = Flask(__name__)
+CORS(app)
 
 
 def run_model(red, blue, weight_class, rounds, bout_type):
