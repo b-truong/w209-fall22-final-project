@@ -15,7 +15,7 @@ import {
   Stack,
 } from "@mui/material";
 import { DSVRowString } from "d3";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useFighterList, useIsDataLoading } from "./DataProvider";
 import FighterSelector from "./FighterProfiles/FighterSelector";
@@ -26,19 +26,23 @@ import FighterSheetCompare from "./FighterProfiles/FighterSheetCompare";
  * Predict which fighter will win
  */
 const Prediction = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
   const isDataLoading = useIsDataLoading();
   const {
     ranges: { weightClasses },
   } = useFighterList();
 
-  // Handle setting weight class logically and to/from URL
+  const [red, setRed] = useState<DSVRowString>({});
+  const [blue, setBlue] = useState<DSVRowString>({});
+
+  // Get current fighters and class from URL
+  const navigate = useNavigate();
+  const location = useLocation();
   const { fighterName } = useParams();
   const secondFighterName = useMemo(
     () => new URLSearchParams(location.search).get("other"),
     [location]
   );
+
   const weightClass = useMemo(
     () => new URLSearchParams(location.search).get("class"),
     [location]
@@ -46,6 +50,24 @@ const Prediction = () => {
   const [selectedWeightClass, setWeightClass] = useState<string>(
     weightClass ?? "Middleweight"
   );
+
+  // Set current fighters and class to URL
+  useEffect(() => {
+    if (red?.fighter) {
+      const urlSelection = red.fighter.replaceAll(" ", "");
+      const secondFighterQuery = blue.fighter
+        ? "?other=" + blue.fighter.replaceAll(" ", "")
+        : "";
+      const classQuery = selectedWeightClass
+        ? "&class=" + selectedWeightClass
+        : "";
+      navigate(
+        `/fightclub/predict/${urlSelection}${secondFighterQuery}${classQuery}`
+      );
+    }
+  }, [red, blue, selectedWeightClass, navigate]);
+
+  // Manage weight class state
   const onChangeWeightClass = useCallback(
     (event: SelectChangeEvent<string>) => {
       const newWeightClass = event.target.value;
@@ -53,28 +75,6 @@ const Prediction = () => {
     },
     []
   );
-
-  // Append weight class to URL with debounce
-  const timeout = useRef<string | number | NodeJS.Timeout | undefined>();
-  useEffect(() => {
-    clearTimeout(timeout.current);
-    timeout.current = setTimeout(() => {
-      if (fighterName && secondFighterName) {
-        navigate(
-          `${location.pathname}?other=${secondFighterName}&class=${selectedWeightClass}`
-        );
-      }
-    }, 0);
-  }, [
-    location.pathname,
-    secondFighterName,
-    selectedWeightClass,
-    fighterName,
-    navigate,
-  ]);
-
-  const [red, setRed] = useState<DSVRowString>({});
-  const [blue, setBlue] = useState<DSVRowString>({});
 
   if (isDataLoading) {
     return (
@@ -118,17 +118,14 @@ const Prediction = () => {
         </Card>
         <FighterSelector
           onChange={setRed}
-          basePath="/fightclub/predict"
           weightClass={selectedWeightClass}
+          fighterName={red.fighter?.replaceAll(" ", "") ?? fighterName}
         />
-        {red.fighter && (
-          <FighterSelector
-            onChange={setBlue}
-            basePath="/fightclub/predict"
-            weightClass={selectedWeightClass}
-            isOther
-          />
-        )}
+        <FighterSelector
+          onChange={setBlue}
+          weightClass={selectedWeightClass}
+          fighterName={blue.fighter?.replaceAll(" ", "") ?? secondFighterName}
+        />
         {red.fighter && blue.fighter && (
           <FighterSheetCompare selected={red} secondSelected={blue} />
         )}

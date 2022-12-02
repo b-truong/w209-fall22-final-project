@@ -25,7 +25,6 @@ import {
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { IFighterListOptions, useFighterList } from "../DataProvider";
 import CasinoIcon from "@mui/icons-material/Casino";
 import CloseIcon from "@mui/icons-material/Close";
@@ -38,27 +37,23 @@ interface IFighterSelector {
   onChange?: (selected: DSVRowString) => void;
   /** Callback for removal button; button is hidden if not provided */
   onRemove?: () => void;
-  /** If this is the second fighter input; implied if `onRemove` is provided */
-  isOther?: boolean;
   /** Set weight class filter; removes weight class filtering option */
   weightClass?: string;
-  /** Base URL path to use for deeplinking */
-  basePath?: string;
+  /** Currently selected fighter name */
+  fighterName?: string | null;
 }
 
 /**
  * Allow users to select a fighter
  */
 const FighterSelector: React.FC<IFighterSelector> = ({
+  fighterName,
   onChange,
   onRemove,
-  isOther,
   weightClass,
-  basePath = "/fightclub/fighters",
 }) => {
   const theme = useTheme();
   const styles = getStyles(theme);
-  const isSecondary = onRemove || isOther;
 
   // Set up filtering
   const [filterElement, setFilterElement] = useState<HTMLElement | null>(null);
@@ -141,13 +136,6 @@ const FighterSelector: React.FC<IFighterSelector> = ({
     applyFilter();
   }, [applyFilter]);
 
-  const location = useLocation();
-  const { fighterName } = useParams();
-  const secondFighterName = useMemo(
-    () => new URLSearchParams(location.search).get("other"),
-    [location]
-  );
-
   // Prepare fighter select box
   const getOptionLabel = useCallback(
     (option: DSVRowString) => option.fighter ?? "",
@@ -171,7 +159,6 @@ const FighterSelector: React.FC<IFighterSelector> = ({
   );
 
   // Handle option selection
-  const navigate = useNavigate();
   const [selected, setSelected] = useState<DSVRowString>({});
   const onSelectFighter = useCallback(
     (event: any, newSelection: DSVRowString | null) => {
@@ -181,25 +168,8 @@ const FighterSelector: React.FC<IFighterSelector> = ({
 
       setSelected(newSelection ?? {});
       onChange?.(newSelection ?? {});
-
-      const urlSelection = newSelection.fighter.replaceAll(" ", "");
-      if (!isSecondary) {
-        const secondFighterQuery = secondFighterName
-          ? "?other=" + secondFighterName.replaceAll(" ", "")
-          : "";
-        navigate(`${basePath}/${urlSelection}${secondFighterQuery}`);
-      } else {
-        navigate(`${location.pathname}?other=${urlSelection}`);
-      }
     },
-    [
-      onChange,
-      navigate,
-      secondFighterName,
-      isSecondary,
-      location.pathname,
-      basePath,
-    ]
+    [onChange]
   );
 
   // Randomly select fighter
@@ -211,13 +181,12 @@ const FighterSelector: React.FC<IFighterSelector> = ({
   // Select a fighter from URL
   useEffect(() => {
     if (fightersList.length) {
-      if (!fighterName || (isSecondary && !secondFighterName)) {
+      if (!fighterName) {
         onSelectRandomFighter();
       }
-      const name = isSecondary ? secondFighterName : fighterName;
-      if (selected.fighter !== name) {
+      if (selected.fighter?.replaceAll(" ", "") !== fighterName) {
         const fighter = fightersList.find(
-          (row) => row?.fighter?.replaceAll(" ", "") === name
+          (row) => row?.fighter?.replaceAll(" ", "") === fighterName
         );
         if (fighter) {
           setSelected(fighter);
@@ -227,15 +196,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({
         }
       }
     }
-  }, [
-    isSecondary,
-    selected,
-    fightersList,
-    onChange,
-    fighterName,
-    secondFighterName,
-    onSelectRandomFighter,
-  ]);
+  }, [selected, fightersList, onChange, fighterName, onSelectRandomFighter]);
 
   // Filter fighter list by search input
   const noop = useCallback((x: any) => x, []);
@@ -264,12 +225,25 @@ const FighterSelector: React.FC<IFighterSelector> = ({
   );
 
   // Apply given weight class and select a random fighter within if needed
+  const [shouldChooseRandomFighter, setChooseRandomeFighter] = useState(false);
   useEffect(() => {
     if (weightClass) {
       setWeightClass(weightClass);
       setShouldApplyFilter(true);
+      if (
+        selected.fighter?.replaceAll(" ", "") === fighterName &&
+        weightClass !== selected.weight_class
+      ) {
+        setChooseRandomeFighter(true);
+      }
     }
   }, [selected, weightClass]);
+  useEffect(() => {
+    if (shouldChooseRandomFighter && !shouldApplyFilter) {
+      setChooseRandomeFighter(false);
+      onSelectRandomFighter();
+    }
+  }, [shouldChooseRandomFighter, shouldApplyFilter, onSelectRandomFighter]);
 
   // Apply filters
   useEffect(() => {

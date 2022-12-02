@@ -10,7 +10,7 @@ import {
   Tabs,
 } from "@mui/material";
 import { DSVRowString } from "d3";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import FighterSelector from "./FighterSelector";
 import FighterSheet from "./FighterSheet";
 import FighterMatchOutcomes from "./FighterMatchOutcomes";
@@ -18,7 +18,7 @@ import FighterStrikes from "./FighterStrikes";
 import { useIsDataLoading } from "../DataProvider";
 import FighterStrikesSummary from "./FighterStrikesSummary";
 import FighterMatchOutcomeSummary from "./FighterMatchOutcomeSummary";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import FighterSheetCompare from "./FighterSheetCompare";
 
 /**
@@ -31,12 +31,25 @@ const FighterProfiles = () => {
     {}
   );
 
+  // Get current fighters from URL
   const navigate = useNavigate();
   const location = useLocation();
+  const { fighterName } = useParams();
   const secondFighterName = useMemo(
     () => new URLSearchParams(location.search).get("other"),
     [location]
   );
+
+  // Set current fighters to URL
+  useEffect(() => {
+    if (selected?.fighter) {
+      const urlSelection = selected.fighter.replaceAll(" ", "");
+      const secondFighterQuery = selectedComparison.fighter
+        ? "?other=" + selectedComparison.fighter.replaceAll(" ", "")
+        : "";
+      navigate(`/fightclub/fighters/${urlSelection}${secondFighterQuery}`);
+    }
+  }, [selected, selectedComparison, navigate]);
 
   const [comparing, setComparing] = useState(!!secondFighterName);
   const onAddComparison = useCallback(() => {
@@ -69,7 +82,10 @@ const FighterProfiles = () => {
   return (
     <Container>
       <Stack justifyContent="center" height="100%" spacing={2} mt={2} pb={2}>
-        <FighterSelector onChange={setSelected} />
+        <FighterSelector
+          onChange={setSelected}
+          fighterName={selected.fighter?.replaceAll(" ", "") ?? fighterName}
+        />
         {!comparing && (
           <Stack justifyContent="center" alignItems="center">
             <Button
@@ -86,6 +102,10 @@ const FighterProfiles = () => {
           <FighterSelector
             onChange={setSelectedComparison}
             onRemove={onRemoveComparison}
+            fighterName={
+              selectedComparison.fighter?.replaceAll(" ", "") ??
+              secondFighterName
+            }
           />
         )}
         {comparing && selectedComparison ? (
