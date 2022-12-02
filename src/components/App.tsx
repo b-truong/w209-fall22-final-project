@@ -44,6 +44,10 @@ const App: React.FC<IApp> = ({ swEventObserver }) => {
                 path="/fightclub/fighters/:fighterName"
                 element={<FighterProfiles />}
               />
+              <Route
+                path="/fightclub/predict/:fighterName"
+                element={<Prediction />}
+              />
               <Route path="/fightclub/matches" element={<Matches />} />
               <Route path="/fightclub/locations" element={<Locations />} />
               <Route path="/fightclub/fighters" element={<FighterProfiles />} />

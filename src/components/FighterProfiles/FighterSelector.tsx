@@ -31,13 +31,19 @@ import CasinoIcon from "@mui/icons-material/Casino";
 import CloseIcon from "@mui/icons-material/Close";
 import getStyles from "./FighterSelector.styles";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { cmsToImperial } from "./FighterSheet.utils";
+import { camelPad, cmsToImperial } from "./FighterSheet.utils";
 
 interface IFighterSelector {
   /** Callback to handle selections */
   onChange?: (selected: DSVRowString) => void;
   /** Callback for removal button; button is hidden if not provided */
   onRemove?: () => void;
+  /** If this is the second fighter input; implied if `onRemove` is provided */
+  isOther?: boolean;
+  /** Set weight class filter; removes weight class filtering option */
+  weightClass?: string;
+  /** Base URL path to use for deeplinking */
+  basePath?: string;
 }
 
 /**
@@ -46,9 +52,13 @@ interface IFighterSelector {
 const FighterSelector: React.FC<IFighterSelector> = ({
   onChange,
   onRemove,
+  isOther,
+  weightClass,
+  basePath = "/fightclub/fighters",
 }) => {
   const theme = useTheme();
   const styles = getStyles(theme);
+  const isSecondary = onRemove || isOther;
 
   // Set up filtering
   const [filterElement, setFilterElement] = useState<HTMLElement | null>(null);
@@ -69,7 +79,9 @@ const FighterSelector: React.FC<IFighterSelector> = ({
   }, []);
 
   // Set up filtering for weight class
-  const [selectedWeightClass, setWeightClass] = useState<string>("All");
+  const [selectedWeightClass, setWeightClass] = useState<string>(
+    weightClass ?? "All"
+  );
   const onChangeWeightClass = (event: SelectChangeEvent<string>) => {
     setWeightClass(event.target.value);
     applyFilter();
@@ -113,27 +125,10 @@ const FighterSelector: React.FC<IFighterSelector> = ({
   };
 
   // Create filter options
-  const [filter, setFilter] = useState<IFighterListOptions>();
-  useEffect(() => {
-    if (shouldApplyFilter) {
-      setFilter({
-        weightClass:
-          selectedWeightClass !== "All" ? selectedWeightClass : undefined,
-        weightRange:
-          selectedWeightRange[1] !== Infinity ? selectedWeightRange : undefined,
-        heightRange:
-          selectedHeightRange[1] !== Infinity ? selectedHeightRange : undefined,
-        ageRange:
-          selectedAgeRange[1] !== Infinity ? selectedAgeRange : undefined,
-      });
-      setShouldApplyFilter(false);
-    }
-  }, [
-    shouldApplyFilter,
-    selectedWeightClass,
-    selectedWeightRange,
-    selectedHeightRange,
-  ]);
+  const [filter, setFilter] = useState<IFighterListOptions>({
+    weightClass:
+      selectedWeightClass !== "All" ? selectedWeightClass : undefined,
+  });
 
   const { fightersList, ranges } = useFighterList(filter);
 
@@ -144,7 +139,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({
     setHeightRange([0, Infinity]);
     setAgeRange([0, Infinity]);
     applyFilter();
-  }, []);
+  }, [applyFilter]);
 
   const location = useLocation();
   const { fighterName } = useParams();
@@ -180,37 +175,31 @@ const FighterSelector: React.FC<IFighterSelector> = ({
   const [selected, setSelected] = useState<DSVRowString>({});
   const onSelectFighter = useCallback(
     (event: any, newSelection: DSVRowString | null) => {
+      if (!newSelection?.fighter) {
+        return;
+      }
+
       setSelected(newSelection ?? {});
       onChange?.(newSelection ?? {});
 
-      if (!onRemove) {
+      const urlSelection = newSelection.fighter.replaceAll(" ", "");
+      if (!isSecondary) {
         const secondFighterQuery = secondFighterName
           ? "?other=" + secondFighterName.replaceAll(" ", "")
           : "";
-        if (newSelection?.fighter) {
-          navigate(
-            `/fightclub/fighters/${newSelection.fighter.replaceAll(
-              " ",
-              ""
-            )}${secondFighterQuery}`
-          );
-        } else {
-          navigate(`/fightclub/fighters${secondFighterQuery}`);
-        }
+        navigate(`${basePath}/${urlSelection}${secondFighterQuery}`);
       } else {
-        if (newSelection?.fighter) {
-          navigate(
-            `${location.pathname}?other=${newSelection.fighter.replaceAll(
-              " ",
-              ""
-            )}`
-          );
-        } else {
-          navigate(location.pathname);
-        }
+        navigate(`${location.pathname}?other=${urlSelection}`);
       }
     },
-    [onChange, navigate, secondFighterName, onRemove, location.pathname]
+    [
+      onChange,
+      navigate,
+      secondFighterName,
+      isSecondary,
+      location.pathname,
+      basePath,
+    ]
   );
 
   // Randomly select fighter
@@ -222,10 +211,10 @@ const FighterSelector: React.FC<IFighterSelector> = ({
   // Select a fighter from URL
   useEffect(() => {
     if (fightersList.length) {
-      if (!fighterName || (onRemove && !secondFighterName)) {
+      if (!fighterName || (isSecondary && !secondFighterName)) {
         onSelectRandomFighter();
       }
-      const name = onRemove ? secondFighterName : fighterName;
+      const name = isSecondary ? secondFighterName : fighterName;
       if (selected.fighter !== name) {
         const fighter = fightersList.find(
           (row) => row?.fighter?.replaceAll(" ", "") === name
@@ -233,11 +222,13 @@ const FighterSelector: React.FC<IFighterSelector> = ({
         if (fighter) {
           setSelected(fighter);
           onChange?.(fighter);
+        } else {
+          onSelectRandomFighter();
         }
       }
     }
   }, [
-    onRemove,
+    isSecondary,
     selected,
     fightersList,
     onChange,
@@ -271,6 +262,37 @@ const FighterSelector: React.FC<IFighterSelector> = ({
     },
     []
   );
+
+  // Apply given weight class and select a random fighter within if needed
+  useEffect(() => {
+    if (weightClass) {
+      setWeightClass(weightClass);
+      setShouldApplyFilter(true);
+    }
+  }, [selected, weightClass]);
+
+  // Apply filters
+  useEffect(() => {
+    if (shouldApplyFilter) {
+      setShouldApplyFilter(false);
+      setFilter({
+        weightClass:
+          selectedWeightClass !== "All" ? selectedWeightClass : undefined,
+        weightRange:
+          selectedWeightRange[1] !== Infinity ? selectedWeightRange : undefined,
+        heightRange:
+          selectedHeightRange[1] !== Infinity ? selectedHeightRange : undefined,
+        ageRange:
+          selectedAgeRange[1] !== Infinity ? selectedAgeRange : undefined,
+      });
+    }
+  }, [
+    shouldApplyFilter,
+    selectedWeightClass,
+    selectedWeightRange,
+    selectedHeightRange,
+    selectedAgeRange,
+  ]);
 
   return (
     <Card>
@@ -328,27 +350,29 @@ const FighterSelector: React.FC<IFighterSelector> = ({
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Stack css={styles.filterBox}>
-          <FormControl css={styles.form}>
-            <InputLabel id="wc-label">Weight Class</InputLabel>
-            <Select
-              labelId="wc-label"
-              value={selectedWeightClass}
-              onChange={onChangeWeightClass}
-              input={<OutlinedInput label="Weight Class" />}
-              fullWidth
-            >
-              <MenuItem key="All" value="All">
-                <ListItemText primary="All" />
-              </MenuItem>
-              {ranges.weightClasses.map((weightClass) => {
-                return (
-                  <MenuItem key={weightClass} value={weightClass}>
-                    <ListItemText primary={weightClass} />
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
+          {!weightClass && (
+            <FormControl css={styles.form}>
+              <InputLabel id="wc-label">Weight Class</InputLabel>
+              <Select
+                labelId="wc-label"
+                value={selectedWeightClass}
+                onChange={onChangeWeightClass}
+                input={<OutlinedInput label="Weight Class" />}
+                fullWidth
+              >
+                <MenuItem key="All" value="All">
+                  <ListItemText primary="All" />
+                </MenuItem>
+                {ranges.weightClasses.map((weightClass) => {
+                  return (
+                    <MenuItem key={weightClass} value={weightClass}>
+                      <ListItemText primary={camelPad(weightClass)} />
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          )}
           <Box css={styles.sliderBox}>
             <Typography variant="caption">Weight Range</Typography>
             <Slider

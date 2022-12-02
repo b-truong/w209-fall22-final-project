@@ -160,16 +160,16 @@ export const useFighterList = (
 
   // Get min and max ranges of weight class constrained set
   const [minAge, maxAge] = useMemo(
-    () => getMinMax(fightersList, "age"),
-    [fightersList]
+    () => getMinMax(weightFiltered, "age"),
+    [weightFiltered]
   );
   const [minHeight, maxHeight] = useMemo(
-    () => getMinMax(fightersList, "Height_cms"),
-    [fightersList]
+    () => getMinMax(weightFiltered, "Height_cms"),
+    [weightFiltered]
   );
   const [minWeight, maxWeight] = useMemo(
-    () => getMinMax(fightersList, "Weight_lbs"),
-    [fightersList]
+    () => getMinMax(weightFiltered, "Weight_lbs"),
+    [weightFiltered]
   );
 
   // Filter by weight range if given
