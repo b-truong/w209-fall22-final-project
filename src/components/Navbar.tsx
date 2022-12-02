@@ -67,6 +67,11 @@ const Navbar = () => {
         path: "/fightclub/fighters",
       },
       {
+        icon: <QueryStatsIcon />,
+        text: "Predict Winner",
+        path: "/fightclub/predict",
+      },
+      {
         icon: <AccountTreeIcon />,
         text: "Match Results",
         path: "/fightclub/matches",
@@ -75,11 +80,6 @@ const Navbar = () => {
         icon: <LocationOnIcon />,
         text: "Match Locations",
         path: "/fightclub/locations",
-      },
-      {
-        icon: <QueryStatsIcon />,
-        text: "Predict Winner",
-        path: "/fightclub/predict",
       },
     ];
   }, []);

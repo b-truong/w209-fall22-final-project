@@ -57,6 +57,11 @@ const Home = () => {
             to="/fightclub/fighters"
           />
           <HomeButton
+            icon={<QueryStatsIcon fontSize="large" />}
+            text="Predict Winner"
+            to="/fightclub/predict"
+          />
+          <HomeButton
             icon={<AccountTreeIcon fontSize="large" />}
             text="Match Results"
             to="/fightclub/matches"
@@ -65,11 +70,6 @@ const Home = () => {
             icon={<LocationOnIcon fontSize="large" />}
             text="Match Locations"
             to="/fightclub/locations"
-          />
-          <HomeButton
-            icon={<QueryStatsIcon fontSize="large" />}
-            text="Predict Winner"
-            to="/fightclub/predict"
           />
         </Stack>
       </Stack>
