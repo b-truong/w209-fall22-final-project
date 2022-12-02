@@ -108,22 +108,22 @@ def predict():
         raise Exception(f"Invalid fighters: {red} and {blue} are the same")
 
     # A key from the df_weight_classes map
-    weightclass = payload['weightclass']
+    weightclass = payload['weightClass']
     if weightclass not in df_weight_classes.keys():
         raise Exception(
-            f"Invalid weightclass: {weightclass}; must be one of {df_weight_classes.keys()}")
+            f"Invalid weightClass: {weightclass}; must be one of {df_weight_classes.keys()}")
 
     # Either 3 or 5
-    no_of_rounds = payload['no_of_rounds']
+    no_of_rounds = payload['rounds']
     if no_of_rounds not in (3, 5):
         raise Exception(
-            f"Invalid no_of_rounds: {no_of_rounds}; must be 3 or 5")
+            f"Invalid rounds: {no_of_rounds}; must be 3 or 5")
 
     # Either "Non Title" or "Title"
-    fight_type = payload['fight_type']
+    fight_type = payload['boutType']
     if fight_type not in ('Title', 'Non Title'):
         raise Exception(
-            f"Invalid fight_type: {no_of_rounds}; must be 'Title' or 'Non Title'")
+            f"Invalid boutType: {no_of_rounds}; must be 'Title' or 'Non Title'")
 
     # Run model
     red_proba, blue_proba = run_model(

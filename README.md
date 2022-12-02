@@ -85,9 +85,9 @@ The API supports the following commands:
   {
     "red": "Matt Hughes",          # Name of red fighter
     "blue": "Kenny Robertson",     # Name of blue fighter
-    "weightclass": "Welterweight", # Common weight class of the two fighters
-    "no_of_rounds": 3,             # Number of rounds, either 3 or 5
-    "fight_type": "Non Title"      # Type of fight, either "Title" or "Non Title"
+    "weightClass": "Welterweight", # Common weight class of the two fighters
+    "rounds": 3,                   # Number of rounds, either 3 or 5
+    "boutType": "Non Title"        # Type of fight, either "Title" or "Non Title"
   }
   ```
 
