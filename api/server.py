@@ -52,30 +52,30 @@ def normalize(df: pd.DataFrame, scaler) -> pd.DataFrame:
 app = Flask(__name__)
 
 
-def run_model(red, blue, weightclass, no_of_rounds, fight_type):
+def run_model(red, blue, weight_class, rounds, bout_type):
     '''
     Run the saved model with the given parameters.
 
     @param red          : The name of the red fighter
     @param blue         : The name of the red fighter
-    @param weightclass  : A key from the df_weight_classes map
-    @param no_of_rounds : Either 3 or 5
-    @param fight_type   : Either "Non Title" or "Title"
+    @param weight_class : A key from the df_weight_classes map
+    @param rounds       : Either 3 or 5
+    @param bout_type    : Either "Non Title" or "Title"
     '''
     # Run model
     df = fighter_df.copy()
 
     # Hot-encode weight classes
     cols_dict = {
-        df_weight_classes[k]: (1 if weightclass == k else 0)
+        df_weight_classes[k]: (1 if weight_class == k else 0)
         for k in df_weight_classes.keys()
     }
 
     # Set other fields
     cols_dict.update(
         {
-            "title_bout": title_bout[fight_type],
-            "no_of_rounds": no_of_rounds
+            "title_bout": title_bout[bout_type],
+            "no_of_rounds": rounds
         }
     )
     extra_cols = pd.DataFrame(
@@ -108,26 +108,26 @@ def predict():
         raise Exception(f"Invalid fighters: {red} and {blue} are the same")
 
     # A key from the df_weight_classes map
-    weightclass = payload['weightClass']
-    if weightclass not in df_weight_classes.keys():
+    weight_class = payload['class']
+    if weight_class not in df_weight_classes.keys():
         raise Exception(
-            f"Invalid weightClass: {weightclass}; must be one of {df_weight_classes.keys()}")
+            f"Invalid class: {weight_class}; must be one of {df_weight_classes.keys()}")
 
     # Either 3 or 5
-    no_of_rounds = payload['rounds']
-    if no_of_rounds not in (3, 5):
+    rounds = payload['rounds']
+    if rounds not in (3, 5):
         raise Exception(
-            f"Invalid rounds: {no_of_rounds}; must be 3 or 5")
+            f"Invalid rounds: {rounds}; must be 3 or 5")
 
     # Either "Non Title" or "Title"
-    fight_type = payload['boutType']
-    if fight_type not in ('Title', 'Non Title'):
+    bout_type = payload['boutType']
+    if bout_type not in ('Title', 'Non Title'):
         raise Exception(
-            f"Invalid boutType: {no_of_rounds}; must be 'Title' or 'Non Title'")
+            f"Invalid boutType: {bout_type}; must be 'Title' or 'Non Title'")
 
     # Run model
     red_proba, blue_proba = run_model(
-        red, blue, weightclass, no_of_rounds, fight_type)
+        red, blue, weight_class, rounds, bout_type)
 
     return jsonify(red=str(red_proba), blue=str(blue_proba))
 
