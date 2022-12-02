@@ -15,6 +15,7 @@ const getStyles = (theme: Theme) => {
     `,
     form: css`
       width: 100%;
+      padding-bottom: ${theme.spacing(2)};
     `,
     input: css`
       flex-grow: 1;
@@ -29,11 +30,6 @@ const getStyles = (theme: Theme) => {
         transition: 0s;
         transform: rotate(360deg);
       }
-    `,
-    sliderBox: css`
-      width: 100%;
-      padding: ${theme.spacing(2)};
-      padding-bottom: 0;
     `,
     resetBox: css`
       flex-flow: row nowrap;

@@ -185,9 +185,7 @@ const Prediction = () => {
           weightClass={selectedWeightClass}
           fighterName={blue.fighter?.replaceAll(" ", "") ?? secondFighterName}
         />
-        {red.fighter && blue.fighter && (
-          <FighterSheetCompare selected={red} secondSelected={blue} />
-        )}
+        <FighterSheetCompare selected={red} secondSelected={blue} />
       </Stack>
     </Container>
   );

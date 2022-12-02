@@ -31,6 +31,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import getStyles from "./FighterSelector.styles";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { camelPad, cmsToImperial } from "./FighterSheet.utils";
+import RangeSlider from "./RangeSlider";
 
 interface IFighterSelector {
   /** Callback to handle selections */
@@ -347,38 +348,26 @@ const FighterSelector: React.FC<IFighterSelector> = ({
               </Select>
             </FormControl>
           )}
-          <Box css={styles.sliderBox}>
-            <Typography variant="caption">Weight Range</Typography>
-            <Slider
-              valueLabelDisplay="auto"
-              valueLabelFormat={formatWeightLabel}
-              onChange={onChangeWeightRange}
-              value={selectedWeightRange}
-              min={ranges.weightRange[0]}
-              max={ranges.weightRange[1]}
-            />
-          </Box>
-          <Box css={styles.sliderBox}>
-            <Typography variant="caption">Height Range</Typography>
-            <Slider
-              valueLabelDisplay="auto"
-              valueLabelFormat={formatHeightLabel}
-              onChange={onChangeHeightRange}
-              value={selectedHeightRange}
-              min={ranges.heightRange[0]}
-              max={ranges.heightRange[1]}
-            />
-          </Box>
-          <Box css={styles.sliderBox}>
-            <Typography variant="caption">Age Range</Typography>
-            <Slider
-              valueLabelDisplay="auto"
-              onChange={onChangeAgeRange}
-              value={selectedAgeRange}
-              min={ranges.ageRange[0]}
-              max={ranges.ageRange[1]}
-            />
-          </Box>
+          <RangeSlider
+            label="Weight Range"
+            valueLabelFormat={formatWeightLabel}
+            onChange={setWeightRange}
+            value={selectedWeightRange}
+            range={ranges.weightRange}
+          />
+          <RangeSlider
+            label="Height Range"
+            valueLabelFormat={formatHeightLabel}
+            onChange={setHeightRange}
+            value={selectedHeightRange}
+            range={ranges.heightRange}
+          />
+          <RangeSlider
+            label="Age Range"
+            onChange={setAgeRange}
+            value={selectedAgeRange}
+            range={ranges.ageRange}
+          />
           <Stack css={styles.resetBox}>
             <Button variant="contained" onClick={resetFilters}>
               Clear filters
