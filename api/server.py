@@ -21,20 +21,20 @@ with open("api/data/standard.scaler", "rb") as ss:
 
 # Weight class string mapping
 df_weight_classes = {
-    "Flyweight": "weight_class_Flyweight",
     "Bantamweight": "weight_class_Bantamweight",
+    "CatchWeight": "weight_class_Catch Weight",
     "Featherweight": "weight_class_Featherweight",
-    "Lightweight": "weight_class_Lightweight",
-    "Welterweight": "weight_class_Welterweight",
-    "Middleweight": "weight_class_Middleweight",
-    "Light Heavyweight": "weight_class_Light Heavyweight",
+    "Flyweight": "weight_class_Flyweight",
     "Heavyweight": "weight_class_Heavyweight",
-    "Women's Strawweight": "weight_class_Women's Strawweight",
-    "Women's Flyweight": "weight_class_Women's Flyweight",
-    "Women's Bantamweight": "weight_class_Women's Bantamweight",
-    "Women's Featherweight": "weight_class_Women's Featherweight",
-    "Catch Weight": "weight_class_Catch Weight",
-    "Open Weight": "weight_class_Open Weight",
+    "LightHeavyweight": "weight_class_Light Heavyweight",
+    "Lightweight": "weight_class_Lightweight",
+    "Middleweight": "weight_class_Middleweight",
+    "OpenWeight": "weight_class_Open Weight",
+    "Welterweight": "weight_class_Welterweight",
+    "WomenBantamweight": "weight_class_Women's Bantamweight",
+    "WomenFeatherweight": "weight_class_Women's Featherweight",
+    "WomenFlyweight": "weight_class_Women's Flyweight",
+    "WomenStrawweight": "weight_class_Women's Strawweight",
 }
 
 # Title bout field mapping
