@@ -33,7 +33,7 @@ const usePrediction = (
 
     const getData = async () => {
       // Send request
-      const response = await fetch("http://api.mma.arcane-arts.net/predict", {
+      const response = await fetch("https://api.mma.arcane-arts.net/predict", {
         method: "POST",
         body: JSON.stringify(options),
         headers: new Headers({ "content-type": "application/json" }),

@@ -71,7 +71,7 @@ Before running the project, install these dependencies:
 
 # Prediction API
 
-A live build of the prediction API is hosted at http://api.mma.arcane-arts.net/
+A live build of the prediction API is hosted at https://api.mma.arcane-arts.net/
 
 Prediction model based on work from [this project](https://github.com/WarrierRajeev/UFC-Predictions).
 
