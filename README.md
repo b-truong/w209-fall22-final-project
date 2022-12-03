@@ -63,6 +63,8 @@ Before running the project, install these dependencies:
 ### `yarn start:api:prod`
 
 - Run the API for production
+- Note that this command runs the server in HTTPS and expects `cert.pem` and `key.pem` certificate files in the project root directory.
+  - One way to generate the certificate files is to use [certbot](https://certbot.eff.org/)
 
 ### `yarn build`
 
@@ -77,7 +79,7 @@ Prediction model based on work from [this project](https://github.com/WarrierRaj
 
 The API supports the following commands:
 
-### `GET /predict`
+### `POST /predict`
 
 - Payload:
 
@@ -85,7 +87,7 @@ The API supports the following commands:
   {
     "red": "Matt Hughes",          # Name of red fighter
     "blue": "Kenny Robertson",     # Name of blue fighter
-    "weightClass": "Welterweight", # Common weight class of the two fighters
+    "class": "Welterweight", # Common weight class of the two fighters
     "rounds": 3,                   # Number of rounds, either 3 or 5
     "boutType": "Non Title"        # Type of fight, either "Title" or "Non Title"
   }
