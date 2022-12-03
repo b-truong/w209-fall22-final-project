@@ -3,7 +3,7 @@
 import {
   Button,
   Card,
-  CircularProgress,
+  LinearProgress,
   Stack,
   Typography,
   useTheme,
@@ -57,11 +57,7 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
   }, [vlSpec, id, isLoading, errorMessage]);
 
   const body = useMemo(() => {
-    if (isLoading) {
-      return <CircularProgress />;
-    }
     if (errorMessage) {
-      console.log(onRetry);
       return (
         <Stack css={styles.errorBox}>
           <Typography css={styles.errorMessage}>
@@ -79,21 +75,21 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
         </Stack>
       );
     }
-  }, [isLoading, errorMessage, onRetry, styles]);
-
-  const key = useMemo(
-    () => JSON.stringify(vlSpec) + isLoading + errorMessage,
-    [vlSpec, isLoading, errorMessage]
-  );
+  }, [errorMessage, onRetry, styles]);
 
   return (
     <Card>
+      <LinearProgress sx={{ visibility: isLoading ? "visible" : "hidden" }} />
       <Stack css={styles.title}>
         <Typography>{title}</Typography>
         {children}
       </Stack>
       {/* Key based on empty state to regenerate component and display other states */}
-      <Stack id={id} css={styles.stack} key={key}>
+      <Stack
+        id={id}
+        css={styles.stack}
+        key={JSON.stringify(vlSpec) + errorMessage}
+      >
         {body}
       </Stack>
     </Card>

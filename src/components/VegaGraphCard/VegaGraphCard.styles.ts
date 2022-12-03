@@ -5,6 +5,7 @@ const getStyles = (theme: Theme, minHeight: number = 250) => {
     title: css`
       margin: ${theme.spacing(2)};
       margin-bottom: 0;
+      margin-top: calc(${theme.spacing(2)} - 4px);
       flex-flow: row wrap;
       justify-content: space-between;
       align-items: center;

@@ -43,6 +43,7 @@ const usePrediction = (
       const body = await response.json();
       if (response.ok) {
         setResult(body);
+        setErrorMessage(undefined);
       } else {
         setErrorMessage(body.error);
       }
