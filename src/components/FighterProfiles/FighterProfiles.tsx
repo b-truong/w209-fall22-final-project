@@ -48,7 +48,7 @@ const FighterProfiles = () => {
       const secondFighterQuery = selectedComparison.fighter
         ? "?other=" + selectedComparison.fighter.replaceAll(" ", "")
         : "";
-      const newPath = `/fightclub/fighters/${urlSelection}${secondFighterQuery}`;
+      const newPath = `/fighters/${urlSelection}${secondFighterQuery}`;
       if (location.pathname + location.search !== newPath) {
         navigate(newPath);
       }
@@ -170,7 +170,7 @@ const FighterProfiles = () => {
                       selected.weight_class === selectedComparison.weight_class
                     )
                   }
-                  to={`/fightclub/predict/${fighterName}?other=${secondFighterName}&class=${selected.weight_class}`}
+                  to={`/predict/${fighterName}?other=${secondFighterName}&class=${selected.weight_class}`}
                 >
                   Predict winner
                 </Button>

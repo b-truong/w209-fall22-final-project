@@ -54,22 +54,22 @@ const Home = () => {
           <HomeButton
             icon={<SportsMmaIcon fontSize="large" />}
             text="Fighter profiles"
-            to="/fightclub/fighters"
+            to="/fighters"
           />
           <HomeButton
             icon={<QueryStatsIcon fontSize="large" />}
             text="Predict Winner"
-            to="/fightclub/predict"
+            to="/predict"
           />
           <HomeButton
             icon={<AccountTreeIcon fontSize="large" />}
             text="Match Results"
-            to="/fightclub/matches"
+            to="/matches"
           />
           <HomeButton
             icon={<LocationOnIcon fontSize="large" />}
             text="Match Locations"
-            to="/fightclub/locations"
+            to="/locations"
           />
         </Stack>
       </Stack>

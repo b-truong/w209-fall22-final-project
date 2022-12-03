@@ -79,7 +79,7 @@ const Prediction = () => {
       const classQuery = selectedWeightClass
         ? `&class=${selectedWeightClass}`
         : "";
-      const newPath = `/fightclub/predict/${urlSelection}${secondFighterQuery}${classQuery}`;
+      const newPath = `/predict/${urlSelection}${secondFighterQuery}${classQuery}`;
       if (location.pathname + location.search !== newPath) {
         navigate(newPath);
       }
@@ -263,7 +263,7 @@ const Prediction = () => {
               variant="outlined"
               color="secondary"
               component={Link}
-              to={`/fightclub/fighters/${redName}?other=${blueName}`}
+              to={`/fighters/${redName}?other=${blueName}`}
             >
               See detailed comparison
             </Button>

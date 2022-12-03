@@ -59,27 +59,27 @@ const Navbar = () => {
       {
         icon: <HomeIcon />,
         text: "Home",
-        path: "/fightclub/home",
+        path: "/home",
       },
       {
         icon: <SportsMmaIcon />,
         text: "Fighters",
-        path: "/fightclub/fighters",
+        path: "/fighters",
       },
       {
         icon: <QueryStatsIcon />,
         text: "Predict Winner",
-        path: "/fightclub/predict",
+        path: "/predict",
       },
       {
         icon: <AccountTreeIcon />,
         text: "Match Results",
-        path: "/fightclub/matches",
+        path: "/matches",
       },
       {
         icon: <LocationOnIcon />,
         text: "Match Locations",
-        path: "/fightclub/locations",
+        path: "/locations",
       },
     ];
   }, []);
@@ -98,12 +98,7 @@ const Navbar = () => {
               </IconButton>
             </Tooltip>
             <Stack direction="row" alignItems="center" flexGrow={1}>
-              <Button
-                to="/fightclub/"
-                component={Link}
-                css={styles.title}
-                disableRipple
-              >
+              <Button to="/" component={Link} css={styles.title} disableRipple>
                 <Typography variant="h6" noWrap>
                   <img src={logo} css={styles.logo} alt="Fight Club logo" />F I
                   G H T &nbsp; C L U B
