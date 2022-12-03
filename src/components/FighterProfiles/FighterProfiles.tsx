@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import {
+  Box,
   Button,
   CircularProgress,
   Container,
@@ -8,6 +9,7 @@ import {
   Stack,
   Tab,
   Tabs,
+  Tooltip,
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -18,13 +20,15 @@ import FighterStrikes from "./FighterStrikes";
 import { useIsDataLoading } from "../DataProvider";
 import FighterStrikesSummary from "./FighterStrikesSummary";
 import FighterMatchOutcomeSummary from "./FighterMatchOutcomeSummary";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import FighterSheetCompare from "./FighterSheetCompare";
 
 /**
  * Fighter data profiles page
  */
 const FighterProfiles = () => {
+  useEffect(() => window.scrollTo(0, 0), []);
+
   const isDataLoading = useIsDataLoading();
   const [selected, setSelected] = useState<DSVRowString>({});
   const [selectedComparison, setSelectedComparison] = useState<DSVRowString>(
@@ -135,10 +139,9 @@ const FighterProfiles = () => {
         {!comparing && (
           <Stack justifyContent="center" alignItems="center">
             <Button
-              css={css`
-                color: white;
-              `}
               onClick={onAddComparison}
+              color="secondary"
+              variant="outlined"
             >
               Add Comparison
             </Button>
@@ -150,6 +153,31 @@ const FighterProfiles = () => {
             onRemove={onRemoveComparison}
             fighterName={secondFighterName}
           />
+        )}
+        {comparing && (
+          <Stack justifyContent="center" alignItems="center">
+            <Tooltip
+              title="Predict a winner for fighters in the same weight class"
+              placement="top"
+            >
+              <Box>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  disabled={
+                    !(
+                      fighterName &&
+                      secondFighterName &&
+                      selected.weight_class === selectedComparison.weight_class
+                    )
+                  }
+                  to={`/fightclub/predict/${fighterName}?other=${secondFighterName}&class=${selected.weight_class}`}
+                >
+                  Predict winner
+                </Button>
+              </Box>
+            </Tooltip>
+          </Stack>
         )}
         {comparing && selectedComparison ? (
           <FighterSheetCompare

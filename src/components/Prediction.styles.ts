@@ -38,6 +38,10 @@ const getStyles = (theme: Theme) => {
         flex-basis: calc(50% - ${theme.spacing(1)});
       }
     `,
+    comparisonBox: css`
+      flex-flow: row nowrap;
+      justify-content: center;
+    `,
   };
 };
 

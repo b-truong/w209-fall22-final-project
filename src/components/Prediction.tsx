@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import {
+  Button,
   Card,
   CircularProgress,
   Container,
@@ -16,7 +17,7 @@ import {
 } from "@mui/material";
 import { DSVRowString } from "d3";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useFighterList, useIsDataLoading } from "./DataProvider";
 import FighterSelector from "./FighterProfiles/FighterSelector";
 import { camelPad } from "./FighterProfiles/FighterSheet.utils";
@@ -32,6 +33,8 @@ const roundsOptions = [5, 3];
  * Predict which fighter will win
  */
 const Prediction = () => {
+  useEffect(() => window.scrollTo(0, 0), []);
+
   const theme = useTheme();
   const styles = getStyles(theme);
 
@@ -253,6 +256,18 @@ const Prediction = () => {
         />
         {red.fighter && blue.fighter && (
           <FighterSheetCompare selected={red} secondSelected={blue} />
+        )}
+        {redName && blueName && (
+          <Stack css={styles.comparisonBox}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              component={Link}
+              to={`/fightclub/fighters/${redName}?other=${blueName}`}
+            >
+              See detailed comparison
+            </Button>
+          </Stack>
         )}
       </Stack>
     </Container>
