@@ -50,11 +50,9 @@ const FighterStrikesSummary: React.FC<IFighterStrikes> = ({
 
   const strikes = useCumulativeFighterStrikes(selected?.fighter ?? "");
   const values = taken ? strikes.taken : strikes.given;
-  const maxStrikes = getStrikeCounts(strikes.given)
-    .concat(getStrikeCounts(strikes.taken))
-    .reduce((max, current) => {
-      return current > max ? current : max;
-    }, 0);
+  const maxStrikes = getStrikeCounts(values).reduce((max, current) => {
+    return current > max ? current : max;
+  }, 0);
 
   // VL specification
   const vlSpec: TopLevelSpec = useMemo(
