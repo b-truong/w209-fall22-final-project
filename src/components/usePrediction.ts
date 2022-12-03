@@ -34,8 +34,9 @@ const usePrediction = (
     const getData = async () => {
       // Send request
       const response = await fetch("http://api.mma.arcane-arts.net/predict", {
-        method: "GET",
+        method: "POST",
         body: JSON.stringify(options),
+        headers: new Headers({ "content-type": "application/json" }),
       });
 
       // Handle result
@@ -52,7 +53,7 @@ const usePrediction = (
     // Perform request and handle any other errors
     setIsLoading(true);
     getData().catch((error) => {
-      setErrorMessage(error);
+      setErrorMessage(error.message);
       setIsLoading(false);
     });
   }, [

@@ -21,7 +21,9 @@ import { useFighterList, useIsDataLoading } from "./DataProvider";
 import FighterSelector from "./FighterProfiles/FighterSelector";
 import { camelPad } from "./FighterProfiles/FighterSheet.utils";
 import FighterSheetCompare from "./FighterProfiles/FighterSheetCompare";
+import FightPrediction from "./FightPrediction";
 import getStyles from "./Prediction.styles";
+import usePrediction from "./usePrediction";
 
 const boutTypes = ["Non Title", "Title"];
 const roundsOptions = [3, 5];
@@ -97,6 +99,15 @@ const Prediction = () => {
     const newBoutType = event.target.value;
     setBoutType(newBoutType);
   }, []);
+
+  // Make prediction
+  const { result, isLoading, errorMessage, retry } = usePrediction({
+    red: red.fighter,
+    blue: blue.fighter,
+    rounds,
+    boutType,
+    class: weightClass ?? undefined,
+  });
 
   if (isDataLoading) {
     return (
@@ -182,6 +193,15 @@ const Prediction = () => {
           onChange={setBlue}
           weightClass={selectedWeightClass}
           fighterName={blue.fighter?.replaceAll(" ", "") ?? secondFighterName}
+        />
+        <FightPrediction
+          isLoading={isLoading}
+          errorMessage={errorMessage}
+          onRetry={retry}
+          redFighter={red.fighter}
+          redChance={result?.red}
+          blueFighter={blue.fighter}
+          blueChance={result?.blue}
         />
         <FighterSheetCompare selected={red} secondSelected={blue} />
       </Stack>

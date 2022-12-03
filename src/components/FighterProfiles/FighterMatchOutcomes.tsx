@@ -12,7 +12,7 @@ import { TopLevelSpec } from "vega-lite";
 import { useFighterFights } from "../DataProvider";
 import { useCallback, useMemo, useState } from "react";
 import { getVegaConfig } from "../theme";
-import VegaGraphCard from "./VegaGraphCard";
+import VegaGraphCard from "../VegaGraphCard";
 
 interface IFighterMatchOutcomes {
   /** The selected fighter */
@@ -136,7 +136,6 @@ const FighterMatchOutcomes: React.FC<IFighterMatchOutcomes> = ({
     <VegaGraphCard
       title={`${displayName ? selected.fighter + " - " : ""}Match Outcomes`}
       vlSpec={vlSpec}
-      isEmpty={!fights.length}
     >
       <Stack direction="row">
         <Typography>Normalize:</Typography>

@@ -129,12 +129,14 @@ const FighterSelector: React.FC<IFighterSelector> = ({
 
   // Reset filters to default values
   const resetFilters = useCallback(() => {
-    setWeightClass("All");
+    if (!weightClass) {
+      setWeightClass("All");
+    }
     setWeightRange([0, Infinity]);
     setHeightRange([0, Infinity]);
     setAgeRange([0, Infinity]);
     applyFilter();
-  }, [applyFilter]);
+  }, [applyFilter, weightClass]);
 
   // Prepare fighter select box
   const getOptionLabel = useCallback(

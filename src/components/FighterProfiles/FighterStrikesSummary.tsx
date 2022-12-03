@@ -6,7 +6,7 @@ import { TopLevelSpec } from "vega-lite";
 import { useCumulativeFighterStrikes } from "../DataProvider";
 import { useMemo } from "react";
 import { getVegaConfig } from "../theme";
-import VegaGraphCard from "./VegaGraphCard";
+import VegaGraphCard from "../VegaGraphCard";
 
 interface IFighterStrikes {
   /** The selected fighter */
@@ -141,7 +141,6 @@ const FighterStrikesSummary: React.FC<IFighterStrikes> = ({
         displayName ? selected.fighter + " - " : ""
       }Significant Strikes${taken ? " Taken" : ""}`}
       vlSpec={vlSpec}
-      isEmpty={!values.length}
     />
   );
 };

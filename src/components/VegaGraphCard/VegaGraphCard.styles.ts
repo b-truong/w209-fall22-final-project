@@ -15,8 +15,15 @@ const getStyles = (theme: Theme, minHeight: number = 250) => {
       align-items: center;
       justify-content: center;
     `,
-    empty: css`
+    errorMessage: css`
       font-style: italic;
+    `,
+    errorBox: css`
+      justify-content: center;
+      align-items: center;
+    `,
+    retryButton: css`
+      margin-top: ${theme.spacing(2)};
     `,
   };
 };
