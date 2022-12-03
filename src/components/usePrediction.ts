@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface IUsePredictionOptions {
   red?: string;
@@ -56,15 +56,14 @@ const usePrediction = (
       setErrorMessage(error.message);
       setIsLoading(false);
     });
-  }, [
-    options.red,
-    options.blue,
-    options.class,
-    options.rounds,
-    options.boutType,
-  ]);
+  }, [options]);
 
-  useEffect(() => getData(), [getData]);
+  // Debounce execution
+  const timeout = useRef<string | number | NodeJS.Timeout>();
+  useEffect(() => {
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => getData(), 200);
+  }, [getData]);
 
   return {
     result,

@@ -31,17 +31,15 @@ const FighterProfiles = () => {
     {}
   );
 
-  // Get current fighters from URL
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { fighterName } = useParams();
-  const secondFighterName = useMemo(
-    () => new URLSearchParams(location.search).get("other"),
-    [location]
-  );
-
   // Set current fighters to URL
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [shouldUpdateUrl, setShouldUpdateUrl] = useState(false);
   useEffect(() => {
+    if (!shouldUpdateUrl) {
+      return;
+    }
+
     if (selected?.fighter) {
       const urlSelection = selected.fighter.replaceAll(" ", "");
       const secondFighterQuery = selectedComparison.fighter
@@ -51,10 +49,40 @@ const FighterProfiles = () => {
       if (location.pathname + location.search !== newPath) {
         navigate(newPath);
       }
+      setShouldUpdateUrl(false);
     }
-  }, [selected, selectedComparison, navigate]);
+  }, [
+    shouldUpdateUrl,
+    selected,
+    selectedComparison,
+    navigate,
+    location.pathname,
+    location.search,
+  ]);
 
-  const [comparing, setComparing] = useState(!!secondFighterName);
+  // Get current fighters from URL
+  const { fighterName: fighterNameUrl } = useParams();
+  const secondFighterNameUrl = useMemo(
+    () => new URLSearchParams(location.search).get("other"),
+    [location.search]
+  );
+
+  // Pass fighter name to selectors
+  const [fighterName, setFighterName] = useState(fighterNameUrl);
+  useEffect(() => {
+    if (fighterNameUrl) {
+      setFighterName(fighterNameUrl);
+    }
+  }, [fighterNameUrl]);
+
+  const onFighterChange = useCallback((newSelected: DSVRowString) => {
+    setSelected(newSelected);
+    setFighterName(newSelected.fighter?.replaceAll(" ", ""));
+    setShouldUpdateUrl(true);
+  }, []);
+
+  // Set comparison mode
+  const [comparing, setComparing] = useState(!!secondFighterNameUrl);
   const onAddComparison = useCallback(() => {
     setComparing(true);
   }, []);
@@ -63,6 +91,24 @@ const FighterProfiles = () => {
     setSelectedComparison({});
     navigate(location.pathname);
   }, [navigate, location]);
+
+  // Pass second fighter name
+  const [secondFighterName, setSecondFighterName] =
+    useState(secondFighterNameUrl);
+  useEffect(() => {
+    if (!secondFighterNameUrl) {
+      setComparing(false);
+      return;
+    }
+    setSecondFighterName(secondFighterNameUrl);
+    setComparing(true);
+  }, [secondFighterNameUrl]);
+
+  const onSecondFighterChange = useCallback((newSelected: DSVRowString) => {
+    setSelectedComparison(newSelected);
+    setSecondFighterName(newSelected.fighter?.replaceAll(" ", "") ?? null);
+    setShouldUpdateUrl(true);
+  }, []);
 
   const [tab, setTab] = useState("Summary");
   const onChangeTab = useCallback((event: any, newTab: string) => {
@@ -85,10 +131,7 @@ const FighterProfiles = () => {
   return (
     <Container>
       <Stack justifyContent="center" height="100%" spacing={2} mt={2} pb={2}>
-        <FighterSelector
-          onChange={setSelected}
-          fighterName={selected.fighter?.replaceAll(" ", "") ?? fighterName}
-        />
+        <FighterSelector onChange={onFighterChange} fighterName={fighterName} />
         {!comparing && (
           <Stack justifyContent="center" alignItems="center">
             <Button
@@ -103,12 +146,9 @@ const FighterProfiles = () => {
         )}
         {comparing && (
           <FighterSelector
-            onChange={setSelectedComparison}
+            onChange={onSecondFighterChange}
             onRemove={onRemoveComparison}
-            fighterName={
-              selectedComparison.fighter?.replaceAll(" ", "") ??
-              secondFighterName
-            }
+            fighterName={secondFighterName}
           />
         )}
         {comparing && selectedComparison ? (

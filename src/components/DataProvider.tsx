@@ -99,6 +99,7 @@ export interface IFighterListOptions {
 }
 
 export interface IUseFighterList {
+  unfilteredFighters: DSVRowArray<string>;
   fightersList: DSVRowArray<string>;
   ranges: {
     weightClasses: string[];
@@ -197,6 +198,7 @@ export const useFighterList = (
   );
 
   return {
+    unfilteredFighters: fightersList,
     fightersList: ageRangeFiltered,
     ranges: {
       weightClasses,

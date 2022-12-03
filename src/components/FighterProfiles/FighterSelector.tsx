@@ -125,7 +125,7 @@ const FighterSelector: React.FC<IFighterSelector> = ({
       selectedWeightClass !== "All" ? selectedWeightClass : undefined,
   });
 
-  const { fightersList, ranges } = useFighterList(filter);
+  const { unfilteredFighters, fightersList, ranges } = useFighterList(filter);
 
   // Reset filters to default values
   const resetFilters = useCallback(() => {
@@ -182,13 +182,10 @@ const FighterSelector: React.FC<IFighterSelector> = ({
 
   // Select a fighter from URL
   useEffect(() => {
-    if (fightersList.length) {
-      if (!fighterName) {
-        onSelectRandomFighter();
-      }
-      if (selected.fighter?.replaceAll(" ", "") !== fighterName) {
-        const fighter = fightersList.find(
-          (row) => row?.fighter?.replaceAll(" ", "") === fighterName
+    if (unfilteredFighters.length) {
+      if (fighterName) {
+        const fighter = unfilteredFighters.find(
+          (row: any) => row?.fighter?.replaceAll(" ", "") === fighterName
         );
         if (fighter) {
           setSelected(fighter);
@@ -196,9 +193,11 @@ const FighterSelector: React.FC<IFighterSelector> = ({
         } else {
           onSelectRandomFighter();
         }
+      } else {
+        onSelectRandomFighter();
       }
     }
-  }, [selected, fightersList, onChange, fighterName, onSelectRandomFighter]);
+  }, [unfilteredFighters, onChange, onSelectRandomFighter, fighterName]);
 
   // Filter fighter list by search input
   const noop = useCallback((x: any) => x, []);
@@ -227,22 +226,23 @@ const FighterSelector: React.FC<IFighterSelector> = ({
   );
 
   // Apply given weight class and select a random fighter within if needed
-  const [shouldChooseRandomFighter, setChooseRandomeFighter] = useState(false);
+  const [shouldChooseRandomFighter, setChooseRandomFighter] = useState(false);
   useEffect(() => {
     if (weightClass) {
       setWeightClass(weightClass);
       setShouldApplyFilter(true);
       if (
+        fighterName &&
         selected.fighter?.replaceAll(" ", "") === fighterName &&
         weightClass !== selected.weight_class
       ) {
-        setChooseRandomeFighter(true);
+        setChooseRandomFighter(true);
       }
     }
   }, [selected, weightClass, fighterName]);
   useEffect(() => {
     if (shouldChooseRandomFighter && !shouldApplyFilter) {
-      setChooseRandomeFighter(false);
+      setChooseRandomFighter(false);
       onSelectRandomFighter();
     }
   }, [shouldChooseRandomFighter, shouldApplyFilter, onSelectRandomFighter]);

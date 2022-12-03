@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { useMediaQuery, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { TopLevelSpec } from "vega-lite";
 import { useMemo } from "react";
 import { getVegaConfig } from "./theme";
@@ -36,7 +36,6 @@ const FightPrediction: React.FC<IFighterStrikes> = ({
   onRetry,
 }) => {
   const theme = useTheme();
-  const smallViewport = useMediaQuery("(max-width: 500px)");
 
   // VL specification
   const vlSpec: TopLevelSpec = useMemo(
@@ -188,7 +187,7 @@ const FightPrediction: React.FC<IFighterStrikes> = ({
         },
       ],
     }),
-    [theme, smallViewport, redChance, redFighter, blueChance, blueFighter]
+    [theme, redChance, redFighter, blueChance, blueFighter]
   );
 
   return (

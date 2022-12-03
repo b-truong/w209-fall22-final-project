@@ -79,7 +79,7 @@ const VegaGraphCard: React.FC<IVegaGraphCard> = ({
         </Stack>
       );
     }
-  }, [isLoading, errorMessage]);
+  }, [isLoading, errorMessage, onRetry, styles]);
 
   const key = useMemo(
     () => JSON.stringify(vlSpec) + isLoading + errorMessage,

@@ -25,8 +25,8 @@ import FightPrediction from "./FightPrediction";
 import getStyles from "./Prediction.styles";
 import usePrediction from "./usePrediction";
 
-const boutTypes = ["Non Title", "Title"];
-const roundsOptions = [3, 5];
+const boutTypes = ["Title", "Non Title"];
+const roundsOptions = [5, 3];
 
 /**
  * Predict which fighter will win
@@ -40,48 +40,92 @@ const Prediction = () => {
     ranges: { weightClasses },
   } = useFighterList();
 
-  const [red, setRed] = useState<DSVRowString>({});
-  const [blue, setBlue] = useState<DSVRowString>({});
-
-  // Get current fighters and class from URL
+  // Get parameters from URL
   const navigate = useNavigate();
   const location = useLocation();
-  const { fighterName } = useParams();
-  const secondFighterName = useMemo(
-    () => new URLSearchParams(location.search).get("other"),
-    [location]
-  );
 
+  const { fighterName: fighterNameUrl } = useParams();
+  const secondFighterNameUrl = useMemo(
+    () => new URLSearchParams(location.search).get("other"),
+    [location.search]
+  );
   const weightClass = useMemo(
     () => new URLSearchParams(location.search).get("class"),
     [location]
   );
+
+  // Manage current state
+  const [red, setRed] = useState<DSVRowString>({});
+  const [blue, setBlue] = useState<DSVRowString>({});
   const [selectedWeightClass, setWeightClass] = useState<string>(
     weightClass ?? "Middleweight"
   );
 
-  // Set current fighters and class to URL
+  // Update the URL as necessary
+  const [shouldUpdateUrl, setShouldUpdateUrl] = useState(false);
   useEffect(() => {
-    if (red?.fighter && blue?.fighter && selectedWeightClass) {
-      const urlSelection = red.fighter.replaceAll(" ", "");
+    if (!shouldUpdateUrl) {
+      return;
+    }
+
+    if (red.fighter && blue.fighter && selectedWeightClass) {
+      const urlSelection = red.fighter?.replaceAll(" ", "");
       const secondFighterQuery = blue.fighter
         ? "?other=" + blue.fighter.replaceAll(" ", "")
         : "";
       const classQuery = selectedWeightClass
-        ? "&class=" + selectedWeightClass
+        ? `&class=${selectedWeightClass}`
         : "";
       const newPath = `/fightclub/predict/${urlSelection}${secondFighterQuery}${classQuery}`;
       if (location.pathname + location.search !== newPath) {
         navigate(newPath);
       }
+      setShouldUpdateUrl(false);
     }
-  }, [red, blue, selectedWeightClass, navigate]);
+  }, [
+    red,
+    blue,
+    selectedWeightClass,
+    navigate,
+    location.pathname,
+    location.search,
+    shouldUpdateUrl,
+  ]);
+
+  // Pass red fighter name to selectors
+  const [redName, setRedName] = useState(fighterNameUrl);
+  useEffect(() => {
+    if (fighterNameUrl) {
+      setRedName(fighterNameUrl);
+    }
+  }, [fighterNameUrl]);
+
+  const onRedChange = useCallback((newSelected: DSVRowString) => {
+    setRed(newSelected);
+    setRedName(newSelected.fighter?.replaceAll(" ", ""));
+    setShouldUpdateUrl(true);
+  }, []);
+
+  // Pass blue fighter name to selectors
+  const [blueName, setBlueName] = useState(secondFighterNameUrl);
+  useEffect(() => {
+    if (secondFighterNameUrl) {
+      setBlueName(secondFighterNameUrl);
+    }
+  }, [secondFighterNameUrl]);
+
+  const onBlueChange = useCallback((newSelected: DSVRowString) => {
+    setBlue(newSelected);
+    setBlueName(newSelected.fighter?.replaceAll(" ", "") ?? null);
+    setShouldUpdateUrl(true);
+  }, []);
 
   // Manage weight class state
   const onChangeWeightClass = useCallback(
     (event: SelectChangeEvent<string>) => {
       const newWeightClass = event.target.value;
       setWeightClass(newWeightClass);
+      setShouldUpdateUrl(true);
     },
     []
   );
@@ -101,13 +145,17 @@ const Prediction = () => {
   }, []);
 
   // Make prediction
-  const { result, isLoading, errorMessage, retry } = usePrediction({
-    red: red.fighter,
-    blue: blue.fighter,
-    rounds,
-    boutType,
-    class: weightClass ?? undefined,
-  });
+  const options = useMemo(
+    () => ({
+      red: red.fighter,
+      blue: blue.fighter,
+      rounds,
+      boutType,
+      class: weightClass ?? undefined,
+    }),
+    [red.fighter, blue.fighter, rounds, boutType, weightClass]
+  );
+  const { result, isLoading, errorMessage, retry } = usePrediction(options);
 
   if (isDataLoading) {
     return (
@@ -185,14 +233,14 @@ const Prediction = () => {
           </Stack>
         </Card>
         <FighterSelector
-          onChange={setRed}
+          onChange={onRedChange}
           weightClass={selectedWeightClass}
-          fighterName={red.fighter?.replaceAll(" ", "") ?? fighterName}
+          fighterName={redName}
         />
         <FighterSelector
-          onChange={setBlue}
+          onChange={onBlueChange}
           weightClass={selectedWeightClass}
-          fighterName={blue.fighter?.replaceAll(" ", "") ?? secondFighterName}
+          fighterName={blueName}
         />
         <FightPrediction
           isLoading={isLoading}
@@ -203,7 +251,9 @@ const Prediction = () => {
           blueFighter={blue.fighter}
           blueChance={result?.blue}
         />
-        <FighterSheetCompare selected={red} secondSelected={blue} />
+        {red.fighter && blue.fighter && (
+          <FighterSheetCompare selected={red} secondSelected={blue} />
+        )}
       </Stack>
     </Container>
   );
