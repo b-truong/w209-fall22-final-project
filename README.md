@@ -41,7 +41,7 @@ Before running the project, install these dependencies:
 
 - Install the web app project packages
 
-### `yarn install:pydeps`
+### `yarn install:prep`
 
 - Install the Python pre-processing packages
 
