@@ -51,9 +51,8 @@ Before running the project, install these dependencies:
 
 ### `yarn start`
 
-- Run the project in development mode
-- Access the project at http://localhost:3000/
-- The project will automatically reload whenever changes are made to the files
+- Run the web app in development mode
+- The web app will automatically reload whenever changes are made
 
 ### `yarn start:api`
 
@@ -68,7 +67,7 @@ Before running the project, install these dependencies:
 
 ### `yarn build`
 
-- Create a production ready build
+- Create a production ready build of the web app
 - Build output is located in the generated `build/` directory
 
 # Prediction API
