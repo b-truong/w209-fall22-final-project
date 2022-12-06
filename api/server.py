@@ -11,13 +11,13 @@ fighter_df = pd.read_csv(
     "api/data/fighters_stats.csv", index_col="index")
 
 # Open saved model files
-with open("api/data/model.sav", "rb") as mdl:
+with open("api/model/model.sav", "rb") as mdl:
     model = pickle.load(mdl)
 
-with open("api/data/cols.list", "rb") as c:
+with open("api/model/cols.list", "rb") as c:
     cols = pickle.load(c)
 
-with open("api/data/standard.scaler", "rb") as ss:
+with open("api/model/standard.scaler", "rb") as ss:
     scaler = pickle.load(ss)
 
 # Weight class string mapping
