@@ -64,7 +64,6 @@ def run_model(red, blue, weight_class, rounds, bout_type):
     @param rounds       : Either 3 or 5
     @param bout_type    : Either "Non Title" or "Title"
     '''
-    # Run model
     df = fighter_df.copy()
 
     # Hot-encode weight classes
